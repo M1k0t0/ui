@@ -158,7 +158,7 @@ onMounted(() => {
       // command, the Combobox (Popover + Command), and the CommandDialog all read
       // identically. A host that supplies its own elevation (e.g. CommandDialog's
       // transparent DialogContent) just lets this surface show through.
-      'bg-popover text-popover-foreground border border-[color:var(--border-menu)] rounded-menu-shell shadow-[var(--shadow-dropdown)] flex h-full w-full flex-col overflow-hidden',
+      'bg-popover text-popover-foreground border-(length:--stroke) border-[color:var(--border-menu)] rounded-menu-shell flex h-full w-full flex-col overflow-hidden',
       props.class,
     )"
     @entry-focus="onEntryFocus"

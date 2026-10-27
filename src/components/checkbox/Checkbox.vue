@@ -21,7 +21,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     v-bind="forwarded"
     :class="
       cn(
-        'peer relative size-3.5 shrink-0 rounded-2xs border outline-none cursor-pointer',
+        'peer relative size-4 shrink-0 rounded-2xs border-(length:--stroke) outline-none cursor-pointer',
         // hit-slop: clickable area extends well beyond the visual box
         `before:absolute before:-inset-2 before:content-['']`,
         'focus-visible:ring-2 focus-visible:ring-ring/20',

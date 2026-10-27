@@ -42,8 +42,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     <DialogContent
       data-slot="sheet-content"
       :class="cn(
-        'fixed z-(--z-overlay) flex flex-col gap-4 shadow-[var(--shadow-modal)] transition ease-in-out',
-        'bg-card border-border',
+        'fixed z-(--z-overlay) flex flex-col gap-4 transition ease-in-out',
+        'bg-card border-[color:var(--border-menu-elevated)]',
         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-150 data-[state=open]:duration-150',
         side === 'right'
           && 'data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 sm:max-w-sm',

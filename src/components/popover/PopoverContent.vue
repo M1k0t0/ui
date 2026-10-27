@@ -42,7 +42,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 // the un-refactored rounded-lg / border-border / shadow-md generic card.
 const chromeClass = computed(() => props.menu
   ? ''
-  : 'bg-popover text-popover-foreground w-72 rounded-menu-shell border border-[color:var(--border-menu)] p-4 shadow-[var(--shadow-dropdown)]')
+  : 'bg-popover text-popover-foreground w-72 rounded-menu-shell border-(length:--stroke) border-[color:var(--border-menu)] p-4')
 
 // Menu motion when hosting a menu surface OR when explicitly opted in via motion.
 const motionClass = computed(() => (props.menu || props.motion === 'menu')

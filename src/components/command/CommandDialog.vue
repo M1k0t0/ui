@@ -57,7 +57,7 @@ const forwarded = useForwardPropsEmits(reactiveOmit(props, 'variant', 'title', '
            separates from the dark scrim by luminance, so a dark hairline there would
            just muddy the edge instead of sharpening it. -->
       <Command
-        class="border-[color:var(--border-menu-elevated)] shadow-[var(--shadow-modal)]"
+        class="border-[color:var(--border-menu-elevated)]"
         :class="variant === 'picker' ? 'gap-3 p-4 [&_[data-slot=command-group]]:p-0' : undefined"
       >
         <DialogHeader

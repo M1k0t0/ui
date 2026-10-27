@@ -114,7 +114,6 @@
   }
   [data-button]:is([data-variant="outline"], [data-variant="secondary"]):hover::before {
     background-color: var(--btn-secondary-overlay);
-    box-shadow: none;
   }
   [data-button]:is([data-variant="outline"], [data-variant="secondary"]):active::before {
     scale: 0.974;
@@ -848,6 +847,7 @@
     padding: 0.125rem;
     border-radius: var(--radius-md);
     background-color: var(--segment-track);
+    box-shadow: inset 0 0 0 var(--stroke) var(--segment-frame);
   }
   [data-slot="segmented"] [data-segment-thumb] {
     position: absolute;
@@ -880,8 +880,8 @@
     align-items: center;
     justify-content: center;
     gap: 0.375rem;
-    height: 1.75rem;
-    padding-inline: 0.75rem;
+    height: 2.5rem;
+    padding-inline: 0.875rem;
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
     font-weight: 500;
@@ -898,7 +898,7 @@
   }
   [data-slot="segmented"] [data-segment-item][data-active="true"],
   [data-slot="segmented"] [data-segment-item][data-active="true"]:hover {
-    color: var(--foreground);
+    color: var(--segment-thumb-foreground);
   }
   [data-slot="segmented"] [data-segment-item]::before {
     content: "";
@@ -920,7 +920,7 @@
   }
   [data-slot="segmented"] [data-segment-item]:disabled {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.4;
   }
   [data-slot="segmented"] [data-segment-item]:focus-visible {
     outline: none;
@@ -1577,6 +1577,15 @@
   --terminal-selection: rgb(45 44 41 / 0.16);
   --switch-on: var(--pulse);
   --selection-fill: var(--ink);
+  /* Text/glyph on an accent or status fill (§3.21): always Ink, both modes. */
+  --on-accent: var(--ink);
+  --destructive-hover: var(--spark-shade);
+  --destructive-active: var(--spark-deep);
+  /* Disabled filled control (§7.15): Mist fill, Steel text — not a fade. */
+  --disabled-fill: var(--mist);
+  --disabled-foreground: var(--steel);
+  --segment-frame: var(--ink);
+  --segment-thumb-foreground: var(--paper);
   --selection-fill-hover: var(--graphite);
   --selection-fill-active: var(--slate);
   --selection-foreground: var(--paper);
@@ -1801,6 +1810,10 @@
   --btn-destructive-hover-text: oklch(0.80 0.18 25);
   --background-chrome: var(--ink);
   --selection-fill: var(--paper);
+  --disabled-fill: var(--graphite);
+  --disabled-foreground: var(--steel);
+  --segment-frame: var(--paper);
+  --segment-thumb-foreground: var(--ink);
   --selection-fill-hover: var(--fog);
   --selection-fill-active: var(--ash);
   --selection-foreground: var(--ink);
@@ -1825,6 +1838,12 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-destructive-active: var(--destructive-active);
+  --color-on-accent: var(--on-accent);
+  --color-success: var(--success);
+  --color-pulse: var(--pulse);
+  --color-spark: var(--spark);
   --color-destructive-soft: var(--destructive-soft);
   --color-destructive-border: var(--destructive-border);
   --color-destructive-soft-hover: var(--destructive-soft-hover);
@@ -2493,4 +2512,41 @@
   line-height: 1rem;
   letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
+}
+
+@layer components {
+  /* ── Disabled filled buttons (§7.15) ──────────────────────────────────────
+     A disabled CTA reads as a Mist plate with Steel text, not a faded CTA.
+     !important: the cva base carries `disabled:opacity-40` (utilities layer)
+     for ghost/link, which must not fade these. */
+  [data-button]:is([data-variant="default"], [data-variant="primary"], [data-variant="outline"], [data-variant="secondary"], [data-variant="brand"], [data-variant="destructive"]):disabled {
+    opacity: 1 !important;
+    color: var(--disabled-foreground) !important;
+    background-color: var(--disabled-fill) !important;
+  }
+  [data-button]:is([data-variant="default"], [data-variant="primary"], [data-variant="outline"], [data-variant="secondary"], [data-variant="brand"]):disabled::before {
+    background-color: var(--disabled-fill);
+    box-shadow: none;
+  }
+
+  /* ── Selected card (§7.6) ─────────────────────────────────────────────────
+     A 2px Ink border and a Pulse corner triangle in the top-left chamfer.
+     Keyed off [data-ui-selected] like every other durable selected state. */
+  :is([data-slot="card"], [data-slot="surface-card"], [data-slot="action-card"])[data-ui-selected] {
+    position: relative;
+    border-width: 2px;
+    border-color: var(--foreground);
+  }
+  :is([data-slot="card"], [data-slot="surface-card"], [data-slot="action-card"])[data-ui-selected]::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(var(--chamfer-card) * 2);
+    height: calc(var(--chamfer-card) * 2);
+    background-color: var(--pulse);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    border-radius: 0;
+    pointer-events: none;
+  }
 }

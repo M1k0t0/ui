@@ -31,7 +31,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       <DialogContent
         :class="
           cn(
-            'relative z-(--z-overlay) grid w-full max-w-lg my-8 gap-4 border border-[color:var(--border-menu-elevated)] bg-card p-6 shadow-[var(--shadow-modal)] sm:rounded-xl md:w-full',
+            'relative z-(--z-overlay) grid w-full max-w-lg my-8 gap-4 border-(length:--stroke) border-[color:var(--border-menu-elevated)] bg-card p-6 sm:rounded-panel md:w-full',
             // Same 100ms fade + 2% zoom modal entrance as DialogContent (was an inert
             // duration-200 with no animation utilities attached) so the scrollable
             // variant opens with the one shared modal motion.

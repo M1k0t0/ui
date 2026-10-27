@@ -178,7 +178,7 @@ const indicatorStyle = computed(() => {
   position: absolute;
   bottom: -1px;
   left: 0;
-  height: 2px;
+  height: var(--stroke);
   border-radius: 0;
   background-color: var(--foreground);
   pointer-events: none;
@@ -227,7 +227,7 @@ const indicatorStyle = computed(() => {
 }
 [data-variant="pill"] :deep([data-slot="tabs-trigger"][data-state="active"]),
 [data-variant="pill"] :deep([data-slot="tabs-trigger"][data-state="active"]:hover) {
-  color: var(--foreground);
+  color: var(--segment-thumb-foreground);
 }
 [data-variant="pill"] :deep([data-slot="tabs-trigger"])::before {
   content: "";

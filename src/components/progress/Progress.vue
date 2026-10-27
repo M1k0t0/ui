@@ -19,19 +19,17 @@ const value = computed(() => props.modelValue ?? 0)
 </script>
 
 <template>
-  <!-- Track + fill reuse the slider language: the neutral rail (--slider-track,
-       which carries its own dark-mode value) and the one selection blue
-       (--accent-blue-fill) shared by every selection control, so a progress bar
-       reads as the same family as Slider/Switch/Checkbox. h-1.5 matches the slider
-       rail height. -->
+  <!-- Continuous bar in the progress language (§7.4): done = the selection
+       ink, remaining = the slider rail (Fog). For counted work prefer
+       SegmentedProgress, which draws the parallelogram cells. -->
   <ProgressRoot
     data-slot="progress"
     v-bind="delegatedProps"
-    :class="cn('relative h-1.5 w-full overflow-hidden rounded-full bg-[color:var(--slider-track)]', props.class)"
+    :class="cn('relative h-1.5 w-full overflow-hidden rounded-none bg-[color:var(--slider-track)]', props.class)"
   >
     <ProgressIndicator
       data-slot="progress-indicator"
-      class="size-full flex-1 rounded-full bg-accent-blue-fill transition-transform duration-300 ease-out will-change-transform"
+      class="size-full flex-1 rounded-none bg-[color:var(--selection-fill)] transition-transform duration-300 ease-out will-change-transform"
       :style="`transform: translateX(-${100 - value}%);`"
     />
   </ProgressRoot>

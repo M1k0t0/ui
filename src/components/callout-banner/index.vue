@@ -72,15 +72,15 @@
       <div class="min-w-0 flex-1">
         <p
           v-if="title"
-          class="break-words font-medium text-foreground"
-          :class="firstLineRung"
+          class="break-words font-medium"
+          :class="[firstLineRung, inkClass]"
         >
           {{ title }}
         </p>
         <p
           v-if="description"
           class="whitespace-pre-wrap break-words"
-          :class="title ? ['mt-0.5 text-muted-foreground', size === 'sm' ? 'text-body' : 'text-label'] : [firstLineRung, 'text-foreground']"
+          :class="title ? ['mt-0.5', subInkClass, size === 'sm' ? 'text-body' : 'text-label'] : [firstLineRung, inkClass]"
         >
           {{ description }}
         </p>
@@ -135,12 +135,12 @@
 // shadcn `Alert` role (neutral tone + description-only + details), so hosts
 // have one notice owner instead of two with different edges and icon math.
 import { ErrorIcon } from '@memohai/icon/ui'
-import { ChevronRight, Info, TriangleAlert, X } from 'lucide-vue-next'
+import { Check, ChevronRight, Info, TriangleAlert, X } from 'lucide-vue-next'
 import { computed } from 'vue'
 import { Button } from '#/components/button'
 
 const props = withDefaults(defineProps<{
-  tone?: 'neutral' | 'warning' | 'destructive'
+  tone?: 'neutral' | 'success' | 'warning' | 'destructive'
   title?: string
   description?: string
   size?: 'default' | 'sm'
@@ -163,6 +163,7 @@ const emit = defineEmits<{
 
 const toneIcon = computed(() => ({
   neutral: Info,
+  success: Check,
   warning: TriangleAlert,
   destructive: ErrorIcon,
 })[props.tone])
@@ -186,12 +187,15 @@ const frameClass = computed(() => props.size === 'sm'
 // destructive/neutral deepen by brightness since there is no rung above.
 const toneClass = computed(() => {
   const sm = props.size === 'sm'
+  // LabMate §7.8: a confirmation is a Pulse plate with an Ink edge, an error
+  // is a Spark plate — both are solid accent fills carrying Ink text.
+  if (props.tone === 'success') {
+    const rest = 'border-(length:--stroke) border-[color:var(--on-accent)] bg-success'
+    return props.clickable ? `${rest} transition-[filter] hover:brightness-95` : rest
+  }
   if (props.tone === 'destructive') {
-    if (!sm) return props.clickable ? 'bg-destructive-soft-hover transition-[filter] hover:brightness-125' : 'bg-destructive-soft-hover'
-    const rest = 'border-destructive-border bg-destructive-soft'
-    return props.clickable
-      ? `${rest} transition-colors hover:bg-destructive-soft-hover hover:border-destructive-border-hover`
-      : rest
+    const rest = 'border-(length:--stroke) border-[color:var(--on-accent)] bg-destructive'
+    return props.clickable ? `${rest} transition-colors hover:bg-destructive-hover` : rest
   }
   if (props.tone === 'neutral') {
     if (!sm) return props.clickable ? 'bg-muted transition-[filter] hover:brightness-125' : 'bg-muted'
@@ -207,9 +211,15 @@ const toneClass = computed(() => {
 
 const iconClass = computed(() => ({
   neutral: 'text-muted-foreground',
+  success: 'text-on-accent',
   warning: 'text-warning-foreground',
-  destructive: 'text-destructive',
+  destructive: 'text-on-accent',
 })[props.tone])
+
+// Text on a solid accent plate is always Ink (§3.21), in both modes.
+const filled = computed(() => !props.bare && (props.tone === 'success' || props.tone === 'destructive'))
+const inkClass = computed(() => filled.value ? 'text-on-accent' : 'text-foreground')
+const subInkClass = computed(() => filled.value ? 'text-on-accent' : 'text-muted-foreground')
 
 const interactiveClass = 'w-full cursor-pointer'
 </script>

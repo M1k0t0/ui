@@ -9,7 +9,7 @@
 // fade; trigger-anchored panels add menuAnchoredMotionClass below.
 // Keyframes own motion, so geometry updates must never inherit a CSS transition.
 export const menuContentClass
-  = 'bg-popover text-popover-foreground border border-[color:var(--border-menu)] rounded-menu-shell shadow-[var(--shadow-dropdown)] z-(--z-overlay) overflow-x-hidden overflow-y-auto '
+  = 'bg-popover text-popover-foreground border-(length:--stroke) border-[color:var(--border-menu)] rounded-menu-shell z-(--z-overlay) overflow-x-hidden overflow-y-auto '
     + 'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 '
     + 'duration-75 transition-none'
 
@@ -36,7 +36,7 @@ export const menuViewportClass = 'menu-viewport flex flex-col gap-(--menu-row-ga
 // box; this carries only the hairline + shadow + radius + surface tokens that the
 // inner div also needs, so the chrome quartet isn't hand-copied at every call site.
 export const menuChromeClass
-  = 'flex flex-col overflow-hidden rounded-menu-shell border border-[color:var(--border-menu)] bg-popover text-popover-foreground shadow-[var(--shadow-dropdown)]'
+  = 'flex flex-col overflow-hidden rounded-menu-shell border-(length:--stroke) border-[color:var(--border-menu)] bg-popover text-popover-foreground'
 
 // Virtualized listbox viewport: the scroll container for a searchable list whose
 // rows are absolutely positioned (so it can't take menuViewportClass's
