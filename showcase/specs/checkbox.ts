@@ -14,9 +14,9 @@ export const checkboxSpec: ComponentSpec = {
   id: 'checkbox',
   name: 'Checkbox',
   description:
-    'Multi-select check control. The tick is the same selection blue fill as Switch and Radio — one blue, everywhere.',
+    'Multi-select check control. Checked fills with the selection ink, the same as Radio and Slider — blue is reserved for completed work.',
   descriptionZh:
-    '多选勾选控件。对勾与 Switch、Radio 共用同一个选择蓝填充——一处蓝，处处蓝。',
+    '多选勾选控件。选中时填充选择墨色,与 Radio、Slider 一致——蓝色只留给“已完成”。',
   controls: [
     { kind: 'enum', key: 'state', label: 'State', options: STATES, default: 'checked', display: 'segmented' },
     { kind: 'boolean', key: 'disabled', label: 'Disabled', default: false },
@@ -37,10 +37,10 @@ export const checkboxSpec: ComponentSpec = {
 
 - Always pair with a Label — clicking the label toggles the box via for/id.
 - indeterminate is for "some children selected" parent rows, not a third user choice.
-- The edge is a control-edge hairline; checked swaps to the blue fill in place.`,
+- The edge is a control-edge hairline; checked swaps to the Ink fill in place.`,
   usageZh: `选中是一个指示器(对勾),永远不是持久的行底色。
 
 - 永远配 Label——点标签即可切换勾选(for/id)。
 - indeterminate 用于"部分子项选中"的父行,不是给用户的第三种选择。
-- 边缘是控件发丝边;选中时原位换成蓝色填充。`,
+- 边缘是控件发丝边;选中时原位换成墨色填充。`,
 }

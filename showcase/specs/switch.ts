@@ -9,9 +9,9 @@ export const switchSpec: ComponentSpec = {
   id: 'switch',
   name: 'Switch',
   description:
-    'Binary on/off control. The checked state is the one selection blue — a solid fill, not a border.',
+    'Binary on/off control. On is a solid Pulse fill — on means live.',
   descriptionZh:
-    '二元开关。选中态是实心选择蓝填充，不是描边。',
+    '二元开关。开启是实心 Pulse 填充——开即在线。',
   controls: [
     { kind: 'enum', key: 'size', label: 'Size', options: SIZES, default: 'default', display: 'segmented' },
     { kind: 'boolean', key: 'checked', label: 'Checked', default: true },

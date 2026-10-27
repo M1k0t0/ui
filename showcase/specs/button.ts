@@ -19,9 +19,9 @@ export const buttonSpec: ComponentSpec = {
   id: 'button',
   name: 'Button',
   description:
-    'Triggers an action. The charcoal default is the high-emphasis CTA; brand purple is scarce and reserved for rare moments.',
+    'Triggers an action. The Ink default is the high-emphasis CTA; brand (Pulse) is scarce and reserved for live moments.',
   descriptionZh:
-    '触发一个动作。深炭色 default 是高强调 CTA;brand 紫色稀缺，只留给极少数时刻。',
+    '触发一个动作。墨色 default 是高强调 CTA;brand(Pulse)稀缺,只留给“正在进行”的时刻。',
   controls: [
     {
       kind: 'enum',
@@ -102,16 +102,16 @@ export const buttonSpec: ComponentSpec = {
   },
   usage: `Reach for variant + size, never hand-written classes.
 
-- default/primary is the charcoal high-emphasis CTA — one per surface.
-- brand purple is scarce: rare moments like the chat Send button, never a default fill.
+- default/primary is the Ink high-emphasis CTA — one per surface.
+- brand (Pulse) is scarce: rare live moments like a Run button, never a default fill.
 - destructive is a filled red CTA, not a ghost button with red text.
 - "Clickable text with a hover chip" is TextButton (ghost @ size="text"), not a hand-rolled hover on a span.
 - Icon-only buttons must carry an aria-label.
 - loading holds full color and blocks clicks; disabled fades to opacity-40. Busy ≠ disabled.`,
   usageZh: `用 variant + size 表达意图,永远别手写 class。
 
-- default/primary 是深炭色高强调 CTA——一个界面最多一个。
-- brand 紫是稀缺色:只留给聊天发送键这类极少数时刻,绝不做默认填充。
+- default/primary 是墨色高强调 CTA——一个界面最多一个。
+- brand(Pulse)是稀缺色:只留给“运行”这类极少数时刻,绝不做默认填充。
 - destructive 是实心红 CTA,不是红字 ghost。
 - "可点击、带 hover 衬底的文字"是 TextButton(ghost @ size="text"),不是给 span 手写 hover。
 - 纯图标按钮必须带 aria-label。

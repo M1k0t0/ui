@@ -31,12 +31,12 @@ export const toggleSpec: ComponentSpec = {
     ),
   usage: `Toggle's ON state is the "selected state" (§ Selected state in AGENTS.md): durable chrome on the control itself.
 
-- tint uses brand purple — rationed; the default neutral on-state covers almost every toolbar flag.
+- tint uses the brand (Pulse) — rationed; the default neutral on-state covers almost every toolbar flag.
 - Always an aria-label when the content is an icon.
 - For switching PANELS use Tabs; for picking ONE value from a row of options use SegmentedControl. Toggle is one independent flag.`,
   usageZh: `Toggle 的开态就是"选中态"(见 AGENTS.md § Selected state):控件自身携带的持久铬。
 
-- tint 用品牌紫——配给制;默认的中性开态覆盖几乎所有工具栏场景。
+- tint 用品牌色 Pulse——配给制;默认的中性开态覆盖几乎所有工具栏场景。
 - 内容是图标时必须有 aria-label。
 - 切换面板用 Tabs;从一行选项里选一个值用 SegmentedControl。Toggle 是一个独立的开关位。`,
 }
