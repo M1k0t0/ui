@@ -4,7 +4,8 @@ import { STATUS_GLYPH } from './glyphs'
 
 // The status glyph alone (§3.3): ▶ filled · ❚❚ filled · ✓ stroke · ✕ stroke ·
 // ■ filled · none for not-started. Straight segments, mitred joins, square caps
-// (§6.1). Drawn in currentColor so the host plate decides the ink.
+// (§6.1). Drawn in currentColor so the host plate decides the ink. Filled
+// glyphs carry no stroke so the paused bars stay apart at chip size.
 defineProps<{ status: WorkStatus }>()
 </script>
 
@@ -19,7 +20,7 @@ defineProps<{ status: WorkStatus }>()
     <path
       :d="STATUS_GLYPH[status].d"
       :fill="STATUS_GLYPH[status].fill ? 'currentColor' : 'none'"
-      stroke="currentColor"
+      :stroke="STATUS_GLYPH[status].fill ? 'none' : 'currentColor'"
       stroke-width="2.6"
       stroke-linejoin="miter"
       stroke-linecap="square"

@@ -11,7 +11,7 @@ export const badgeVariants = cva(
   // adapts in dark mode (the ramp flips to a translucent dark tint + light text), so
   // one set of tokens covers both themes. Box metrics (px/py) live in `size`; text
   // size is size-invariant (text-caption) so it sits here in the base.
-  'inline-flex items-center justify-center rounded-sm text-label-mono w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none transition-colors overflow-hidden',
+  'inline-flex items-center justify-center rounded-none text-label-mono w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none transition-colors overflow-hidden',
   {
     variants: {
       variant: {
@@ -28,7 +28,7 @@ export const badgeVariants = cva(
         info:
           'bg-info text-on-accent',
         outline:
-          'rounded-none border-(length:--stroke) border-foreground bg-background text-foreground [a&]:hover:bg-accent',
+          'border-(length:--stroke) border-foreground bg-background text-foreground [a&]:hover:bg-accent',
       },
       size: {
         default: 'h-6 px-2',
@@ -46,11 +46,18 @@ export const badgeVariants = cva(
         sans: '',
         mono: 'font-mono',
       },
+      // Chips are square by default; `chamfer` opts into the 4px
+      // top-left / bottom-right cut (--chamfer-chip).
+      chamfer: {
+        true: 'rounded-sm',
+        false: '',
+      },
     },
     defaultVariants: {
       variant: 'default',
       size: 'default',
       font: 'sans',
+      chamfer: false,
     },
   },
 )

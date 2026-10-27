@@ -11,6 +11,8 @@ const props = defineProps<PrimitiveProps & {
   variant?: BadgeVariants['variant']
   size?: BadgeVariants['size']
   font?: BadgeVariants['font']
+  /** Cut the top-left and bottom-right corners. Square by default. */
+  chamfer?: boolean
   class?: HTMLAttributes['class']
 }>()
 
@@ -20,7 +22,7 @@ const delegatedProps = reactiveOmit(props, 'class')
 <template>
   <Primitive
     data-slot="badge"
-    :class="cn(badgeVariants({ variant, size, font }), props.class)"
+    :class="cn(badgeVariants({ variant, size, font, chamfer }), props.class)"
     v-bind="delegatedProps"
   >
     <slot />

@@ -13,17 +13,19 @@ const props = defineProps<{
   status: WorkStatus
   /** Overrides the default English label (pass the localized string). */
   label?: string
+  /** Cut the top-left and bottom-right corners. Square by default. */
+  chamfer?: boolean
   class?: HTMLAttributes['class']
 }>()
 
 // Full literal strings so Tailwind's scanner generates every plate.
 const plate: Record<WorkStatus, string> = {
-  'not-started': 'rounded-none bg-[var(--status-not-started-light)] text-[color:var(--status-not-started-glyph)] border-(length:--stroke) border-[color:var(--fog)]',
-  'ongoing': 'rounded-sm bg-[var(--status-ongoing-base)] text-[color:var(--status-ongoing-glyph)]',
-  'paused': 'rounded-sm bg-[var(--status-paused-base)] text-[color:var(--status-paused-glyph)]',
-  'completed': 'rounded-sm bg-[var(--status-completed-base)] text-[color:var(--status-completed-glyph)]',
-  'failed': 'rounded-sm bg-[var(--status-failed-base)] text-[color:var(--status-failed-glyph)]',
-  'halted': 'rounded-sm bg-[var(--status-halted-base)] text-[color:var(--status-halted-glyph)]',
+  'not-started': 'bg-[var(--status-not-started-light)] text-[color:var(--status-not-started-glyph)] border-(length:--stroke) border-[color:var(--fog)]',
+  'ongoing': 'bg-[var(--status-ongoing-base)] text-[color:var(--status-ongoing-glyph)]',
+  'paused': 'bg-[var(--status-paused-base)] text-[color:var(--status-paused-glyph)]',
+  'completed': 'bg-[var(--status-completed-base)] text-[color:var(--status-completed-glyph)]',
+  'failed': 'bg-[var(--status-failed-base)] text-[color:var(--status-failed-glyph)]',
+  'halted': 'bg-[var(--status-halted-base)] text-[color:var(--status-halted-glyph)]',
 }
 
 const text = computed(() => props.label ?? WORK_STATUS_LABEL[props.status])
@@ -33,7 +35,7 @@ const text = computed(() => props.label ?? WORK_STATUS_LABEL[props.status])
   <span
     data-slot="status-chip"
     :data-status="status"
-    :class="cn('inline-flex h-7 w-fit shrink-0 items-center gap-2 px-2.5 text-label-mono whitespace-nowrap [&_svg]:size-2.5', plate[status], props.class)"
+    :class="cn('inline-flex h-7 w-fit shrink-0 items-center gap-2 px-2.5 text-label-mono whitespace-nowrap [&_svg]:size-2.5', plate[status], chamfer ? 'rounded-sm' : 'rounded-none', props.class)"
   >
     <StatusGlyph :status="status" />
     {{ text }}

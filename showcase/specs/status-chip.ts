@@ -11,6 +11,7 @@ export const statusChipSpec: ComponentSpec = {
     '工作状态 chip：状态色面 + 状态字形 + 等宽标签。颜色和字形永远一起出现。',
   controls: [
     { kind: 'enum', key: 'status', label: 'Status', options: WORK_STATUSES, default: 'ongoing' },
+    { kind: 'boolean', key: 'chamfer', label: 'Chamfer', default: false },
   ],
   examples: [
     {
@@ -18,8 +19,14 @@ export const statusChipSpec: ComponentSpec = {
       nameZh: '全部状态',
       render: () => WORK_STATUSES.map(status => h(StatusChip, { status })),
     },
+    {
+      name: 'Chamfered',
+      nameZh: '切角',
+      note: 'Opt-in: `chamfer` cuts the top-left and bottom-right corners.',
+      render: () => WORK_STATUSES.map(status => h(StatusChip, { status, chamfer: true })),
+    },
   ],
-  render: state => h(StatusChip, { status: state.status as never }),
+  render: state => h(StatusChip, { status: state.status as never, chamfer: Boolean(state.chamfer) }),
   usage: `Use StatusChip wherever a task, goal or milestone shows its status.
 
 - Halted means stopped from outside (a dependency, a decision, a policy). Paused means its owner stopped it on purpose.

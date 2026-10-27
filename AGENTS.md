@@ -151,10 +151,10 @@ node templates (same 56 / 104 / 200 / 240 / 72 geometry, sub-items at 60%),
 with every colour on a token. The graph canvas itself (layout, lines,
 tracing, mist, editing) stays in the LabMate app.
 
-**Chip shape rule.** A FILLED chip (a plate with no edge) is chamfered with
-`--chamfer-chip`; a FRAMED chip (one that carries a 1.5px edge — mate status
-chips, the milestone / project-goal chips, an outline Badge, a not-started
-StatusChip) is SQUARE. Never chamfer a chip that has a border.
+**Chip shape rule.** Chips (Badge, StatusChip, MateChip, node chips) are
+SQUARE by default. Badge and StatusChip take an opt-in `chamfer` prop that
+cuts the top-left and bottom-right corners with `--chamfer-chip`; reach for it
+deliberately, never as the default look.
 
 There is ONE palette. The old `data-color-scheme` axis (memoh / ocean / forest
 / rose / amber) is gone — LabMate colour carries meaning, so a hue swap would
