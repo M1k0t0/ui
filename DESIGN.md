@@ -2,39 +2,39 @@
 
 ## Overview
 
-A modern, clean, and highly functional interface designed for an AI Agent platform. The design emphasizes a "high-contrast, flat" aesthetic. It moves away from mushy, ubiquitous soft shadows (`shadow-sm`) and brand-colored primary buttons, favoring a tempered base palette with soft whites, light greys, and charcoal blacks. Brand colors are used extremely sparingly for distinct active states and primary conversion actions (like the chat "Send" button).
+LabMate: a low-poly, two-ink language for people and agents working on one project. Every shape is straight edges and flat planes — corners are chamfered (top-left and bottom-right), circles become octagons, and there are no drop shadows or gradient washes. Two inks build the structure; colour appears only when it means something. `AGENTS.md` is the contract; this file is the quick visual summary.
 
 ## Colors
 
-- **Primary / Brand** (`--primary`, `--brand`): Scheme-aware brand accent. It drives explicit brand actions, active indicators, and status dots. Default filled controls should use pale natural surfaces from the base palette instead of brand tint.
-- **Primary Foreground** (`#fafafa`): Used heavily as the background for sidebars (Navigation, Session List, Metadata) to separate them from the main content area.
-- **Background** (`--background`): Soft off-white, used for the central chat area, cards, alerts, and major input fields. Avoid pure white unless an asset or overlay requires it.
-- **Foreground** (`--foreground`): Charcoal black. Now acts as the default visual weight for standard controls and default badges. Avoid pure black for normal UI fills.
-- **Muted Foreground** (`#737373`): Mid-grey, extensively used for timestamps, secondary labels, placeholders, and inactive icons.
-- **Accent** (`#f5f5f5`): Light grey, used for hover states, secondary buttons, code/badge backgrounds, and model selectors.
-- **Border** (`#e5e5e5`): Very light grey, used uniformly for all structural dividers and component borders.
-- **Destructive** (`--destructive`): Scheme-aware critical action color. Used exclusively for text or icons in critical actions (e.g., delete). It does not use raw colored backgrounds (e.g., no `bg-red-50`).
-- **Semantic Colors**: Status, event, capability, diff, terminal, and chart colors must use global tokens (`--success`, `--warning`, `--success-solid-foreground`, `--warning-solid-foreground`, `--info`, `--event-*`, `--capability-*`, `--diff-*`, `--terminal-*`, `--chart-*`) rather than hardcoded Tailwind color families. If component states need more colors, extend the global palette tokens rather than adding component-specific color namespaces.
-- **Color Schemes**: Palettes are selected with `html[data-color-scheme]` and must provide light and dark values for the full semantic set. The default scheme is `memoh`.
+- **Ink scale** (structure): Ink `#0A0A0A` · Graphite `#262626` · Slate `#474747` · Steel `#6B6B6B` · Ash `#A3A3A3` · Fog `#D4D4D4` · Mist `#EDEDED` · Paper `#FFFFFF`, plus wells `#F4F4F4` / `#E3E3E3`.
+- **Pulse** (lime `#C8F135`): alive — running, current, live. The brand (`--brand`, `variant="brand"`), confirmations, the Switch "on" track.
+- **Spark** (coral `#FF6B4A`): a human is needed. Destructive actions, errors, waiting-on-you.
+- **Accents are fills, never text on Paper.** Ink text sits on top (`--on-accent`). A card holds at most one Pulse and one Spark element.
+- **Status** (`--status-*`, always with a glyph): not started (wells) · ongoing (Pulse) ▶ · paused (amber) ❚❚ · completed (blue) ✓ · failed (Spark) ✕ · halted (Graphite, Paper glyph) ■.
+- **Selection** is Ink (Checkbox / Radio / Slider / Progress). Blue is reserved for *completed*.
+- **Dark mode** is derived: Ink and Paper swap surface roles; accents and status planes keep their values and Ink text.
+- There is one palette — no `data-color-scheme` variants.
 
 ## Typography
 
-- **Headline Font**: Inter Variable / Inter / MiSans / PingFang SC / Hiragino Sans GB / Microsoft YaHei UI / Noto Sans SC (the `--font-sans` stack in `style.css`; there is no Japanese-specific face — CJK glyphs fall through to the same Simplified-Chinese-tuned stack).
-- **Body Font**: same as Headline (`--font-sans`).
-- **Mono Font**: unset in the library — falls through to Tailwind's default stack (`ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`; Menlo is a fallback member, not the primary face). Web additionally lets users override `--font-mono` at runtime via Settings → Typography (`apps/web/src/store/settings/typography.ts`), defaulting to `ui-monospace, monospace`.
-
-Headlines and key labels use medium/semibold weights. Body text uses regular weight at 14px. Inputs size via the `size` prop's token ladder, not a fixed value — `sm` uses `text-body` (12px), `default` uses `text-label` (13px), `lg` uses `text-control` (14px); see `sizeClass` in `Input.vue`. Secondary information uses 11px or 12px.
+- **Space Grotesk** for the interface; **JetBrains Mono** for IDs (`LAB-nnn`), metrics, labels and logs. Hosts load the fonts; the library names the families.
+- Scale: display 56 · H1 32 (`text-heading`) · H2 20 (`text-title`) · body 15 / lh 1.55 (`text-body`) · control 15 · label 14 · caption 12.
+- Mono roles: `text-label-mono` (11px, 500, UPPERCASE, +8%) and `text-data` (12px, +6%, tabular).
+- Weights: 600 titles · 500 labels / buttons / chips · 400 body.
 
 ## Elevation
 
-The system employs a **bimodal elevation strategy**:
+Flat, always. Floating menus, popovers, dialogs and panels are separated by a **1.5px Ink border** (and the scrim, for modals) — never by a shadow. The shadow tokens resolve to `none`; `--shadow-hairline` survives only as the inset frame of secondary buttons.
 
-1. **Absolutely Flat (Zero Elevation):** Interactive and atomic elements like Buttons, Inputs, Alerts, Badges, and Collapsibles have **zero shadows**. The default `shadow-sm` from Shadcn must be stripped out. Hierarchy is defined purely by 1px borders and background contrast.
-2. **High Floating (Shadow-lg/md):**
-   - Large layout containers that sit above the main canvas (like a central Login `Card`) use a pronounced `shadow-lg` to starkly differentiate themselves from the flat UI underneath.
-   - Popovers, Dropdowns, and Combobox menus use a tightly controlled `shadow-md` without thick borders.
+## Shape & size
+
+- Chamfers: chip 4 · control 8 · card 12 · panel 16 (`rounded-sm` / `rounded-md` / `rounded-xl` / `rounded-panel`).
+- Base stroke 1.5px (`--stroke`), base grid 8px, permitted angles 30° / 45° / 60°.
+- Controls are 44px tall by default (`sm` 36, `lg` 48); icon buttons 44 × 44 with an `aria-label`.
 
 ## Components
+
+> The per-component notes below predate the LabMate pass in places (radii, heights, colours). Where they disagree with the sections above or with `AGENTS.md`, those win.
 
 ### Base Atoms
 

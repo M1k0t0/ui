@@ -1,13 +1,5 @@
 <script setup lang="ts">
 import { Moon, PanelLeftClose, Sun } from 'lucide-vue-next'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectItemText,
-  SelectTrigger,
-  SelectValue,
-} from '#/components/select'
 import { TextButton } from '#/components/text-button'
 import { ScrollArea } from '#/components/scroll-area'
 import { NavItem } from '#/components/settings'
@@ -16,8 +8,7 @@ import { navGroups } from '../registry'
 import { navigate, route } from '../router'
 import { shellState } from '../shell'
 import { tt, setLocale, localeState } from '../lib/i18n'
-import type { Scheme } from '../theme'
-import { SCHEMES, setScheme, setTheme, themeState } from '../theme'
+import { setTheme, themeState } from '../theme'
 import ChromeIconButton from './ChromeIconButton.vue'
 </script>
 
@@ -87,9 +78,7 @@ import ChromeIconButton from './ChromeIconButton.vue'
           </div>
         </div>
       </ScrollArea>
-      <!-- Theme + locale + scheme live at the sidebar foot. The scheme picker is
-         the library's own Select — the showcase chrome dogfoods the styled
-         menu, never the OS-native popup. The gradient strip fuses the foot
+      <!-- Theme + locale live at the sidebar foot. The gradient strip fuses the foot
          with the list: rows fade out as they scroll under it instead of being
          clipped mid-glyph by the scroll edge. -->
       <div class="relative flex items-center justify-between gap-1 px-4 py-2">
@@ -118,27 +107,6 @@ import ChromeIconButton from './ChromeIconButton.vue'
         >
           {{ localeState.locale === 'zh' ? 'EN' : '中文' }}
         </TextButton>
-        <Select
-          :model-value="themeState.scheme"
-          @update:model-value="setScheme(String($event) as Scheme)"
-        >
-          <SelectTrigger
-            size="sm"
-            class="w-28"
-            :aria-label="tt('Color scheme', '配色方案')"
-          >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent size="sm">
-            <SelectItem
-              v-for="s in SCHEMES"
-              :key="s"
-              :value="s"
-            >
-              <SelectItemText>{{ s }}</SelectItemText>
-            </SelectItem>
-          </SelectContent>
-        </Select>
       </div>
     </div>
   </aside>

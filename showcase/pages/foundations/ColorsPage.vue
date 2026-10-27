@@ -5,7 +5,7 @@ import { tt } from '../../lib/i18n'
 import ColorStack from '../../components/ColorStack.vue'
 
 // Every bar reads its value live from the cascade, so the page follows the
-// sidebar's theme/scheme pickers for free — there is deliberately no static
+// sidebar's theme picker for free — there is deliberately no static
 // Light/Dark split: the pickers ARE the comparison tool.
 // Layout: single-family sections share the two-column page grid side by side;
 // multi-family sections (Status / Accent / Domain) span the full row with
@@ -17,8 +17,8 @@ import ColorStack from '../../components/ColorStack.vue'
     width="xl"
     :title="tt('Colors', '颜色')"
     :description="tt(
-      'Every bar reads its token live from the cascade — switch theme or scheme in the sidebar and the page follows. Hover for the resolved value; click to copy the token name.',
-      '每个色条都实时读取级联中的 token——在侧栏切换主题或配色,整页跟随。悬停查看解析值,点击复制 token 名。',
+      'Every bar reads its token live from the cascade — switch theme in the sidebar and the page follows. Hover for the resolved value; click to copy the token name.',
+      '每个色条都实时读取级联中的 token——在侧栏切换主题,整页跟随。悬停查看解析值,点击复制 token 名。',
     )"
   >
     <!-- Section rhythm (gap-y-8) between grid cells; the horizontal gutter is

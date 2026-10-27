@@ -7,9 +7,9 @@ export const badgeSpec: ComponentSpec = {
   id: 'badge',
   name: 'Badge',
   description:
-    'A calm status chip: flat soft-tint fill, no border, same-hue deep text. Status hues come from the accent palette and auto-adapt to dark mode.',
+    'A read-only chip: mono uppercase label on a chamfered plate. Accent variants are solid fills carrying Ink text.',
   descriptionZh:
-    '安静的状态徽章:柔和浅色填充、无描边、同色系深色文字。状态色取自 accent 色板,暗色模式自动适配。',
+    '只读 chip:切角色板上的等宽大写标签。强调色变体是实色填充,文字为墨色。',
   controls: [
     { kind: 'enum', key: 'variant', label: 'Variant', options: badgeVariantKeys, default: 'default' },
     { kind: 'enum', key: 'size', label: 'Size', options: badgeSizeKeys, default: 'default', display: 'segmented' },

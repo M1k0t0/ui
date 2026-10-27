@@ -90,10 +90,10 @@ export const selectSpec: ComponentSpec = {
 
 - Never inject bg-* / border / hover classes into SelectTrigger; pick size, nothing else.
 - The chosen value shows in the trigger via SelectValue; menu selection is the check indicator, never a row background.
-- For a plain native dropdown (dense toolbars, scheme pickers) use NativeSelect instead — same ladder, no menu surface.`,
+- For a plain native dropdown (dense toolbars, view pickers) use NativeSelect instead — same ladder, no menu surface.`,
   usageZh: `触发器是一个"输入框"——遵循 field-edge 契约,点击聚焦时激活,hover 不变。
 
 - 永远不要往 SelectTrigger 注入 bg-* / border / hover 类;只能选 size。
 - 选中值由 SelectValue 显示在触发器里;菜单内的选中是对勾指示器,绝不是行底色。
-- 只是要一个朴素的原生下拉(紧凑工具栏、scheme 选择)就用 NativeSelect——同一阶梯,没有菜单浮层。`,
+- 只是要一个朴素的原生下拉(紧凑工具栏、视图选择)就用 NativeSelect——同一阶梯,没有菜单浮层。`,
 }

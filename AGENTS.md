@@ -123,6 +123,35 @@ that lacks it keeps re-introducing the same class of bug.
   `[data-state=open]`) — Select, Dropdown, Popover and ghost triggers must not each pick their
   own, or they read as "fighting" (the recurring TextButton-vs-Select hover mismatch).
 
+## The LabMate language (source of the values below)
+
+This library speaks **LabMate**: a low-poly, two-ink language for people and
+agents working on one project. The design rules live with the LabMate product
+(`LabMate-design-rules.md`); the § numbers quoted in `style.css` comments and in
+this file refer to it. What it means for the library, in one breath:
+
+- **Straight edges, flat planes.** No curves: corners are *chamfered* at the
+  top-left and bottom-right; circles become octagons. No drop shadows, no
+  gradient washes.
+- **Two inks + two accents + six statuses.** Ink scale for structure, Pulse for
+  *alive*, Spark for *a human is needed*, and `--status-*` planes for work
+  status (not started / ongoing / paused / completed / failed / halted).
+- **Space Grotesk + JetBrains Mono.** Mono UPPERCASE for labels, chips and
+  section labels; mono for IDs (`LAB-nnn`), metrics and logs.
+- **1.5px strokes, 44px controls, 8px grid.** Touch targets are 44px.
+- **Shape tells who.** A human is an octagon, an agent is a hexagon
+  (`MateAvatar`).
+
+Domain pieces that only make sense inside LabMate (graph nodes, the schedule,
+mist) live in the LabMate app. The library owns the generic primitives:
+`StatusChip` / `StatusGlyph`, `MateAvatar` / `MateAvatarStack` / `MateChip`,
+`HandoffMark`, `SegmentedProgress`, `PhaseTrack`, `SectionLabel`, `IconTile`.
+
+There is ONE palette. The old `data-color-scheme` axis (memoh / ocean / forest
+/ rose / amber) is gone — LabMate colour carries meaning, so a hue swap would
+break it. Dark mode stays, derived: Ink and Paper swap surface roles; Pulse,
+Spark and status planes keep their values and their Ink text.
+
 ## Three laws
 
 1. **Everything is a token.** No raw `#hex` / `rgb()` / `oklch()` / `color-mix()`
@@ -158,10 +187,11 @@ corollaries that the whole system leans on:
   control is shaped by its edge (transparent fill, inherited surface), and
   hover/press/focus is read through a color change — never by inventing a border
   or shadow at rest.
-- **Black / white / gray is the skeleton (~90%). Blue means "selected". Purple is
-  scarce.** The high-emphasis CTA fill is CHARCOAL (`--btn-primary`), NOT brand;
-  brand purple (`--brand`) is reserved for `variant="brand"` and a few accents.
-  Do not paint the UI purple.
+- **Two inks build the structure; colour appears only when it means something.**
+  Ink / Paper and the gray steps between them are the skeleton. **Pulse** (lime)
+  means *alive* (running, current, live, light); **Spark** (coral) means *a
+  human is needed*. Status colours always travel with a glyph. Do not paint the
+  UI lime — an accent is a deliberate signal, never decoration.
 
 ## Unification ≠ homogenization
 
@@ -307,44 +337,40 @@ peers", not "one door to somewhere else".
 ## Color
 
 - Pull from the palette tokens in `style.css`. Never write a literal color in a
-  component.
-- **Selection blue is `--accent-blue-fill`** (`#2383e2`) — the single blue across
-  Checkbox / Switch. Its ramp: `--accent-blue-fill-hover` (deeper) /
-  `--accent-blue-fill-active` (deeper still).
-- **Interaction overlay ladder** — pure neutral overlays, chroma 0, no hue.
-  Composites over the underlying surface, inheriting its warmth automatically.
-  Zero hue = zero color tilt across surfaces or rendering environments.
-  Light mode = black overlays; dark mode = white overlays.
-  - `--overlay-hover-light` (4.5% black / 5.5% white) — wide sidebar rows, menu highlights
-  - `--overlay-hover` (7.2% / 9%) — standard controls (Toggle, Select, Checkbox)
-  - `--overlay-hover-strong` (11% / 13%) — small icon ghost buttons; Toggle on state
-  - `--overlay-active` (13.5% / 15.5%) — pressed state (standard controls)
-  - `--overlay-active-strong` (17% / 19%) — pressed (small icons) / on+press
-  Semantic aliases keep old names so component code is unchanged:
-  `--ui-hover` · `--ui-selected` · `--ui-on` · `--ui-pressed` · `--ui-selected-pressed` ·
-  `--btn-ghost-hover` · `--sidebar-hover` all point into this ladder.
-  Color-scheme variants need **no hover overrides** — overlays are scheme-agnostic.
-- **Accent palette** — 11 hues, each with a 6-role ramp: `--accent-{hue}` (icon/
-  text, **state-constant**), `-soft` (rest bg), `-soft-hover`, `-soft-active`,
-  `-border`, `-deep`. 3-layer model: a colored item's text/icon **never** changes
-  on hover/select — only the background deepens `soft → soft-hover → soft-active`.
-- **Charcoal CTA, scarce brand.** The high-emphasis button fill is the charcoal
-  ramp (`--btn-primary` → `-hover` → `-active`); `variant="default"`/`"primary"`
-  use it. Brand purple (`--brand`) is the SCARCE accent — it ships only via
-  `<Button variant="brand">` (rare brand CTAs like chat Send) and a handful of
-  reserved tokens (`--sidebar-primary`, capability/event accents). Never make
-  purple a default surface or a large fill; the skeleton stays black/white/gray.
-- **Destructive is filled, not ghost.** `variant="destructive"` renders a solid
-  `bg-destructive text-destructive-foreground` button — a filled red CTA. Never
-  use `variant="ghost"` with manual destructive text classes (`text-destructive`,
-  `hover:bg-destructive/10`) as a substitute; that is the OLD pre-refactor ghost
-  pattern. If you need a low-emphasis destructive affordance (e.g. a secondary
-  action in a footer), use `variant="outline"` with the destructive class as a
-  deliberate exception, not the default.
-- **Selection is one blue, applied as fill.** Checkbox, Switch, Radio (checked
-  edge) and the Slider range all use `--accent-blue-fill` — the chosen value
-  reads as a solid blue fill, not a border. (Hover differs by control: Checkbox
-  deepens, Switch brightens.)
+  component. The ONLY raw values are the **LabMate primitives** block at the
+  top of `:root` (theme-constant); `:root` / `.dark` map semantics onto them.
+- **Ink scale** — `--ink` #0A0A0A · `--graphite` #262626 · `--slate` #474747 ·
+  `--steel` #6B6B6B · `--ash` #A3A3A3 · `--fog` #D4D4D4 · `--mist` #EDEDED ·
+  `--paper` #FFF, plus the wells `--well` #F4F4F4 / `--well-deep` #E3E3E3.
+  Light mapping: background/card = Paper, foreground = Ink, muted text = Steel,
+  border = Fog, hover/accent = Mist. Dark mapping: background = Ink, card =
+  Graphite, foreground = Paper, border = Slate.
+- **Accents** — `--pulse{,-light,-shade,-deep,-deeper}` (alive) and
+  `--spark{,-light,-shade,-deep}` (a human is needed). **An accent is always a
+  FILL, never text on Paper; Ink text sits on top of it** — use `--on-accent`
+  (Ink in both modes) / `text-on-accent` for anything drawn on an accent or
+  status plate. A card holds at most one Pulse element and one Spark element.
+- **Semantic aliases** — `--brand` = Pulse (`variant="brand"`),
+  `--destructive` = Spark (+ `--destructive-hover` / `-active`), `--success` =
+  Pulse family (a confirmation), `--warning` = paused amber, `--info` =
+  completed blue. `--primary` / `--btn-primary` = Ink (Paper in dark).
+- **Work status** — `--status-{not-started|ongoing|paused|completed|failed|halted}-{light|base|deep|glyph}`.
+  Status is shown by colour AND glyph, never one alone — render it through
+  `StatusChip` / `StatusGlyph`. Halted (stopped from outside) goes dark;
+  paused (stopped on purpose) is amber; failed (a human should look) is Spark.
+- **Selection is Ink.** Checkbox, Radio, Slider range and Progress use
+  `--selection-fill{,-hover,-active}` / `--selection-foreground` (Ink with a
+  Paper glyph; inverted in dark). Blue is reserved for *completed*. The Switch
+  "on" track is Pulse (`--switch-on`) — on means live.
+- **Interaction overlay ladder** — pure neutral overlays, chroma 0
+  (`--overlay-hover-light` … `--overlay-active-strong`, aliased as `--ui-hover`
+  / `--ui-selected` / `--ui-pressed` / `--btn-ghost-hover` / `--sidebar-hover`).
+  Flat tints, not shadows, so they stay. Light = black overlays, dark = white.
+- **Accent palette** (`--accent-{hue}` ramps) is kept for host decoration
+  (tags, capability colours) but is NOT part of the LabMate signal vocabulary —
+  status and liveness never use it.
+- Contrast: text is at least 4.5 : 1; colours that must be told apart also
+  differ in lightness.
 
 ## Interaction model (hover / press / focus)
 
@@ -364,7 +390,7 @@ peers", not "one door to somewhere else".
   reveal / steppers) via `variant="ghost"` / `InputGroupButton`. Do **not**
   hand-roll an icon-hover background; that is the canonical bug.
 - **Fields engage on FOCUS only, never hover** — a text field is a container you
-  click into; hover-darkening reads as twitchy. The field edge is one inset 1px
+  click into; hover-darkening reads as twitchy. The field edge is one inset 1.5px (`--stroke`)
   hairline whose color swaps per state (never an outer ring):
   `--field-edge-rest` → `--field-edge-solid` (focus) / `--field-edge-engaged`
   (subtle) / `--destructive` (invalid).
@@ -449,31 +475,39 @@ direction.
 
 ## Radius
 
-- Use the scale only: `rounded-2xs/xs/sm/md/lg/xl` = `--radius-*`
-  (3 / 4 / 6 / 8 / 10 / 14 px; `--radius` = 10px), plus the menu pair
-  `--radius-menu` (8) / `--radius-menu-shell` (12).
-- Role map (the values components actually land on):
-  - Badge / tag / Tooltip / Kbd → `rounded-sm` (6).
+**There is no border-radius — corners are chamfered** (cut flat at the
+top-left and bottom-right). The mechanism is single-sourced:
+
+- `@layer base` sets `corner-shape: bevel` on every element and pseudo-element,
+  so every radius is drawn as a straight cut — borders, inset shadows,
+  `::before` shells (`border-radius: inherit`) and focus rings all follow it.
+- The `--radius-*` ladder is a **TL/BR shorthand** (`var(--chamfer-x) 0`), so
+  `rounded-md` cuts the top-left and bottom-right corners only.
+- Chamfer scale (`:root`): `--chamfer-chip` 4 · `--chamfer-control` 8 ·
+  `--chamfer-card` 12 · `--chamfer-panel` 16.
+- Role map:
+  - Chip / badge / Tooltip / Kbd → `rounded-sm` (also `2xs` / `xs`) = chip.
   - Controls (button / field / Select / Toggle) and menu rows → `rounded-md` /
-    `rounded-menu` (8).
-  - Chromed Popover & menu shell → `rounded-menu-shell` (12).
-  - Card / Dialog / Sheet → `rounded-xl` (14). (The sizing bench explored
-    card 12 / dialog 16, but shipped components consolidate on 14 — follow the
-    component, not the bench.)
-  - Avatar → `rounded-full`.
-- In-field small controls (InputGroup clear/reveal, NumberField steppers) share
-  one tuned radius: `rounded-[calc(var(--radius)-5px)]` (5px) — the only allowed
-  arbitrary radius (allowlisted in the guard). Smaller than 8px on purpose so a
-  ~24px box does not read as a pill.
+    `rounded-menu` = control.
+  - Card / menu shell / ActionCard → `rounded-xl` / `rounded-lg` /
+    `rounded-menu-shell` = card.
+  - Dialog / Sheet → `rounded-panel` = panel.
+- **Circles become octagons:** `.rounded-full` is overridden to
+  `--chamfer-octagon` (29.3%, bevelled) — Avatar, Switch, Radio, Slider thumb.
+- Browsers without `corner-shape` fall back to SQUARE corners (never curves).
+- Directional utilities (`rounded-l-md`, `rounded-t-md`) do not compose with the
+  two-value shorthand; they degrade to square. Prefer `rounded-*-none` to drop a
+  corner, never to add one.
+- Never write an arbitrary radius. In-field small controls use `rounded-xs`.
 
 ## Borders & field edge
 
 Borders come in THREE role families — never cross them (putting a structural
 border on a control body is a top cause of the "dirty" look):
 
-- **Control edge** — an alpha hairline that melts into the inherited fill:
-  `--field-edge-*` (fields / Select trigger) and `--border-hairline`
-  (secondary/outline button, Checkbox, Radio, Slider thumb). 1px, changes in
+- **Control edge** — a `--stroke` (1.5px) line: `--field-edge-*` (fields /
+  Select trigger; Ash at rest, Ink on focus) and `--border-hairline` (Ink — the
+  secondary/outline button frame, Checkbox, Radio, Slider thumb). Changes in
   place. `--shadow-hairline` is this edge expressed as an inset shadow so it can
   animate with hover.
 - **Structural edge** — solid neutral `--border`: containers & dividers (Card,
@@ -487,7 +521,7 @@ Fields use the `--field-edge-*` contract: the edge changes color IN PLACE
 stack an outer ring on a field, and never grow the border width on focus** (the
 old `focus:border-2` + `z-10`/`relative` reflow fix is the anti-pattern).
 
-**The near-black edge (`--field-edge-solid`, ~0.78 alpha) is a scarce, deliberate
+**The Ink edge (`--field-edge-solid`) is a scarce, deliberate
 accent — not a generic "make it pop" border.** It is loud on purpose and belongs
 to ONE semantic: a FIELD committing to focus (Input / Textarea / Select trigger /
 InputGroup / NumberField, plus the field-family PinInput / InputOTP / TagsInput).
@@ -497,7 +531,7 @@ Everywhere else, reach for the softer rungs first — the subtle
 focus ring `--ring` (which is a MID-GRAY ~0.575L, **not** black — see Interaction
 model). Using the near-black edge as a hover / selected / emphasis treatment
 outside the field-commit semantic needs an explicit, case-by-case reason; when in
-doubt, default to gray. (Like purple-scarcity, this is a judgment rule — loud
+doubt, default to gray. (Like accent scarcity, this is a judgment rule — loud
 high-contrast chrome is rationed, not guard-enforced.)
 
 Whether a surface even HAS a border is a CONTRAST decision: a Card / dropdown over
@@ -516,20 +550,18 @@ dark. Tooltip carries no border at all — its solid fill is its own edge.
 
 ## Elevation / shadow
 
-- **Flat by default.** `@layer utilities { .shadow-sm { box-shadow: none } }`
-  zeroes Tailwind's `shadow-sm` on purpose — shadow is a scarce, tokenized
-  elevation ladder, not decoration.
-- The tokenized ladder (use a token; never write `box-shadow: 0 …` inline or a
-  raw `shadow-xs/md/lg` utility):
-  - `--shadow-hairline` — the 1px inset edge for secondary/outline buttons (a
-    shadow only so it can animate with hover; not a drop shadow).
-  - `--shadow-thumb` — the faint lift on the SegmentedControl sliding thumb.
-  - `--shadow-dropdown` — floating menus (Dropdown / Select / chromed Popover);
-    strong negative spread so the cast sits below the panel and barely bleeds out
-    the sides.
-  - `--shadow-modal` — the modal layer (Dialog / Sheet / CommandDialog).
-- Flat controls and Cards carry NO shadow. Tooltip carries none. A `shadow-none`
-  fighting an inherited shadow, or an invented `shadow-xs`, is the dirty tell.
+- **No drop shadows, anywhere** (LabMate §2.3). `--shadow-thumb`,
+  `--shadow-dropdown` and `--shadow-modal` resolve to `none`; they remain only
+  so host code that names them keeps working. Components no longer reference
+  them.
+- Floating and modal surfaces separate by a **1.5px Ink border**
+  (`border-(length:--stroke)` + `--border-menu` / `--border-menu-elevated`) and,
+  for modals, the scrim. Panels (inspector, legend) are Paper with a 1.5px Ink
+  border.
+- `--shadow-hairline` survives as the 1.5px INSET frame of secondary/outline
+  buttons — a frame expressed as a shadow so it animates; not a drop shadow.
+- The only glow in LabMate is *light* (Pulse halos on graph nodes) — that is the
+  app's domain, not the library's. A raw `shadow-*` utility is a dirty tell.
 
 ## Layering / z-index — the "z 梯"
 
@@ -578,17 +610,28 @@ dark. Tooltip carries no border at all — its solid fill is its own edge.
 
 ## Typography
 
+- Faces: `--font-sans` = **Space Grotesk** (interface), `--font-mono` =
+  **JetBrains Mono** (IDs, metrics, labels, logs). The library only names the
+  families; hosts load the fonts (the showcase loads them in `index.html`).
 - Size: the `--text-*` scale only (line-height + tracking baked in):
-  `text-caption` 11 · `text-body` 12 (workhorse) · `text-label` 13 ·
-  `text-control` 14 · `text-title` 16 · `text-heading` 18 · `text-display` 24.
-- Weight is **role-mapped** (single source — do not free-style):
-  `font-semibold` → surface/section titles · `font-medium` → labels, button text,
-  badges, emphasis · `font-normal` → body, descriptions, field values, placeholder.
+  `text-caption` 12 · `text-label` 14 · `text-body` 15 (lh 1.55) ·
+  `text-control` 15 · `text-title` 20 (H2) · `text-heading` 32 (H1) ·
+  `text-display` 56.
+- Mono roles are utilities: `text-label-mono` (11px / 500 / UPPERCASE / +8%
+  tracking — chips, badges, section labels) and `text-data` (12px / +6% /
+  tabular — IDs like `LAB-042`, metrics, logs).
+- Weight is **role-mapped**: `font-semibold` (600) → display / H1 / H2 /
+  surface titles · `font-medium` (500) → labels, button text, chips, emphasis ·
+  `font-normal` (400) → body, descriptions, field values.
+- A section label is `SectionLabel` (`07 ——— CONTROLS`), never hand-built.
 
 ## Sizing & icons
 
-- Control height ladder: `sm` h-8 (32) · default h-9 (36) · `lg` h-10 (40);
-  icon-only buttons `icon-sm` 32 / `icon` 36 / `icon-lg` 40.
+- Control height ladder: `sm` h-9 (36) · default h-11 (**44**, the LabMate
+  touch target) · `lg` h-12 (48); icon-only buttons `icon-sm` 36 / `icon` 44 /
+  `icon-lg` 48. Fields, Select triggers, NativeSelect, NumberField, InputGroup
+  and Toggle share the same ladder. Use the default size unless density truly
+  requires `sm`.
 - Icon glyph sizes scale with the control on ONE shared ladder — don't free-set
   icon sizes, pick the rung: default control **16px** (`[&_svg]:size-4`); small
   in-field controls **14px** (`size-3.5`); text-scale affordances (TextButton /
@@ -634,9 +677,12 @@ grows (clipped controls, cramped rows, same-row controls that stop matching heig
 
 ## Disabled
 
-- `opacity-40` everywhere for the disabled state (no muddy gray fill, no color
-  swap). Loading buttons are the exception — they hold full color (the spinner is
-  the signal).
+- Filled and framed buttons (primary / secondary / outline / brand /
+  destructive) turn into a **Mist plate with Steel text**
+  (`--disabled-fill` / `--disabled-foreground`) — a disabled CTA is not a faded
+  CTA. The rule lives in `style.css` on `[data-button]:disabled`.
+- Everything else (ghost / link buttons, fields, toggles, menu rows) keeps
+  `opacity-40`. Loading buttons hold full colour (the spinner is the signal).
 
 ## Pointer Cursor
 
@@ -849,10 +895,16 @@ rules 5/6/7 run as HARD failures. Tokens added in that pass:
 
 Remaining (non-blocking) TODOs:
 
-- Toggle `tint` active uses `--brand` (consider an accent token).
-- Dark-mode accent palette + elevation currently inherit light values.
-- SegmentedControl disabled uses CSS `opacity: 0.5`; the contract says 40 — unify
-  to `0.4` if/when the maintainer agrees it's not part of its personality.
+- Toggle `tint` active uses `--brand` (now Pulse) — confirm that "on" should read
+  as *live* there, or give it the selection ink.
+- `variant="ghost"` keeps the overlay hover chip. LabMate's own "ghost" (Ink
+  text with a 1.5px underline offset 4px) is `variant="link-static"`; ghost is
+  the icon/toolbar affordance and an underline there would be noise.
+- `components/sidebar/` still carries `text-sidebar-foreground/70`-style alpha
+  and was not re-checked against LabMate.
+- The host guard (`check-ui-contract.mjs`) still allowlists the old in-field
+  `calc(var(--radius)-5px)` radius; nothing uses it now (in-field controls are
+  `rounded-xs`), so drop the allowlist entry.
 
 ## The showcase (`showcase/`)
 

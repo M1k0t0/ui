@@ -192,12 +192,15 @@ What concretely changed, before → after:
 - **Floating white cards.** Content lives in `bg-card` cards with **one** `border-border`
   hairline and the shell radius. The section title sits *above* the card as quiet muted
   text. Use the shared `SettingsSection` / `SettingsRow` primitives — do not hand-roll a card.
-- **Unified stroke.** One hairline, `border-border`. Never `border-border/50`,
+- **Unified stroke.** One line, `border-border` (Fog) for structure, the 1.5px
+  `--stroke` Ink line for frames and panels. Never `border-border/50`,
   `border-*/40`, or a structural border on a control body.
-- **Unified radius.** Only the role-map scale (card 14 / menu-shell 12 / control 8 /
-  badge·tooltip 6). Never a bare `rounded` or an off-scale `rounded-lg` on a control.
-- **Unified color.** Black/white/gray is ~90% of the UI (the skeleton). Charcoal is the
-  high-emphasis CTA; blue means "selected"; purple is scarce. `success`/`warning`/
+- **Unified chamfer.** Corners are cut, never rounded: only the role-map scale
+  (panel 16 / card 12 / control 8 / chip 4, top-left + bottom-right). Never a bare
+  `rounded`, an arbitrary radius, or a hand-made curve.
+- **Unified color.** Two inks are the skeleton; Ink is the high-emphasis CTA. Pulse
+  (lime) means alive, Spark (coral) means a human is needed, and work status is
+  `StatusChip` (colour + glyph). Accents are fills with Ink text, never text on Paper. `success`/`warning`/
   `destructive` are **rationed signals**, not surface decoration — never tint a whole
   card `bg-success/5`.
 - **Unified components.** Use the refactored `@felinic/ui` atoms as-is. Do not re-skin
@@ -282,8 +285,8 @@ rule, applied from the first line: **never write a raw color — use a semantic 
   `--ui-pressed`, the `--overlay-*` rungs, or `bg-accent` which maps into them) — **never** a
   solid fill, a hand-mixed gray, or an alpha hack (`bg-black/5`, `hover:bg-gray-100`). The
   overlays are chroma-0 and composite over whatever surface they sit on, so they are the **same
-  token in light and dark** (light = a black wash, dark = a white wash) and identical across
-  every color scheme — no `dark:` variant, no per-scheme override, and they cannot break the way
+  token in light and dark** (light = a black wash, dark = a white wash) and identical in
+  every context — no `dark:` variant, no per-surface override, and they cannot break the way
   a baked color does. (Full ladder in `packages/ui/AGENTS.md` § Color → Interaction overlay.)
 - **A `dark:` override is a smell, not a fix.** Themed tokens auto-switch with **no** `dark:`
   prefix. If you're reaching for `dark:bg-…` to patch a page, it means you started from a raw

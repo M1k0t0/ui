@@ -1,5 +1,5 @@
 // Static foundation scales — the values here are CONSTANTS (they don't change
-// with theme/scheme), transcribed from style.css `@theme inline` and the
+// with theme), transcribed from style.css `@theme inline` and the
 // AGENTS.md contract sections. The z ladder values are additionally pinned by
 // the host guard (check-ui-contract.mjs hard-fails any off-ladder z), so the
 // Layers table can't silently drift. If a scale here ever disagrees with
@@ -8,50 +8,49 @@
 // token names and class names are never translated.
 
 export const TYPE_SCALE = [
-  { cls: 'text-display', px: 24, rem: '1.5rem', lh: '1.85rem', role: 'Hero / empty-state', roleZh: '主视觉 / 空状态' },
-  { cls: 'text-heading', px: 18, rem: '1.125rem', lh: '1.55rem', role: 'Dialog / page headings', roleZh: '对话框 / 页面标题' },
-  { cls: 'text-title', px: 16, rem: '1rem', lh: '1.4rem', role: 'Card / section / sheet titles', roleZh: '卡片 / 分区 / 抽屉标题' },
-  { cls: 'text-control', px: 14, rem: '0.875rem', lh: '1.25rem', role: 'Buttons, compact titles', roleZh: '按钮、紧凑标题' },
-  { cls: 'text-label', px: 13, rem: '0.8125rem', lh: '1.125rem', role: 'Form labels, emphasized small', roleZh: '表单标签、小号强调' },
-  { cls: 'text-body', px: 12, rem: '0.75rem', lh: '1rem', role: 'Default UI body (workhorse)', roleZh: '默认正文(主力)' },
-  { cls: 'text-caption', px: 11, rem: '0.6875rem', lh: '1rem', role: 'Badges, tiny meta', roleZh: '徽章、微型元信息' },
+  { cls: 'text-display', px: 56, rem: '3.5rem', lh: '1.05', role: 'Display', roleZh: '展示' },
+  { cls: 'text-heading', px: 32, rem: '2rem', lh: '1.15', role: 'H1 — dialog / page headings', roleZh: 'H1——对话框 / 页面标题' },
+  { cls: 'text-title', px: 20, rem: '1.25rem', lh: '1.3', role: 'H2 — card / section / sheet titles', roleZh: 'H2——卡片 / 分区 / 抽屉标题' },
+  { cls: 'text-control', px: 15, rem: '0.9375rem', lh: '1.25rem', role: 'Buttons, compact titles', roleZh: '按钮、紧凑标题' },
+  { cls: 'text-body', px: 15, rem: '0.9375rem', lh: '1.55', role: 'Body', roleZh: '正文' },
+  { cls: 'text-label', px: 14, rem: '0.875rem', lh: '1.25rem', role: 'Form labels, emphasized small', roleZh: '表单标签、小号强调' },
+  { cls: 'text-caption', px: 12, rem: '0.75rem', lh: '1rem', role: 'Tiny meta', roleZh: '微型元信息' },
+  { cls: 'text-label-mono', px: 11, rem: '0.6875rem', lh: '1rem', role: 'Mono UPPERCASE labels, chips, section labels', roleZh: '等宽大写标签、chip、分区标签' },
+  { cls: 'text-data', px: 12, rem: '0.75rem', lh: '1rem', role: 'Mono IDs (LAB-nnn), metrics, logs', roleZh: '等宽 ID（LAB-nnn）、指标、日志' },
 ] as const
 
 export const WEIGHT_ROLES = [
-  { cls: 'font-semibold', value: 520, role: 'Surface / section titles', roleZh: '表面 / 分区标题' },
-  { cls: 'font-medium', value: 450, role: 'Labels, button text, badges, emphasis', roleZh: '标签、按钮文字、徽章、强调' },
-  { cls: 'font-normal', value: 360, role: 'Body, descriptions, field values, placeholder', roleZh: '正文、描述、字段值、占位符' },
+  { cls: 'font-semibold', value: 600, role: 'Display / H1 / H2 / surface titles', roleZh: '展示 / H1 / H2 / 表面标题' },
+  { cls: 'font-medium', value: 500, role: 'Labels, button text, chips, emphasis', roleZh: '标签、按钮文字、chip、强调' },
+  { cls: 'font-normal', value: 400, role: 'Body, descriptions, field values, placeholder', roleZh: '正文、描述、字段值、占位符' },
 ] as const
 
 export const FONT_STACKS = [
   {
     token: '--font-sans',
-    value: '\'Inter Variable\', \'Inter\', \'MiSans\', \'PingFang SC\', \'Hiragino Sans GB\', \'Microsoft YaHei UI\', \'Noto Sans SC\'',
+    value: '\'Space Grotesk Variable\', \'Space Grotesk\', \'MiSans\', \'PingFang SC\', \'Hiragino Sans GB\', \'Microsoft YaHei UI\', \'Noto Sans SC\'',
   },
   {
-    token: '(mono — unset)',
-    value: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace (Tailwind default; hosts may override --font-mono)',
+    token: '--font-mono',
+    value: '\'JetBrains Mono Variable\', \'JetBrains Mono\', ui-monospace, SFMono-Regular, Menlo, monospace',
   },
 ] as const
 
 export const SPACING_STEPS = [1, 2, 3, 4, 5, 6, 8, 10, 12, 16] as const
 
+// Chamfers, not radii: each rung cuts the top-left and bottom-right corners only.
 export const RADIUS_SCALE = [
-  { token: '--radius-2xs', px: 3, cls: 'rounded-2xs', role: '', roleZh: '' },
-  { token: '--radius-xs', px: 4, cls: 'rounded-xs', role: '', roleZh: '' },
-  { token: '--radius-sm', px: 6, cls: 'rounded-sm', role: 'Badge / tag / Tooltip / Kbd', roleZh: '徽章 / 标签 / Tooltip / Kbd' },
-  { token: '--radius-md', px: 8, cls: 'rounded-md', role: 'Controls & menu rows', roleZh: '控件与菜单行' },
-  { token: '--radius', px: 10, cls: 'rounded-lg', role: 'Scale base', roleZh: '阶梯基准' },
-  { token: '--radius-xl', px: 14, cls: 'rounded-xl', role: 'Card / Dialog / Sheet', roleZh: '卡片 / 对话框 / 抽屉' },
-  { token: '--radius-menu', px: 8, cls: '', role: 'Menu rows', roleZh: '菜单行' },
-  { token: '--radius-menu-shell', px: 12, cls: '', role: 'Chromed Popover & menu shell / ActionCard', roleZh: '带铬 Popover 与菜单壳 / ActionCard' },
+  { token: '--chamfer-chip', px: 4, cls: 'rounded-sm', role: 'Chips, badges, tooltips, Kbd (also rounded-2xs / rounded-xs)', roleZh: 'chip、徽章、Tooltip、Kbd（rounded-2xs / rounded-xs 同档）' },
+  { token: '--chamfer-control', px: 8, cls: 'rounded-md', role: 'Controls (buttons, inputs) & menu rows', roleZh: '控件（按钮、输入框）与菜单行' },
+  { token: '--chamfer-card', px: 12, cls: 'rounded-xl', role: 'Cards, menu shells, ActionCard (also rounded-lg)', roleZh: '卡片、菜单壳、ActionCard（rounded-lg 同档）' },
+  { token: '--chamfer-panel', px: 16, cls: 'rounded-panel', role: 'Panels — Dialog / Sheet', roleZh: '面板——Dialog / Sheet' },
 ] as const
 
 export const ELEVATION_SCALE = [
-  { token: '--shadow-hairline', role: 'The 1px inset edge on secondary/outline buttons (a shadow only so it animates with hover)', roleZh: 'secondary/outline 按钮的 1px 内嵌边(只是为了让边随 hover 动画)' },
-  { token: '--shadow-thumb', role: 'Faint lift on the SegmentedControl sliding thumb', roleZh: 'SegmentedControl 滑块拇指的轻微浮起' },
-  { token: '--shadow-dropdown', role: 'Floating menus — Dropdown / Select / chromed Popover', roleZh: '浮层菜单——Dropdown / Select / 带铬 Popover' },
-  { token: '--shadow-modal', role: 'The modal layer — Dialog / Sheet / CommandDialog', roleZh: '模态层——Dialog / Sheet / CommandDialog' },
+  { token: '--shadow-hairline', role: 'The 1.5px Ink frame on secondary/outline buttons (a shadow only so it animates with hover)', roleZh: 'secondary/outline 按钮的 1.5px 墨线框（只是为了让边随 hover 动画）' },
+  { token: '--shadow-thumb', role: 'none — the segmented thumb is a flat Ink plate', roleZh: 'none——分段控件滑块是平的墨色板' },
+  { token: '--shadow-dropdown', role: 'none — floating menus separate by a 1.5px Ink border', roleZh: 'none——浮层菜单靠 1.5px 墨线分隔' },
+  { token: '--shadow-modal', role: 'none — modals separate by the scrim + a 1.5px Ink border', roleZh: 'none——模态层靠遮罩 + 1.5px 墨线分隔' },
 ] as const
 
 export const MOTION_DURATIONS = [

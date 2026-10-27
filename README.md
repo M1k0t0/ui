@@ -8,6 +8,17 @@ Host repos consume it as a **git submodule mounted at `packages/ui`** — not
 as an npm package — so Tailwind scans the sources directly and the pnpm
 workspace resolves it by path with zero build/publish step.
 
+## Design language
+
+Since 0.16.0 the library speaks **LabMate**: chamfered corners, two inks plus
+Pulse / Spark accents, Space Grotesk + JetBrains Mono, 1.5px strokes, 44px
+controls, no shadows. Breaking for hosts upgrading from 0.15:
+
+- `data-color-scheme` is gone (one palette); remove the attribute and any scheme picker.
+- Default control height is 44px (`sm` 36, `lg` 48).
+- `--font-sans` / `--font-mono` name Space Grotesk / JetBrains Mono — load them in the host.
+- `--brand` is Pulse with Ink text; `--destructive` is Spark with Ink text; selection controls are Ink.
+
 ## What's inside
 
 | Path | What it is |

@@ -4,7 +4,7 @@ import { NativeSelect } from '#/components/native-select'
 
 const SIZES = ['default', 'sm', 'lg'] as const
 
-const SCHEMES = ['memoh', 'ocean', 'forest', 'rose', 'amber']
+const VIEWS = ['graph', 'schedule', 'mates']
 
 export const nativeSelectSpec: ComponentSpec = {
   id: 'native-select',
@@ -23,9 +23,9 @@ export const nativeSelectSpec: ComponentSpec = {
       {
         size: state.size as never,
         disabled: Boolean(state.disabled),
-        modelValue: 'ocean',
+        modelValue: 'graph',
         'onUpdate:modelValue': () => {},
       },
-      () => SCHEMES.map(s => h('option', { value: s }, s)),
+      () => VIEWS.map(s => h('option', { value: s }, s)),
     ),
 }

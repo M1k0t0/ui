@@ -27,17 +27,17 @@ import SpecimenRow from '../../components/SpecimenRow.vue'
             class="flex flex-col items-start gap-2"
           >
             <div
-              class="h-16 w-24 border border-border bg-card"
-              :style="{ borderRadius: `var(${r.token})` }"
+              class="h-16 w-24 border-(length:--stroke) border-foreground bg-card"
+              :class="r.cls"
             />
             <div class="font-mono text-caption text-muted-foreground">
               {{ r.token }} · {{ r.px }}px
             </div>
           </div>
           <div class="flex flex-col items-start gap-2">
-            <div class="h-16 w-24 rounded-full border border-border bg-card" />
+            <div class="size-16 rounded-full border-(length:--stroke) border-foreground bg-card" />
             <div class="font-mono text-caption text-muted-foreground">
-              rounded-full · Avatar
+              rounded-full · octagon
             </div>
           </div>
         </div>
@@ -48,8 +48,8 @@ import SpecimenRow from '../../components/SpecimenRow.vue'
         bare
         :title="tt('Role map', '角色映射')"
         :description="tt(
-          'Off-scale radius is a dirty-pattern red line. The one sanctioned arbitrary value is the in-field small-control calc(var(--radius) - 5px) (5px), so a 24px box doesn\'t read as a pill.',
-          '阶梯外圆角是 dirty pattern 红线。唯一特许的任意值是框内小控件的 calc(var(--radius) - 5px)(5px)——24px 的小盒子才不会圆成药丸。',
+          'There are no curves. Every rung is a chamfer cut at the top-left and bottom-right (corner-shape: bevel); rounded-full draws an octagon. Off-scale corners are a dirty-pattern red line.',
+          '没有曲线。每一档都是左上与右下的切角（corner-shape: bevel）；rounded-full 画成八边形。阶梯外的角是 dirty pattern 红线。',
         )"
       >
         <SpecimenTable>

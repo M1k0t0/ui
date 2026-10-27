@@ -44,8 +44,8 @@ const LEGACY = ['Badge (semantic fills)', 'Alert (semantic fills)', 'components/
            heading. -->
       <p class="max-w-xl text-control text-muted-foreground">
         {{ tt(
-          'Theme and color scheme switch at the bottom of the sidebar; each component page pairs a control board with live examples down the scroll.',
-          '主题与配色方案在侧栏底部切换;每个组件页上方是控制板,向下滚动是一节节活示例。',
+          'The light/dark theme switches at the bottom of the sidebar; each component page pairs a control board with live examples down the scroll.',
+          '亮暗主题在侧栏底部切换;每个组件页上方是控制板,向下滚动是一节节活示例。',
         ) }}
       </p>
 

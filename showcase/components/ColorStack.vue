@@ -16,7 +16,7 @@ import {
 // hero, the short name rides inside the bar, and the resolved value only
 // surfaces on hover (token · oklch/rgb). Values are measured off each bar's
 // OWN computed background — no static value/contrast table can exist because
-// every token re-resolves on theme/scheme flip.
+// every token re-resolves on theme flip.
 //
 // Ink choice (dark vs light label) CANNOT look at the token's raw color: the
 // overlay/border tokens are translucent (rgba(0,0,0,0.04) reads as near-white
@@ -90,7 +90,7 @@ function measure() {
 
 onMounted(() => nextTick(measure))
 watch(
-  () => [themeState.theme, themeState.scheme],
+  () => themeState.theme,
   () => nextTick(measure),
 )
 

@@ -17,7 +17,7 @@ build its own showcase out of itself has no authority to teach anyone.
 
 `pnpm dev` serves the module's living reference: a custom, spec-driven
 showcase (foundations pages + one page per component with live controls and
-light/dark × 5-scheme switching). It replaced Storybook (removed — 3 stale
+light/dark switching). It replaced Storybook (removed — 3 stale
 stories, zero remaining value over the dev wall).
 
 ## Adding or changing a component page

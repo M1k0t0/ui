@@ -9,7 +9,7 @@ import TabBar from './components/TabBar.vue'
 
 initRouter('overview', id => !!pageById(id))
 
-watchEffect(() => applyTheme(themeState.theme, themeState.scheme))
+watchEffect(() => applyTheme(themeState.theme))
 
 // flatPages always has at least Overview (registry guarantee), so the fallback
 // can't be undefined in practice.

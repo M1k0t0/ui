@@ -64,7 +64,29 @@ const ACCENT_HUES: Array<[hue: string, label: string, labelZh: string]> = [
   ['red', 'Red', '红'],
 ]
 
+const WORK_STATUSES = ['not-started', 'ongoing', 'paused', 'completed', 'failed', 'halted']
+
 export const COLOR_SECTIONS: ColorSection[] = [
+  {
+    title: 'Ink scale',
+    titleZh: '墨色阶',
+    families: [
+      rowsFamily(['--ink', '--graphite', '--slate', '--steel', '--ash', '--fog', '--mist', '--paper', '--well', '--well-deep']),
+    ],
+  },
+  {
+    title: 'Accents',
+    titleZh: '强调色',
+    families: [
+      rampFamily('--pulse', ['light', '', 'shade', 'deep', 'deeper'], 'Pulse — alive', 'Pulse——在线'),
+      rampFamily('--spark', ['light', '', 'shade', 'deep'], 'Spark — a human is needed', 'Spark——需要人'),
+    ],
+  },
+  {
+    title: 'Work status',
+    titleZh: '工作状态',
+    families: WORK_STATUSES.map(s => rampFamily(`--status-${s}`, ['light', 'base', 'deep', 'glyph'], s)),
+  },
   {
     title: 'Surfaces & text',
     titleZh: '表面与文字',
@@ -103,10 +125,11 @@ export const COLOR_SECTIONS: ColorSection[] = [
     ],
   },
   {
-    title: 'Brand',
-    titleZh: '品牌色',
+    title: 'Brand (Pulse) & selection',
+    titleZh: '品牌（Pulse）与选中',
     families: [
-      rowsFamily(['--brand', '--brand-soft', '--brand-border', '--brand-hover']),
+      rowsFamily(['--brand', '--brand-soft', '--brand-border', '--brand-hover', '--on-accent']),
+      rampFamily('--selection-fill', ['', 'hover', 'active'], 'Selection ink', '选中墨色'),
     ],
   },
   {
@@ -124,7 +147,6 @@ export const COLOR_SECTIONS: ColorSection[] = [
     titleZh: 'Accent 色板',
     families: [
       ...ACCENT_HUES.map(([hue, label, labelZh]) => rampFamily(`--accent-${hue}`, ACCENT_ROLES, label, labelZh)),
-      rampFamily('--accent-blue-fill', ['', 'hover', 'active'], 'Blue fill', '蓝填充'),
     ],
   },
   {
@@ -156,8 +178,10 @@ export const COLOR_SECTIONS: ColorSection[] = [
         '--btn-primary-active',
         '--btn-ghost-hover',
         '--btn-secondary-overlay',
-        '--btn-destructive-hover-bg',
-        '--btn-destructive-hover-text',
+        '--destructive-hover',
+        '--destructive-active',
+        '--disabled-fill',
+        '--disabled-foreground',
       ]),
     ],
   },

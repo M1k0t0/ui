@@ -439,7 +439,7 @@ stub. Ask "separating items within one surface, or splitting the container?" bef
 - A `dark:` override means you started from a raw light color — fix the base token, don't patch
   per-mode. Themed tokens need no `dark:` prefix.
 - **Tints/interaction states use the overlay ladder, not a baked color or alpha hack.** It is
-  chroma-0 and composites over the surface, so it's identical in light/dark/every scheme with no
+  chroma-0 and composites over the surface, so it's identical in light/dark with no
   override. Aliases: `--ui-hover` (standard hover), `--ui-selected` (highlight/selected row),
   `--ui-pressed` (press), `--sidebar-hover` / `--btn-ghost-hover`; raw rungs `--overlay-hover-light`
   → `--overlay-hover` → `--overlay-hover-strong` → `--overlay-active` → `--overlay-active-strong`.
@@ -564,7 +564,7 @@ see it, replace it with the right column. This is your strip-list when refactori
 | a grouping/wrapper `<div>` (the thing you wrap a `v-if` block in) carrying `border-b`, sitting as the **last child of a card** | its full-width hairline lands on the card's bottom stroke → a doubled line that *fights the stroke* and slices the corner | borders go on **rows** (`mx-4 … last:border-b-0`), never on the wrapper; the card's own border is the bottom edge (§ Dividers; `bot-network.vue` overlay-config wrapper) |
 | success toast on every settings tweak / auto-save | toast spam, reads as nagging | auto-save silently; toast only explicit actions + errors |
 | raw color in an app page (`bg-white`, `text-black`, `-gray-*`, `#fff`, `dark:`) | breaks dark mode; **no lint catches it in `apps/web`** | semantic token (`bg-card`/`text-foreground`/…); grep + flip-to-dark before shipping |
-| hand-mixed gray / alpha for a hover/selected tint (`hover:bg-gray-100`, `bg-black/5`) | not theme/scheme-agnostic; can tilt or break in dark | the neutral overlay ladder (`--ui-hover`/`--ui-selected`/`--overlay-*`, or `bg-accent`) |
+| hand-mixed gray / alpha for a hover/selected tint (`hover:bg-gray-100`, `bg-black/5`) | not theme-agnostic; can tilt or break in dark | the neutral overlay ladder (`--ui-hover`/`--ui-selected`/`--overlay-*`, or `bg-accent`) |
 | hardcoded user-facing text | breaks i18n; only checked in one language | i18n key in both `en.json` + `zh.json`; design for the wider/longer locale |
 | section pops in a different size than its skeleton/placeholder | layout jump on load | skeleton matches final shape; reserve `min-h`; `—` not faked `0` |
 | stray `overflow-*` / `overflow-x-hidden` on a swapped pane | nested scrollbar or stolen ancestor scroll | own scroll only when intended; `overflow-x-clip` for sideways-nudge |
@@ -620,14 +620,14 @@ already in our system, or like an AI improvising its own house style?"
 | The AI reaches for… | Why it breaks our language | What we want instead |
 |---|---|---|
 | a boxed / rounded icon stacked above every heading or title | card-in-card + icon-abuse (an icon must earn its place) | no icon — the title is the title |
-| purple→blue gradients, neon, cyan-on-dark, glowing accents | the skeleton is black/white/gray; blue = selected, purple is scarce, nothing glows | token solids; charcoal CTA |
+| purple→blue gradients, neon, cyan-on-dark, glowing accents | the skeleton is two inks; Pulse = alive, Spark = a human is needed, nothing glows | token solids; Ink CTA |
 | gradient text (esp. on metrics / headings) | we have no gradients; text is a solid token | `text-foreground` / `text-muted-foreground` |
 | identical equal-sized card grids (icon + heading + text, repeated) | the identical-card-grid tell, and usually card-in-card | stat tiles (hairline-divided, not boxes-in-a-box) or plain content under a title |
 | the hero-metric template (big number, small label, gradient accent) | template-y; our metrics are a flat stat-tile row, no gradient | stat tiles |
 | glassmorphism — blur, glass cards, glow borders | we're flat: no invented shadow/glow, the edge is one hairline | `bg-card` + one `border-border` hairline |
 | rounded rectangles with a generic drop shadow | flat by default; shadow is a scarce elevation token, not decoration | flat card, no shadow |
 | centering everything | landing-page habit; we left-align inside the `max-w-3xl` shell | left-aligned, shell rhythm |
-| making every button primary | breaks hierarchy; charcoal is the one high-emphasis fill | one primary, the rest ghost / outline |
+| making every button primary | breaks hierarchy; Ink is the one high-emphasis fill | one primary, the rest ghost / outline |
 | defaulting to dark mode with glowing accents | dark is the automatic result of tokens, not an aesthetic flex | build in tokens; dark just works |
 | a thick colored border on one side of a block | a lazy accent that fights the unified single-hairline stroke | one hairline; express state via fill / color |
 | bounce / elastic easing, or a staggered page-load reveal | our motion is restrained, fixed-palette, no overshoot | the duration palette + ease-out, change read in place |
@@ -649,7 +649,7 @@ already in our system, or like an AI improvising its own house style?"
 | Toolbar icon action | `<Button variant="ghost" size="icon">` | a bare clickable `<svg>` with manual hover bg |
 | Standalone icon action | `<Button variant="outline" size="icon">` | ghost (reads as toolbar) |
 | Clickable low-emphasis text w/ hover chip | `TextButton` (ghost @ `size="text"`) | a `<span @click>` with a hand-rolled hover |
-| High-emphasis CTA | `<Button>` (charcoal default) | `variant="brand"` purple unless it's a true brand CTA |
+| High-emphasis CTA | `<Button>` (Ink default) | `variant="brand"` (Pulse) unless it's a true brand CTA |
 | Destructive action | `<Button variant="destructive">` (filled) | `variant="ghost"` + `text-destructive` |
 | Count / unread / overflow badge | `BadgeCount` (`destructive` alert · `default` neutral) | a hand-built rounded-full number pill |
 | Empty surface | `Empty` (+ framed) | bare centered muted `<p>` |

@@ -13,10 +13,13 @@ import { inputGroupSpec } from './input-group'
 import { nativeSelectSpec } from './native-select'
 import { numberFieldSpec } from './number-field'
 import { popoverSpec } from './popover'
+import { mateAvatarSpec } from './mate-avatar'
 import { segmentedSpec } from './segmented'
+import { segmentedProgressSpec } from './segmented-progress'
 import { selectSpec } from './select'
 import { skeletonSpec } from './skeleton'
 import { sonnerSpec } from './sonner'
+import { statusChipSpec } from './status-chip'
 import { switchSpec } from './switch'
 import { tabsSpec } from './tabs'
 import { textareaSpec } from './textarea'
@@ -43,6 +46,9 @@ export const componentSpecs: ComponentSpec[] = [
   toggleSpec,
   actionCardSpec,
   badgeSpec,
+  statusChipSpec,
+  mateAvatarSpec,
+  segmentedProgressSpec,
   cardSpec,
   tabsSpec,
   accordionSpec,
