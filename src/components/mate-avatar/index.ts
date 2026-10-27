@@ -1,0 +1,5 @@
+export { default as MateAvatar } from './MateAvatar.vue'
+export { default as MateAvatarStack } from './MateAvatarStack.vue'
+export { default as MateChip } from './MateChip.vue'
+export { mateInitials } from './types'
+export type { AgentStatus, HumanStatus, MateAvatarSize, MateBadge, MateKind, MateStatus } from './types'
