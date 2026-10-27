@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<{
       // Size scale — fixed height for single-line groups only. Gated behind
       // :not(:has(>textarea)) so it never fights the auto-height of a textarea
       // group (otherwise [data-size] out-specifies :has() and re-pins the height).
-      '[&:not(:has(>textarea))]:data-[size=sm]:h-8 [&:not(:has(>textarea))]:data-[size=default]:h-9 [&:not(:has(>textarea))]:data-[size=lg]:h-10',
+      '[&:not(:has(>textarea))]:data-[size=sm]:h-9 [&:not(:has(>textarea))]:data-[size=default]:h-11 [&:not(:has(>textarea))]:data-[size=lg]:h-12',
       'data-[size=sm]:[&_[data-slot=input-group-control]]:text-body',
       'data-[size=lg]:[&_[data-slot=input-group-control]]:text-control',
 

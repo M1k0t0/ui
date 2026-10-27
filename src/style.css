@@ -884,8 +884,8 @@
     padding-inline: 0.75rem;
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
-    font-weight: 450;
-    letter-spacing: -0.16px;
+    font-weight: 500;
+    letter-spacing: 0;
     white-space: nowrap;
     /* idle label sits lighter than global muted for a cleaner, airier read;
        active jumps to near-foreground for strong contrast. Hover nudges darker. */
@@ -1161,7 +1161,8 @@
   --menu-item-leading-size: calc(var(--text-label--line-height) + 1rem);
   --menu-viewport-max-height: calc(2.125rem * 9 + 0.125rem * 8);
   --select-viewport-max-height: var(--menu-viewport-max-height);
-  --font-sans: "Inter Variable", "Inter", "MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
+  --font-sans: "Space Grotesk Variable", "Space Grotesk", "MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --radius: var(--chamfer-control);
   /* Near-neutral WARM surfaces (hue 63, faint chroma — a gentle warm lean so the
      off-white reads cozy and slightly white-leaning, NOT yellow/red and NOT the
@@ -1853,40 +1854,39 @@
   --animate-accordion-down: accordion-down 0.18s ease-out;
   --animate-accordion-up: accordion-up 0.18s ease-out;
 
-  /* Type scale: semantic sizes with line-height + tracking baked in.
-     Tuned for variable Latin + CJK fonts.
-     Weight is ROLE-MAPPED via the --font-weight-* overrides below — do not free-style:
-       · font-semibold (520) → surface / section titles (Card / Dialog / Sheet)
-       · font-medium   (450) → labels, button text, badges, small/inline titles, emphasis
-       · font-normal   (360) → body, descriptions, field values, placeholder, input text */
-  --text-caption: 0.6875rem; /* 11px — badges, tiny meta */
+  /* Type scale (LabMate §4): semantic sizes with line-height + tracking baked in.
+     Space Grotesk for the interface; the mono roles (labels, IDs, metrics) are
+     the text-label-mono / text-data utilities below.
+     Weight is ROLE-MAPPED — do not free-style:
+       · font-semibold (600) → display / H1 / H2 / surface titles
+       · font-medium   (500) → labels, button text, chips, emphasis
+       · font-normal   (400) → body, descriptions, field values, placeholder */
+  --text-caption: 0.75rem; /* 12px — tiny meta */
   --text-caption--line-height: 1rem;
-  --text-caption--letter-spacing: -0.04px;
-  --text-body: 0.75rem; /* 12px — default UI body (workhorse) */
-  --text-body--line-height: 1rem;
-  --text-body--letter-spacing: -0.08px;
-  --text-label: 0.8125rem; /* 13px — form labels, emphasized small */
-  --text-label--line-height: 1.125rem;
-  --text-label--letter-spacing: -0.1px;
-  --text-control: 0.875rem; /* 14px — buttons, compact titles */
+  --text-caption--letter-spacing: 0;
+  --text-body: 0.9375rem; /* 15px — body (§4 Body 15/400, lh 1.55) */
+  --text-body--line-height: 1.55;
+  --text-body--letter-spacing: 0;
+  --text-label: 0.875rem; /* 14px — form labels, emphasized small */
+  --text-label--line-height: 1.25rem;
+  --text-label--letter-spacing: 0;
+  --text-control: 0.9375rem; /* 15px — buttons, compact titles */
   --text-control--line-height: 1.25rem;
-  --text-control--letter-spacing: -0.14px;
-  --text-title: 1rem; /* 16px — card / section / sheet titles */
-  --text-title--line-height: 1.4rem;
-  --text-title--letter-spacing: -0.18px;
-  --text-heading: 1.125rem; /* 18px — dialog / page headings */
-  --text-heading--line-height: 1.55rem;
-  --text-heading--letter-spacing: -0.26px;
-  --text-display: 1.5rem; /* 24px — hero / empty-state */
-  --text-display--line-height: 1.85rem;
-  --text-display--letter-spacing: -0.4px;
+  --text-control--letter-spacing: 0;
+  --text-title: 1.25rem; /* 20px — H2: card / section / sheet titles */
+  --text-title--line-height: 1.3;
+  --text-title--letter-spacing: -0.01em;
+  --text-heading: 2rem; /* 32px — H1: dialog / page headings */
+  --text-heading--line-height: 1.15;
+  --text-heading--letter-spacing: -0.02em;
+  --text-display: 3.5rem; /* 56px — display */
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.035em;
 
-  /* Font-weight overrides: Inter runs ~half-step heavier than SF Pro at the same
-     numeric weight, so the Tailwind role-map values are shifted down accordingly. */
-  --font-weight-normal: 360;
-  --font-weight-medium: 450;
-  --font-weight-semibold: 520;
-  --font-weight-bold: 620;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -2059,7 +2059,7 @@
   }
   body {
     font-family: var(--font-sans);
-    font-weight: 360;
+    font-weight: 400;
     @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -2476,4 +2476,21 @@
   ::after {
     border-radius: 0 !important;
   }
+}
+
+/* Mono roles (LabMate §4): section labels / chips, and IDs / metrics / logs. */
+@utility text-label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+@utility text-data {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
 }

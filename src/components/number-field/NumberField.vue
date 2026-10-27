@@ -33,9 +33,9 @@ const delegated = reactiveOmit(props, 'class', 'placeholder', 'suffix', 'size')
 const forwarded = useForwardPropsEmits(delegated, emits)
 
 const sizeClass = computed(() => ({
-  sm: 'h-8 text-body',
-  default: 'h-9 text-label',
-  lg: 'h-10 text-control',
+  sm: 'h-9 text-body',
+  default: 'h-11 text-label',
+  lg: 'h-12 text-control',
 }[props.size]))
 
 // Stepper box scales with field height; glyph stays a calm 14px. Radius is the
@@ -45,7 +45,7 @@ const sizeClass = computed(() => ({
 // keeping one value means every in-field control corner matches.
 const stepClass = computed(() => cn(
   'p-0 rounded-xs text-muted-foreground hover:text-foreground [&_svg]:size-3.5',
-  { sm: 'size-6', default: 'size-7', lg: 'size-8' }[props.size],
+  { sm: 'size-7', default: 'size-8', lg: 'size-9' }[props.size],
 ))
 </script>
 

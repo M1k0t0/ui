@@ -28,9 +28,9 @@ const delegatedProps = reactiveOmit(props, 'class', 'size')
 // Size ladder mirrors the Select trigger (sm h-8 / default h-9 / lg h-10), tokenised
 // to the same control type scale so a NativeSelect and a Select read identically.
 const sizeClass = computed(() => ({
-  sm: 'h-8 pl-3 text-body',
-  default: 'h-9 pl-3 text-label',
-  lg: 'h-10 pl-3.5 text-control',
+  sm: 'h-9 pl-3 text-body',
+  default: 'h-11 pl-3 text-label',
+  lg: 'h-12 pl-3.5 text-control',
 }[props.size]))
 </script>
 

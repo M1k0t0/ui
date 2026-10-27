@@ -114,8 +114,8 @@ function onMinuteKeydown(e: KeyboardEvent) {
 }
 
 const containerClass = computed(() => props.size === 'sm'
-  ? 'h-8 px-2.5 text-body'
-  : 'h-9 px-3 text-label',
+  ? 'h-9 px-2.5 text-body'
+  : 'h-11 px-3 text-label',
 )
 
 const segmentClass = computed(() => props.size === 'sm'

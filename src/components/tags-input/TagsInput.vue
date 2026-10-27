@@ -24,9 +24,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       // destructive. Focus-within only nudges the edge to ENGAGED (not the near-black
       // solid we reserve for single-line fields) so a big multi-row tag box never
       // reads as a heavy black-boxed card.
-      // min-h-9 matches a single-line input so an empty field has real presence;
+      // min-h-11 matches a single-line input so an empty field has real presence;
       // py-1.5 + gap-1.5 give the chips + typing line room to breathe and wrap.
-      'flex min-h-9 flex-wrap items-center gap-1.5 rounded-md px-2 py-1.5 text-body outline-none',
+      'flex min-h-11 flex-wrap items-center gap-1.5 rounded-md px-2 py-1.5 text-body outline-none',
       props.class)"
   >
     <slot v-bind="slotProps" />

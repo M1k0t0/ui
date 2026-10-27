@@ -217,8 +217,8 @@ const indicatorStyle = computed(() => {
   padding-inline: 0.75rem;
   border-radius: var(--radius-sm);
   font-size: 0.875rem;
-  font-weight: 475;
-  letter-spacing: -0.16px;
+  font-weight: 500;
+  letter-spacing: 0;
   color: var(--control-label);
   transition: color 150ms ease;
 }
