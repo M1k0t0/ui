@@ -846,7 +846,7 @@
     align-items: center;
     gap: 0.125rem;
     padding: 0.125rem;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     background-color: var(--segment-track);
   }
   [data-slot="segmented"] [data-segment-thumb] {
@@ -859,7 +859,7 @@
        compared against another component's z-index. */
     z-index: 0;
     pointer-events: none;
-    border-radius: calc(var(--radius) - 0.125rem);
+    border-radius: var(--radius-sm);
     background-color: var(--segment-thumb);
     box-shadow: var(--shadow-thumb);
     transition:
@@ -882,7 +882,7 @@
     gap: 0.375rem;
     height: 1.75rem;
     padding-inline: 0.75rem;
-    border-radius: calc(var(--radius) - 0.125rem);
+    border-radius: var(--radius-sm);
     font-size: 0.875rem;
     font-weight: 450;
     letter-spacing: -0.16px;
@@ -1137,6 +1137,17 @@
   --status-halted-glyph: var(--paper);
   /* Base stroke (§2.5): outlines, frames, the secondary button edge. */
   --stroke: 1.5px;
+  /* Chamfer scale (§2.2). Corners are cut at the top-left and bottom-right only;
+     the @theme radius ladder below turns each into a TL/BR shorthand and the
+     base layer sets corner-shape: bevel, so every rounded-* utility, border,
+     inset shadow and ::before shell is cut instead of rounded. */
+  --chamfer-chip: 4px;
+  --chamfer-control: 8px;
+  --chamfer-card: 12px;
+  --chamfer-panel: 16px;
+  /* "Circles become octagons" (§2.1): a bevelled 29.3% corner on a square
+     cuts four equal 45° facets. */
+  --chamfer-octagon: 29.3%;
 }
 
 :root {
@@ -1151,7 +1162,7 @@
   --menu-viewport-max-height: calc(2.125rem * 9 + 0.125rem * 8);
   --select-viewport-max-height: var(--menu-viewport-max-height);
   --font-sans: "Inter Variable", "Inter", "MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
-  --radius: 0.625rem;
+  --radius: var(--chamfer-control);
   /* Near-neutral WARM surfaces (hue 63, faint chroma — a gentle warm lean so the
      off-white reads cozy and slightly white-leaning, NOT yellow/red and NOT the
      cold/green a near-zero chroma drifts to), CONTENT-anchored: the reading
@@ -1826,15 +1837,16 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-2xs: calc(var(--radius) - 7px);
-  --radius-xs: calc(var(--radius) - 6px);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  /* Menu geometry: row = 8px, shell = row + 4px. */
-  --radius-menu: calc(var(--radius) - 2px);
-  --radius-menu-shell: calc(var(--radius) + 2px);
+  --radius-2xs: var(--chamfer-chip) 0;
+  --radius-xs: var(--chamfer-chip) 0;
+  --radius-sm: var(--chamfer-chip) 0;
+  --radius-md: var(--chamfer-control) 0;
+  --radius-lg: var(--chamfer-card) 0;
+  --radius-xl: var(--chamfer-card) 0;
+  --radius-panel: var(--chamfer-panel) 0;
+  /* Menu geometry: rows are controls, the shell is a card. */
+  --radius-menu: var(--chamfer-control) 0;
+  --radius-menu-shell: var(--chamfer-card) 0;
 
   /* Accordion open/close — height tween driven by reka's measured content height.
      Kept short (matches the menu/fast-motion budget) so sections feel snappy. */
@@ -2035,6 +2047,13 @@
 }
 
 @layer base {
+  /* Chamfers, not curves (§2.1–2.2): every radius is cut flat. */
+  *,
+  ::before,
+  ::after {
+    corner-shape: bevel;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
@@ -2065,7 +2084,7 @@
   *::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border: 1px solid transparent;
-    border-radius: 9999px;
+    border-radius: 0;
     background-clip: padding-box;
   }
 
@@ -2439,5 +2458,22 @@
   .menu-viewport > [role="separator"] {
     margin-block: max(0px, calc(var(--menu-frame-spacing) - var(--menu-row-gap)));
     margin-inline: calc(var(--menu-frame-spacing) * 2);
+  }
+}
+
+/* Circles become octagons (§2.1). Unlayered on purpose so it beats Tailwind's
+   own rounded-full utility in every layer order. */
+.rounded-full {
+  border-radius: var(--chamfer-octagon);
+}
+
+/* Browsers without corner-shape would draw the radius ladder as CURVES — the
+   one thing this language forbids — so they fall back to square corners.
+   Octagons degrade to squares the same way. */
+@supports not (corner-shape: bevel) {
+  *,
+  ::before,
+  ::after {
+    border-radius: 0 !important;
   }
 }

@@ -179,7 +179,7 @@ const indicatorStyle = computed(() => {
   bottom: -1px;
   left: 0;
   height: 2px;
-  border-radius: 9999px;
+  border-radius: 0;
   background-color: var(--foreground);
   pointer-events: none;
   transition:
@@ -197,7 +197,7 @@ const indicatorStyle = computed(() => {
      paint order against this thumb's own sibling triggers below, same as
      style.css's [data-segment-thumb]/[data-segment-item] this was ported from. */
   z-index: 0;
-  border-radius: calc(var(--radius) - 0.125rem);
+  border-radius: var(--radius-sm);
   background-color: var(--segment-thumb);
   box-shadow: var(--shadow-thumb);
   pointer-events: none;
@@ -215,7 +215,7 @@ const indicatorStyle = computed(() => {
   z-index: 1;
   height: 1.75rem;
   padding-inline: 0.75rem;
-  border-radius: calc(var(--radius) - 0.125rem);
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 475;
   letter-spacing: -0.16px;

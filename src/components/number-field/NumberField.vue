@@ -44,7 +44,7 @@ const sizeClass = computed(() => ({
 // a free-floating ~28px hover chip reads too sharp at the geometric 4px, and
 // keeping one value means every in-field control corner matches.
 const stepClass = computed(() => cn(
-  'p-0 rounded-[calc(var(--radius)-5px)] text-muted-foreground hover:text-foreground [&_svg]:size-3.5',
+  'p-0 rounded-xs text-muted-foreground hover:text-foreground [&_svg]:size-3.5',
   { sm: 'size-6', default: 'size-7', lg: 'size-8' }[props.size],
 ))
 </script>
