@@ -18,21 +18,21 @@ function state(i: number) {
   return 'future'
 }
 const stateClass: Record<string, string> = {
-  completed: 'bg-border text-foreground',
+  completed: 'bg-[var(--fog)] text-[color:var(--graphite)]',
   current: 'bg-pulse text-on-accent',
-  future: 'bg-muted text-muted-foreground',
+  future: 'bg-[var(--mist)] text-[color:var(--slate)]',
 }
 </script>
 
 <template>
-  <ol data-slot="phase-track" :class="cn('flex w-full', props.class)">
+  <ol data-slot="phase-track" :class="cn('flex w-full gap-0.5', props.class)">
     <li
       v-for="(phase, i) in phases"
       :key="i"
       data-slot="phase-track-item"
       :data-state="state(i)"
       :aria-current="i === current ? 'step' : undefined"
-      :class="cn('phase-chevron flex h-9 min-w-0 flex-1 items-center justify-center px-5 text-label-mono', stateClass[state(i)], i > 0 && '-ml-1.5')"
+      :class="cn('phase-chevron flex h-10 min-w-0 flex-1 items-center justify-center px-5 text-label font-semibold', stateClass[state(i)])"
     >
       <span class="truncate">{{ phase }}</span>
     </li>
@@ -40,12 +40,16 @@ const stateClass: Record<string, string> = {
 </template>
 
 <style scoped>
-/* Chevron cut: a 45°-ish point on the right and a matching notch on the left
-   (the first item keeps a flat leading edge). Geometry only — no colour. */
+/* Chevron cut (§7.5): a 14px point on the right and a matching notch on the
+   left. The first phase keeps a flat leading edge, the last a flat tail.
+   Geometry only — no colour. */
 .phase-chevron {
-  clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 50%, calc(100% - 0.75rem) 100%, 0 100%, 0.75rem 50%);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%);
 }
 .phase-chevron:first-child {
-  clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 50%, calc(100% - 0.75rem) 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%);
+}
+.phase-chevron:last-child:not(:first-child) {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 14px 50%);
 }
 </style>

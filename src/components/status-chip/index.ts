@@ -1,4 +1,5 @@
 export { default as StatusChip } from './StatusChip.vue'
 export { default as StatusGlyph } from './StatusGlyph.vue'
+export { statusPlanes, STATUS_GLYPH } from './glyphs'
 export { WORK_STATUS_LABEL, WORK_STATUSES } from './types'
 export type { WorkStatus } from './types'

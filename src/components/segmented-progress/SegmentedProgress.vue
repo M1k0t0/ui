@@ -5,7 +5,7 @@ import { cn } from '#/lib/utils'
 
 // Segmented progress (§7.4): one parallelogram per unit of work. Done cells are
 // Ink, remaining cells Fog, and the next cell may be Pulse to mark the work in
-// flight. The 30° slant is one of the permitted angles (§2.5).
+// flight. Each cell is cut by a 4px slant (the doc's 14px-tall cells).
 const props = withDefaults(defineProps<{
   total: number
   done: number
@@ -36,13 +36,19 @@ const cellClass: Record<string, string> = {
     :aria-valuemax="total"
     :aria-valuenow="Math.min(done, total)"
     :aria-label="label"
-    :class="cn('flex h-2 w-full gap-1 px-0.5', props.class)"
+    :class="cn('flex h-3.5 w-full gap-0.75', props.class)"
   >
     <span
       v-for="(state, i) in cells"
       :key="i"
       :data-state="state"
-      :class="cn('h-full flex-1 -skew-x-30', cellClass[state])"
+      :class="cn('segment-cell h-full flex-1', cellClass[state])"
     />
   </div>
 </template>
+
+<style scoped>
+.segment-cell {
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+</style>

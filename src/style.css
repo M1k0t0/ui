@@ -1102,6 +1102,12 @@
   /* Intermediate neutrals for wells and empty facets (§3.11). */
   --well: #f4f4f4;
   --well-deep: #e3e3e3;
+  /* Facet neutrals for faceted drawings (milestone gem, chalice glass, the
+     agent hexagon's darkest plane). Drawing-only — not surface tokens. */
+  --facet-paper: #f7f7f7;
+  --facet-mid: #ebebeb;
+  --facet-shade: #dcdcdc;
+  --facet-ink: #1a1a1a;
   --pulse: #c8f135;
   --pulse-light: #ddf77e;
   --pulse-shade: #a9d12a;
@@ -1135,6 +1141,11 @@
   --status-halted-base: var(--graphite);
   --status-halted-deep: var(--ink);
   --status-halted-glyph: var(--paper);
+  /* Milestone-only pre-states (§8.6): locked / ready share grey planes. */
+  --status-locked-light: var(--facet-paper);
+  --status-locked-base: var(--facet-mid);
+  --status-locked-deep: var(--fog);
+  --status-locked-glyph: var(--slate);
   /* Base stroke (§2.5): outlines, frames, the secondary button edge. */
   --stroke: 1.5px;
   /* Chamfer scale (§2.2). Corners are cut at the top-left and bottom-right only;
@@ -1579,6 +1590,8 @@
   --selection-fill: var(--ink);
   /* Text/glyph on an accent or status fill (§3.21): always Ink, both modes. */
   --on-accent: var(--ink);
+  /* Secondary text on Paper (§3.1 Slate) — node meta lines, roles. */
+  --subtle-foreground: var(--slate);
   --destructive-hover: var(--spark-shade);
   --destructive-active: var(--spark-deep);
   /* Disabled filled control (§7.15): Mist fill, Steel text — not a fade. */
@@ -1811,6 +1824,7 @@
   --background-chrome: var(--ink);
   --selection-fill: var(--paper);
   --disabled-fill: var(--graphite);
+  --subtle-foreground: var(--ash);
   --disabled-foreground: var(--steel);
   --segment-frame: var(--paper);
   --segment-thumb-foreground: var(--ink);
@@ -1841,6 +1855,7 @@
   --color-destructive-hover: var(--destructive-hover);
   --color-destructive-active: var(--destructive-active);
   --color-on-accent: var(--on-accent);
+  --color-subtle-foreground: var(--subtle-foreground);
   --color-pulse: var(--pulse);
   --color-spark: var(--spark);
   --color-destructive-soft: var(--destructive-soft);

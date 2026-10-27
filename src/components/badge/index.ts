@@ -28,7 +28,7 @@ export const badgeVariants = cva(
         info:
           'bg-info text-on-accent',
         outline:
-          'border-(length:--stroke) border-foreground bg-background text-foreground [a&]:hover:bg-accent',
+          'rounded-none border-(length:--stroke) border-foreground bg-background text-foreground [a&]:hover:bg-accent',
       },
       size: {
         default: 'h-6 px-2',

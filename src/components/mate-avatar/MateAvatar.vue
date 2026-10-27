@@ -1,41 +1,54 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import type { MateAvatarSize, MateBadge, MateKind } from './types'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { cn } from '#/lib/utils'
+import { MATE_STACK_KEY } from './context'
 import { mateInitials } from './types'
 
-// Mate avatar (§5.1–5.3, §5.6). A HUMAN is a Paper octagon with an Ink outline
-// and one Ink facet at the bottom-right; an AGENT is a faceted Ink hexagon whose
-// top-left plane is Pulse (the agent is live). Planes are lit from the top-left
-// (§2.4). Inside a MateAvatarStack, agents pick up a Paper outline through the
-// --mate-ring variable the stack sets.
+// Mate avatar (§5.1–5.3, §5.6), drawn on the design doc's 48-unit grid.
+//  · HUMAN — a Paper octagon with an Ink outline and one Ink corner facet at
+//    the bottom-right. Initials Ink / 600.
+//  · AGENT — an Ink hexagon. `faceted` draws all six planes lit from the
+//    top-left (Pulse plane = live) with a Paper outline; the compact form is a
+//    flat Ink hexagon with one Steel facet, used at small sizes and in stacks.
+//    Initials Paper / 700.
+// Inside a MateAvatarStack every avatar takes the 2.5-unit stack outline
+// (Paper on agents, Ink on humans) and humans drop the corner facet.
 const props = withDefaults(defineProps<{
   kind: MateKind
   /** Accessible name; initials are derived from it unless `initials` is set. */
   name: string
   initials?: string
   size?: MateAvatarSize
+  /** Agent planes (§5.2). Defaults to on at `xl`, off below. */
+  faceted?: boolean
   /** Agent state badge (§5.6). Ignored for humans. */
   badge?: MateBadge
   class?: HTMLAttributes['class']
-}>(), { size: 'md' })
+}>(), { size: 'md', faceted: undefined })
 
+const stacked = inject(MATE_STACK_KEY, false)
 const text = computed(() => props.initials ?? mateInitials(props.name))
 const label = computed(() => `${props.name} (${props.kind})`)
+const showFacets = computed(() => props.faceted ?? props.size === 'xl')
 
 const sizeClass: Record<MateAvatarSize, string> = {
-  sm: 'size-6',
-  md: 'size-8',
-  lg: 'size-10',
-  xl: 'size-14',
+  sm: 'size-7',
+  md: 'size-9',
+  lg: 'size-11',
+  xl: 'size-18',
 }
-const badgeClass: Record<MateBadge, string> = {
-  running: 'bg-pulse',
-  waiting: 'bg-spark',
-  blocked: 'bg-[var(--paper)] border-(length:--stroke) border-[color:var(--ink)]',
-  idle: 'bg-[var(--mist)]',
+
+// §5.6 — square badge, bottom-right; the glyph carries the state, not the hue.
+const BADGE: Record<MateBadge, { d: string, fill: boolean, bg: string }> = {
+  running: { d: 'M7 4l13 8-13 8z', fill: true, bg: 'var(--pulse)' },
+  waiting: { d: 'M6 3h12L12 12z M6 21h12L12 12z', fill: false, bg: 'var(--spark)' },
+  blocked: { d: 'M8 3h8l5 5v8l-5 5H8l-5-5V8z M7 17L17 7', fill: false, bg: 'var(--paper)' },
+  idle: { d: 'M5 11h14v2H5z', fill: true, bg: 'var(--mist)' },
 }
+const HEX = '24,1 44,12.5 44,35.5 24,47 4,35.5 4,12.5'
+const OCT = '14,1 34,1 47,14 47,34 34,47 14,47 1,34 1,14'
 </script>
 
 <template>
@@ -46,49 +59,75 @@ const badgeClass: Record<MateBadge, string> = {
     :aria-label="label"
     :class="cn('relative inline-flex shrink-0 select-none', sizeClass[size], props.class)"
   >
-    <svg viewBox="0 0 40 40" class="size-full overflow-visible" aria-hidden="true">
+    <svg viewBox="0 0 48 48" class="size-full overflow-visible" aria-hidden="true">
       <template v-if="kind === 'human'">
         <polygon
-          points="11.7,0 28.3,0 40,11.7 40,28.3 28.3,40 11.7,40 0,28.3 0,11.7"
+          :points="OCT"
           fill="var(--paper)"
           stroke="var(--ink)"
-          stroke-width="1.5"
-          vector-effect="non-scaling-stroke"
+          :stroke-width="stacked ? 2.5 : 2"
+          stroke-linejoin="miter"
         />
-        <polygon points="40,28.3 28.3,40 32,32" fill="var(--ink)" />
+        <polygon v-if="!stacked" points="47,34 34,47 41,40" fill="var(--ink)" />
+        <text
+          x="24"
+          y="29"
+          text-anchor="middle"
+          font-size="14"
+          font-weight="600"
+          fill="var(--ink)"
+          style="font-family: var(--font-sans)"
+        >{{ text }}</text>
       </template>
       <template v-else>
-        <polygon
-          points="20,0 37.32,10 37.32,30 20,40 2.68,30 2.68,10"
-          fill="none"
-          stroke="var(--mate-ring, transparent)"
-          stroke-width="3"
-          vector-effect="non-scaling-stroke"
-        />
-        <polygon points="20,20 2.68,10 20,0" fill="var(--pulse)" />
-        <polygon points="20,20 20,0 37.32,10" fill="var(--graphite)" />
-        <polygon points="20,20 37.32,10 37.32,30" fill="var(--ink)" />
-        <polygon points="20,20 37.32,30 20,40" fill="var(--ink)" />
-        <polygon points="20,20 20,40 2.68,30" fill="var(--graphite)" />
-        <polygon points="20,20 2.68,30 2.68,10" fill="var(--slate)" />
-        <polygon points="20,8 30.4,14 30.4,26 20,32 9.6,26 9.6,14" fill="var(--ink)" />
+        <template v-if="showFacets && !stacked">
+          <g stroke="var(--ink)" stroke-width="0.75" stroke-linejoin="miter">
+            <polygon points="24,1 44,12.5 22,22" fill="var(--steel)" />
+            <polygon points="44,12.5 44,35.5 22,22" fill="var(--slate)" />
+            <polygon points="44,35.5 24,47 22,22" fill="var(--graphite)" />
+            <polygon points="24,47 4,35.5 22,22" fill="var(--facet-ink)" />
+            <polygon points="4,35.5 4,12.5 22,22" fill="var(--graphite)" />
+            <polygon points="4,12.5 24,1 22,22" fill="var(--pulse)" />
+          </g>
+          <polygon :points="HEX" fill="none" stroke="var(--paper)" stroke-width="1.5" stroke-linejoin="miter" />
+        </template>
+        <template v-else>
+          <polygon
+            :points="HEX"
+            fill="var(--ink)"
+            :stroke="stacked ? 'var(--paper)' : 'none'"
+            :stroke-width="stacked ? 2.5 : 0"
+            stroke-linejoin="miter"
+          />
+          <polygon points="4,12.5 24,1 22,22" fill="var(--steel)" />
+        </template>
+        <text
+          x="24"
+          y="30"
+          text-anchor="middle"
+          font-size="14"
+          font-weight="700"
+          fill="var(--paper)"
+          style="font-family: var(--font-sans)"
+        >{{ text }}</text>
       </template>
-      <text
-        x="20"
-        y="20"
-        text-anchor="middle"
-        dominant-baseline="central"
-        font-size="13"
-        font-weight="600"
-        :fill="kind === 'human' ? 'var(--ink)' : 'var(--paper)'"
-        style="font-family: var(--font-sans)"
-      >{{ text }}</text>
     </svg>
     <span
       v-if="badge && kind === 'agent'"
       data-slot="mate-avatar-badge"
       :data-badge="badge"
-      :class="cn('absolute -right-0.5 -bottom-0.5 size-[40%] rounded-2xs', badgeClass[badge])"
-    />
+      class="absolute right-[-8.33%] bottom-[-4.17%] flex size-[41.67%] items-center justify-center border-(length:--stroke) border-[color:var(--ink)]"
+      :style="{ backgroundColor: BADGE[badge].bg }"
+    >
+      <svg viewBox="0 0 24 24" class="size-[60%]" aria-hidden="true">
+        <path
+          :d="BADGE[badge].d"
+          :fill="BADGE[badge].fill ? 'var(--ink)' : 'none'"
+          stroke="var(--ink)"
+          stroke-width="2.5"
+          stroke-linejoin="miter"
+        />
+      </svg>
+    </span>
   </span>
 </template>

@@ -8,6 +8,7 @@ import { checkboxSpec } from './checkbox'
 import { dialogSpec } from './dialog'
 import { dropdownMenuSpec } from './dropdown-menu'
 import { fieldSpec } from './field'
+import { goalNodeSpec, milestoneNodeSpec, projectGoalNodeSpec, startNodeSpec, taskNodeSpec } from './graph-nodes'
 import { inputSpec } from './input'
 import { inputGroupSpec } from './input-group'
 import { nativeSelectSpec } from './native-select'
@@ -49,6 +50,11 @@ export const componentSpecs: ComponentSpec[] = [
   statusChipSpec,
   mateAvatarSpec,
   segmentedProgressSpec,
+  startNodeSpec,
+  taskNodeSpec,
+  goalNodeSpec,
+  milestoneNodeSpec,
+  projectGoalNodeSpec,
   cardSpec,
   tabsSpec,
   accordionSpec,
