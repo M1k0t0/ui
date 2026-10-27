@@ -19,6 +19,9 @@ const twMerge = extendTailwindMerge({
             'title',
             'heading',
             'display',
+            // Mono roles (@utility in style.css) — they set font-size too.
+            'label-mono',
+            'data',
           ],
         },
       ],
