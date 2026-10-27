@@ -1,5 +1,6 @@
 import type { ComponentSpec } from '../lib/spec'
 import { h } from 'vue'
+import { ActivityChip } from '#/components/activity-chip'
 import { StatusChip, WORK_STATUSES } from '#/components/status-chip'
 
 export const statusChipSpec: ComponentSpec = {
@@ -20,10 +21,19 @@ export const statusChipSpec: ComponentSpec = {
       render: () => WORK_STATUSES.map(status => h(StatusChip, { status })),
     },
     {
+      name: 'Activity',
+      nameZh: '活动状态',
+      note: 'ActivityChip — what a mate is doing now. Blocked is a hatched strip in an Ink frame; done a hexagon-check in a Fog frame.',
+      render: () => (['running', 'planning', 'waiting', 'blocked', 'idle', 'done'] as const).map(status => h(ActivityChip, { status })),
+    },
+    {
       name: 'Chamfered',
       nameZh: '切角',
       note: 'Opt-in: `chamfer` cuts the top-left and bottom-right corners.',
-      render: () => WORK_STATUSES.map(status => h(StatusChip, { status, chamfer: true })),
+      render: () => [
+        ...WORK_STATUSES.map(status => h(StatusChip, { status, chamfer: true })),
+        ...(['running', 'planning', 'idle'] as const).map(status => h(ActivityChip, { status, chamfer: true })),
+      ],
     },
   ],
   render: state => h(StatusChip, { status: state.status as never, chamfer: Boolean(state.chamfer) }),

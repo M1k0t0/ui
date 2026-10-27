@@ -1,5 +1,6 @@
 export * from './components/accordion/index'
 export * from './components/action-card/index'
+export * from './components/activity-chip/index'
 export * from './components/alert/index'
 export * from './components/auto-height/index'
 export * from './components/avatar/index'
