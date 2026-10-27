@@ -7,7 +7,8 @@ import { cn } from '#/lib/utils'
 import Label from '../label/Label.vue'
 import { FIELD_INJECTION_KEY } from './context'
 
-// Field label — same Label primitive, sized to the field's 13px rhythm. Inside a
+// Field label — same Label primitive, set as a mono uppercase label above the
+// field (design doc controls: `ASSIGNEE`). Inside a
 // <Field> it auto-targets the control via `for`; pass `for` to override. Required
 // `*` and "Optional" affordances are i18n-agnostic by design: pass `requiredText`
 // / `optionalText` for a localized string, or slot the affordance directly. This
@@ -31,18 +32,18 @@ const forAttr = computed(() => props.for ?? field?.id)
     :for="forAttr"
     data-slot="field-label"
     v-bind="delegated"
-    :class="cn('gap-1 text-label', props.class)"
+    :class="cn('gap-1 text-label-mono text-subtle-foreground', props.class)"
   >
     <slot />
     <slot name="affordance">
       <span
         v-if="required"
         aria-hidden="true"
-        class="text-destructive"
+        class="text-foreground"
       >{{ requiredText ?? '*' }}</span>
       <span
         v-else-if="optional"
-        class="text-muted-foreground text-caption font-normal"
+        class="text-muted-foreground font-normal normal-case tracking-normal"
       >{{ optionalText ?? '(optional)' }}</span>
     </slot>
   </Label>

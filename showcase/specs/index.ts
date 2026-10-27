@@ -10,11 +10,13 @@ import { dropdownMenuSpec } from './dropdown-menu'
 import { fieldSpec } from './field'
 import { goalNodeSpec, milestoneNodeSpec, projectGoalNodeSpec, startNodeSpec, taskNodeSpec } from './graph-nodes'
 import { inputSpec } from './input'
+import { labIconSpec } from './lab-icon'
 import { inputGroupSpec } from './input-group'
 import { nativeSelectSpec } from './native-select'
 import { numberFieldSpec } from './number-field'
 import { popoverSpec } from './popover'
 import { mateAvatarSpec } from './mate-avatar'
+import { scheduleBarSpec } from './schedule-bar'
 import { segmentedSpec } from './segmented'
 import { segmentedProgressSpec } from './segmented-progress'
 import { selectSpec } from './select'
@@ -23,6 +25,7 @@ import { sonnerSpec } from './sonner'
 import { statusChipSpec } from './status-chip'
 import { switchSpec } from './switch'
 import { tabsSpec } from './tabs'
+import { tagChipSpec } from './tag-chip'
 import { textareaSpec } from './textarea'
 import { toggleSpec } from './toggle'
 import { tooltipSpec } from './tooltip'
@@ -48,6 +51,8 @@ export const componentSpecs: ComponentSpec[] = [
   actionCardSpec,
   badgeSpec,
   statusChipSpec,
+  tagChipSpec,
+  labIconSpec,
   mateAvatarSpec,
   segmentedProgressSpec,
   startNodeSpec,
@@ -55,6 +60,7 @@ export const componentSpecs: ComponentSpec[] = [
   goalNodeSpec,
   milestoneNodeSpec,
   projectGoalNodeSpec,
+  scheduleBarSpec,
   cardSpec,
   tabsSpec,
   accordionSpec,

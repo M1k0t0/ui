@@ -151,6 +151,23 @@ node templates (same 56 / 104 / 200 / 240 / 72 geometry, sub-items at 60%),
 with every colour on a token. The graph canvas itself (layout, lines,
 tracing, mist, editing) stays in the LabMate app.
 
+**LabMate control rules (design doc controls board).**
+- Fields are framed in Ink at rest (`--field-edge-rest` = `--border-hairline`);
+  focus keeps the frame and adds the trace light (`--trace-light`, a 3px Pulse
+  halo, §10.53) around it. This replaces the old "edge swaps color, never an
+  outer ring" field rule. Field labels (`FieldLabel`) are mono UPPERCASE.
+- SegmentedControl: the track is the Ink frame, segments sit flush with 1.5px
+  Ink dividers, labels mono 12px UPPERCASE, the selected segment Ink.
+- Ghost text buttons are Ink text with a 1.5px underline offset 4px (§7.13);
+  ghost ICON buttons rest on a Mist plate (`--icon-plate`). TextButton
+  (`size="text"`) and block rows keep the plain hover chip.
+- Icons: use `LabIcon` (the 24-icon set, stroke by size: 16→2, 20→1.75,
+  24→1.5, 32→1.25). Lucide glyphs inside components are forced to mitred
+  joins and square caps.
+- Card marks: `TagChip` (Mist, lowercase mono, square), `PriorityMark`
+  (▲▲▲ / ▲▲△ / ▲△△), `LoadBar` (flat cells). Schedule: `ScheduleBar` and
+  `AwayBand` (§13.2).
+
 **Chip shape rule.** Chips (Badge, StatusChip, MateChip, node chips) are
 SQUARE by default. Badge and StatusChip take an opt-in `chamfer` prop that
 cuts the top-left and bottom-right corners with `--chamfer-chip`; reach for it
@@ -906,9 +923,6 @@ Remaining (non-blocking) TODOs:
 
 - Toggle `tint` active uses `--brand` (now Pulse) — confirm that "on" should read
   as *live* there, or give it the selection ink.
-- `variant="ghost"` keeps the overlay hover chip. LabMate's own "ghost" (Ink
-  text with a 1.5px underline offset 4px) is `variant="link-static"`; ghost is
-  the icon/toolbar affordance and an underline there would be noise.
 - `components/sidebar/` still carries `text-sidebar-foreground/70`-style alpha
   and was not re-checked against LabMate.
 - The host guard (`check-ui-contract.mjs`) still allowlists the old in-field

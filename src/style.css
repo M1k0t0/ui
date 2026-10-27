@@ -218,6 +218,9 @@
   [data-slot="pin-input-slot"]:focus,
   [data-slot="input-otp-slot"][data-active="true"] {
     --field-edge: var(--field-edge-solid);
+    /* LabMate: the field is framed in Ink at rest (design doc controls), so
+       focus reads through the trace light (§10.53) around the frame. */
+    box-shadow: inset 0 0 0 var(--stroke) var(--field-edge), 0 0 0 3px var(--trace-light);
   }
   /* SUBTLE: the faintest deepen of the hairline — search / low-chrome, and the
      tags field. The near-black solid edge is a strong, decided signal we reserve
@@ -843,11 +846,12 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.125rem;
-    padding: 0.125rem;
+    gap: var(--stroke);
+    padding: var(--stroke);
     border-radius: var(--radius-md);
-    background-color: var(--segment-track);
-    box-shadow: inset 0 0 0 var(--stroke) var(--segment-frame);
+    /* The track IS the Ink frame: segments sit flush on it and the 1.5px gaps
+       between them read as Ink dividers (design doc controls, §7.2). */
+    background-color: var(--segment-frame);
   }
   [data-slot="segmented"] [data-segment-thumb] {
     position: absolute;
@@ -880,21 +884,31 @@
     align-items: center;
     justify-content: center;
     gap: 0.375rem;
-    height: 2.5rem;
-    padding-inline: 0.875rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.875rem;
+    height: calc(2.75rem - 2 * var(--stroke));
+    padding-inline: 1.125rem;
+    border-radius: 0;
+    background-color: var(--segment-track);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     white-space: nowrap;
     /* idle label sits lighter than global muted for a cleaner, airier read;
        active jumps to near-foreground for strong contrast. Hover nudges darker. */
-    color: var(--control-label);
+    color: var(--foreground);
     cursor: pointer;
     transition: color 150ms ease;
   }
-  [data-slot="segmented"] [data-segment-item]:hover {
-    color: var(--control-label-hover);
+  [data-slot="segmented"] [data-segment-item]:first-of-type {
+    border-top-left-radius: calc(var(--chamfer-control) - var(--stroke));
+  }
+  [data-slot="segmented"] [data-segment-item]:last-of-type {
+    border-bottom-right-radius: calc(var(--chamfer-control) - var(--stroke));
+  }
+  /* The active segment lets the sliding Ink thumb show through. */
+  [data-slot="segmented"] [data-segment-item][data-active="true"] {
+    background-color: transparent;
   }
   [data-slot="segmented"] [data-segment-item][data-active="true"],
   [data-slot="segmented"] [data-segment-item][data-active="true"]:hover {
@@ -1396,7 +1410,7 @@
        --field-edge-engaged  SUBTLE focus — barely deeper than rest
        --field-edge-solid    SOLID focus — the edge turns near-black in place
        --field-placeholder   soft hint color — lighter/greyer than muted text */
-  --field-edge-rest: var(--ash);
+  --field-edge-rest: var(--border-hairline);
   --field-edge-engaged: var(--steel);
   --field-edge-solid: var(--ink);
   --field-placeholder: var(--ash);
@@ -1592,6 +1606,14 @@
   --on-accent: var(--ink);
   /* Secondary text on Paper (§3.1 Slate) — node meta lines, roles. */
   --subtle-foreground: var(--slate);
+  /* Trace light (§10.53): the Pulse ring that marks the thing under attention —
+     reused as the keyboard / field focus halo. */
+  --trace-light: color-mix(in oklab, var(--pulse) 75%, transparent);
+  /* Icon-only button plate (design doc controls): a Mist square. */
+  --icon-plate: var(--mist);
+  /* Empty cell of a load bar / timeline grid line (§12.1, §13). */
+  --cell-empty: var(--well-deep);
+  --icon-plate-hover: var(--well-deep);
   --destructive-hover: var(--spark-shade);
   --destructive-active: var(--spark-deep);
   /* Disabled filled control (§7.15): Mist fill, Steel text — not a fade. */
@@ -1803,7 +1825,7 @@
   --terminal-selection: rgb(224 224 224 / 0.20);
   /* Dark: field edge uses solid neutral grays (black-alpha is invisible on dark bg).
        rest ≈ RGB(70) · engaged ≈ RGB(90) · solid ≈ near-white for committed focus */
-  --field-edge-rest: var(--steel);
+  --field-edge-rest: var(--border-hairline);
   --field-edge-engaged: var(--ash);
   --field-edge-solid: var(--paper);
   /* Dark: segmented control labels. The thumb chip is the primary "selected"
@@ -1825,6 +1847,9 @@
   --selection-fill: var(--paper);
   --disabled-fill: var(--graphite);
   --subtle-foreground: var(--ash);
+  --icon-plate: var(--graphite);
+  --cell-empty: var(--slate);
+  --icon-plate-hover: var(--slate);
   --disabled-foreground: var(--steel);
   --segment-frame: var(--paper);
   --segment-thumb-foreground: var(--ink);
@@ -1856,6 +1881,7 @@
   --color-destructive-active: var(--destructive-active);
   --color-on-accent: var(--on-accent);
   --color-subtle-foreground: var(--subtle-foreground);
+  --color-cell-empty: var(--cell-empty);
   --color-pulse: var(--pulse);
   --color-spark: var(--spark);
   --color-destructive-soft: var(--destructive-soft);
@@ -2563,4 +2589,34 @@
     border-radius: 0;
     pointer-events: none;
   }
+}
+
+@layer components {
+  /* ── Icon-only buttons: a Mist plate (design doc controls) ───────────────
+     An icon alone has no text weight to read as a control, so the ghost icon
+     button rests on a plate; hover deepens it one well step. */
+  [data-button][data-variant="ghost"]:is([data-size="icon"], [data-size="icon-sm"], [data-size="icon-lg"])::before {
+    background-color: var(--icon-plate);
+  }
+  @media (hover: hover) {
+    [data-button][data-variant="ghost"]:is([data-size="icon"], [data-size="icon-sm"], [data-size="icon-lg"]):hover::before {
+      background-color: var(--icon-plate-hover);
+    }
+  }
+
+  /* ── Ghost text button (§7.13): Ink text, 1.5px underline offset 4px ─────
+     Only a standalone text action — not icon buttons, the compact TextButton
+     rung, or full-width (block) rows such as sidebar navigation. */
+  [data-button][data-variant="ghost"]:not([data-size^="icon"]):not([data-size="text"]):not([data-block]) {
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--stroke);
+    text-underline-offset: 4px;
+  }
+}
+
+/* Lucide glyphs used inside components take LabMate's joins (§6.1): mitred
+   corners and square caps. Presentation attributes lose to any CSS rule. */
+svg.lucide {
+  stroke-linecap: square;
+  stroke-linejoin: miter;
 }
