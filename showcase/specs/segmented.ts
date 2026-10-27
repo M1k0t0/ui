@@ -20,9 +20,9 @@ export const segmentedSpec: ComponentSpec = {
   id: 'segmented',
   name: 'SegmentedControl',
   description:
-    'One value picked from a short row, with the elevated sliding thumb. A mode/filter selector — it owns no panels.',
+    'One value picked from a short row: flush mono segments in an Ink frame, the chosen one filled Ink. A mode/filter selector — it owns no panels.',
   descriptionZh:
-    '从短行中选一个值，滑块拇指带浮起感。它是模式/筛选选择器——不拥有面板。',
+    '从短行中选一个值:墨色框内平铺的等宽分段,选中项填满墨色。它是模式/筛选选择器——不拥有面板。',
   controls: [
     { kind: 'enum', key: 'value', label: 'Value', options: BASIC_ITEMS.map(i => i.value), default: 'week', display: 'segmented' },
   ],

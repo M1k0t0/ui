@@ -95,8 +95,8 @@ const OCT = '14,1 34,1 47,14 47,34 34,47 14,47 1,34 1,14'
           <polygon
             :points="HEX"
             fill="var(--ink)"
-            :stroke="stacked ? 'var(--paper)' : 'none'"
-            :stroke-width="stacked ? 2.5 : 0"
+            :stroke="stacked ? 'var(--paper)' : 'var(--agent-edge)'"
+            :stroke-width="stacked ? 2.5 : 1.5"
             stroke-linejoin="miter"
           />
           <polygon points="4,12.5 24,1 22,22" fill="var(--steel)" />

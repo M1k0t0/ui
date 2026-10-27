@@ -1611,6 +1611,12 @@
   --trace-light: color-mix(in oklab, var(--pulse) 75%, transparent);
   /* Icon-only button plate (design doc controls): a Mist square. */
   --icon-plate: var(--mist);
+  /* Outline of a flat agent hexagon: none on Paper; Paper on an Ink page, the
+     way the doc draws agents on its Ink panel. */
+  --agent-edge: transparent;
+  /* Graph-node outline, countdown ring and lock pips: Ink on Paper, Paper on
+     an Ink page (Ink and Paper swap roles in dark). */
+  --node-edge: var(--ink);
   /* Empty cell of a load bar / timeline grid line (§12.1, §13). */
   --cell-empty: var(--well-deep);
   --icon-plate-hover: var(--well-deep);
@@ -1848,6 +1854,8 @@
   --disabled-fill: var(--graphite);
   --subtle-foreground: var(--ash);
   --icon-plate: var(--graphite);
+  --agent-edge: var(--paper);
+  --node-edge: var(--paper);
   --cell-empty: var(--slate);
   --icon-plate-hover: var(--slate);
   --disabled-foreground: var(--steel);
@@ -2606,8 +2614,10 @@
 
   /* ── Ghost text button (§7.13): Ink text, 1.5px underline offset 4px ─────
      Only a standalone text action — not icon buttons, the compact TextButton
-     rung, or full-width (block) rows such as sidebar navigation. */
-  [data-button][data-variant="ghost"]:not([data-size^="icon"]):not([data-size="text"]):not([data-block]) {
+     rung, full-width (block) rows, navigation rows (NavItem / anything in a
+     nav or sidebar), or menu / popover triggers (they carry aria-haspopup or
+     a reka data-state). */
+  [data-button][data-variant="ghost"]:not([data-size^="icon"]):not([data-size="text"]):not([data-block]):not([data-settings-nav-item]):not([aria-haspopup]):not([data-state]):not(nav *):not([data-sidebar] *):not(aside *) {
     text-decoration-line: underline;
     text-decoration-thickness: var(--stroke);
     text-underline-offset: 4px;

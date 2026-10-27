@@ -53,7 +53,7 @@ const lightOn = computed(() => props.lit || props.status === 'ongoing')
           <polygon points="54,28 28,54 26,26" :fill="c.d" />
           <polygon points="28,54 2,28 26,26" :fill="c.b" />
         </g>
-        <polygon points="28,2 54,28 28,54 2,28" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="miter" />
+        <polygon points="28,2 54,28 28,54 2,28" fill="none" stroke="var(--node-edge)" stroke-width="1.5" stroke-linejoin="miter" />
         <g v-if="glyph.d" transform="translate(19 19) scale(0.75)">
           <path :d="glyph.d" :fill="glyph.fill ? c.g : 'none'" :stroke="c.g" stroke-width="2.6" stroke-linejoin="miter" stroke-linecap="square" />
         </g>

@@ -99,8 +99,8 @@ const chip = computed(() => ({
           </g>
           <line :x1="liquid.xl" :y1="liquid.yl" :x2="liquid.xr" :y2="liquid.yl" stroke="var(--ink)" stroke-width="1.5" />
         </template>
-        <polygon points="30,20 210,20 196,80 150,130 90,130 44,80" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="miter" />
-        <g stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="miter">
+        <polygon points="30,20 210,20 196,80 150,130 90,130 44,80" fill="none" stroke="var(--node-edge)" stroke-width="2.5" stroke-linejoin="miter" />
+        <g stroke="var(--node-edge)" stroke-width="1.5" stroke-linejoin="miter">
           <polygon points="108,130 120,130 120,200 114,200" :fill="c.l" />
           <polygon points="120,130 132,130 126,200 120,200" :fill="c.d" />
           <polygon points="120,148 120,182 102,165" :fill="c.l" />

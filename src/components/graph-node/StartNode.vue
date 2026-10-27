@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<{
         <polygon points="10,4 28,36 10,36" fill="var(--pulse)" />
         <polygon points="10,36 28,36 10,68" fill="var(--slate)" />
       </g>
-      <polygon points="10,4 68,36 10,68" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="miter" />
+      <polygon points="10,4 68,36 10,68" fill="none" stroke="var(--node-edge)" stroke-width="2" stroke-linejoin="miter" />
     </svg>
     <NodeLabel v-if="showLabel" :title="label" :meta="meta" weight="goal" />
   </div>

@@ -66,7 +66,7 @@ const metaLine = computed(() => props.meta
         <polygon points="22.6,94.5 4.4,38.5 50,56" :fill="facets[3]" />
         <polygon points="4.4,38.5 52,4 50,56" :fill="facets[4]" />
       </g>
-      <polygon points="52,4 99.6,38.5 81.4,94.5 22.6,94.5 4.4,38.5" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="miter" />
+      <polygon points="52,4 99.6,38.5 81.4,94.5 22.6,94.5 4.4,38.5" fill="none" stroke="var(--node-edge)" stroke-width="2" stroke-linejoin="miter" />
       <polygon
         points="52,40 67.2,51.1 61.4,68.9 42.6,68.9 36.8,51.1"
         :fill="dark ? 'var(--ink)' : 'var(--paper)'"

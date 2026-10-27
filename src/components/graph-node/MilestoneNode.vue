@@ -48,11 +48,11 @@ const segments = computed(() => {
   const rem = Math.max(0, Math.min(24, Math.round((24 * left.value) / total.value)))
   return Array.from({ length: 24 }, (_, i) => ({
     rotate: `${i * 15}deg`,
-    bg: final.value ? c.value.b : i < rem ? (urgent.value ? 'var(--spark)' : 'var(--ink)') : 'var(--well-deep)',
+    bg: final.value ? c.value.b : i < rem ? (urgent.value ? 'var(--spark)' : 'var(--node-edge)') : 'var(--cell-empty)',
   }))
 })
 const dark = computed(() => props.status === 'halted')
-const edge = computed(() => props.status === 'locked' ? 'var(--ash)' : props.status === 'ready' ? 'var(--pulse-deep)' : 'var(--ink)')
+const edge = computed(() => props.status === 'locked' ? 'var(--ash)' : props.status === 'ready' ? 'var(--pulse-deep)' : 'var(--node-edge)')
 const edgeW = computed(() => props.status === 'ready' ? 4 : 2)
 const badgeBg = computed(() => dark.value ? 'var(--ink)' : props.status === 'ready' ? 'var(--pulse)' : 'var(--paper)')
 const glyphInk = computed(() => dark.value ? 'var(--paper)' : props.status === 'locked' ? 'var(--slate)' : 'var(--ink)')
@@ -135,8 +135,8 @@ const name = computed(() => STATUS_NAME[props.status === 'not-started' ? 'not-st
         <span
           v-for="(on, i) in pips"
           :key="i"
-          class="milestone-pip size-3 border-(length:--stroke) border-[color:var(--ink)]"
-          :style="{ backgroundColor: on ? 'var(--ink)' : 'var(--paper)' }"
+          class="milestone-pip size-3 border-(length:--stroke) border-[color:var(--node-edge)]"
+          :style="{ backgroundColor: on ? 'var(--node-edge)' : 'transparent' }"
         />
       </span>
     </div>
