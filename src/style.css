@@ -1187,7 +1187,7 @@
   --menu-viewport-max-height: calc(2.125rem * 9 + 0.125rem * 8);
   --select-viewport-max-height: var(--menu-viewport-max-height);
   --font-sans: "Space Grotesk Variable", "Space Grotesk", "MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
-  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, "PingFang SC", "Microsoft YaHei UI", "Noto Sans Mono CJK SC", "Noto Sans CJK SC", monospace;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, "MiSans", "PingFang SC", "Microsoft YaHei UI", "Noto Sans Mono CJK SC", "Noto Sans CJK SC", monospace;
   --radius: var(--chamfer-control);
   /* Near-neutral WARM surfaces (hue 63, faint chroma — a gentle warm lean so the
      off-white reads cozy and slightly white-leaning, NOT yellow/red and NOT the
