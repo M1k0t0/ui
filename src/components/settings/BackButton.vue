@@ -23,7 +23,7 @@
 // (apps/web/components/settings/back-button.vue, now a re-export shim) so the
 // back affordance has exactly one implementation. Library-boundary adaptations
 // vs the host original:
-// - import { Button } from '../button' (was '@felinic/ui').
+// - import { Button } from '../button' (was '@labmate/ui').
 // Everything else is byte-identical to the host original.
 import { ChevronLeft } from 'lucide-vue-next'
 import { Button } from '../button'

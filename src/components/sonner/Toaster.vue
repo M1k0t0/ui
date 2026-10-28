@@ -104,12 +104,12 @@ onBeforeUnmount(() => {
 <template>
   <Teleport to="body">
     <ol
-      :class="cn('memoh-toaster', `memoh-toaster--${props.position}`, props.class)"
+      :class="cn('labmate-toaster', `labmate-toaster--${props.position}`, props.class)"
       role="region"
       aria-label="Notifications"
       tabindex="-1"
     >
-      <TransitionGroup name="memoh-toast">
+      <TransitionGroup name="labmate-toast">
         <!--
           Two layout variants — selected purely from data, no CSS hacks needed:
 
@@ -120,7 +120,7 @@ onBeforeUnmount(() => {
         <li
           v-for="t in ordered"
           :key="t.id"
-          :class="cn('memoh-toast', t.description || t.textAction ? 'memoh-toast--rich' : 'memoh-toast--single')"
+          :class="cn('labmate-toast', t.description || t.textAction ? 'labmate-toast--rich' : 'labmate-toast--single')"
           :data-variant="t.variant"
           role="status"
           aria-live="polite"
@@ -138,15 +138,15 @@ onBeforeUnmount(() => {
             <component
               :is="semanticIcon[t.variant]"
               v-if="semanticIcon[t.variant]"
-              class="memoh-toast__icon size-4"
+              class="labmate-toast__icon size-4"
               aria-hidden="true"
             />
-            <span class="memoh-toast__title memoh-toast__title--grow">{{ headingFor(t) }}</span>
+            <span class="labmate-toast__title labmate-toast__title--grow">{{ headingFor(t) }}</span>
             <Button
               v-if="t.action"
               variant="outline"
               size="sm"
-              class="memoh-toast__action"
+              class="labmate-toast__action"
               @click="() => { t.action!.onClick(); dismiss(t.id) }"
             >
               {{ t.action.label }}
@@ -154,7 +154,7 @@ onBeforeUnmount(() => {
             <Button
               variant="ghost"
               size="icon-sm"
-              class="memoh-toast__close"
+              class="labmate-toast__close"
               aria-label="Dismiss notification"
               @click="dismiss(t.id)"
             >
@@ -173,14 +173,14 @@ onBeforeUnmount(() => {
             <component
               :is="semanticIcon[t.variant]"
               v-if="semanticIcon[t.variant]"
-              class="memoh-toast__icon size-4 memoh-toast__icon--rich"
+              class="labmate-toast__icon size-4 labmate-toast__icon--rich"
               aria-hidden="true"
             />
-            <div class="memoh-toast__body">
-              <span class="memoh-toast__title">{{ headingFor(t) }}</span>
+            <div class="labmate-toast__body">
+              <span class="labmate-toast__title">{{ headingFor(t) }}</span>
               <p
                 v-if="t.description"
-                class="memoh-toast__desc"
+                class="labmate-toast__desc"
               >
                 {{ t.description }}
               </p>
@@ -204,7 +204,7 @@ onBeforeUnmount(() => {
                 v-if="t.action"
                 variant="outline"
                 size="sm"
-                class="memoh-toast__action"
+                class="labmate-toast__action"
                 @click="() => { t.action!.onClick(); dismiss(t.id) }"
               >
                 {{ t.action.label }}
@@ -214,7 +214,7 @@ onBeforeUnmount(() => {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                class="memoh-toast__close memoh-toast__close--rich"
+                class="labmate-toast__close labmate-toast__close--rich"
                 aria-label="Dismiss notification"
                 @click="dismiss(t.id)"
               >

@@ -43,7 +43,7 @@
 // Lifted from the host app (apps/web/components/form-dialog-shell/index.vue,
 // now a re-export shim) so the form dialog shell has exactly one
 // implementation. Library-boundary adaptations vs the host original:
-// - the single '@felinic/ui' import split into relative '../button' (Button)
+// - the single '@labmate/ui' import split into relative '../button' (Button)
 //   and '../dialog' (Dialog*).
 // Everything else is byte-identical to the host original.
 import { Button } from '../button'

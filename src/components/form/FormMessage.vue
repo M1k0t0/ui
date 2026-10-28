@@ -18,10 +18,11 @@ const { name, formMessageId } = useFormField()
     :id="formMessageId"
     v-slot="{ message }"
     data-slot="form-message"
+    data-error-text
     as="p"
     :name="toValue(name)"
     :class="cn(
-      'text-destructive flex items-center gap-1.5 text-label leading-snug',
+      'text-foreground flex items-center gap-1.5 text-label leading-snug',
       props.class,
     )"
   >

@@ -26,7 +26,7 @@
 // Lifted from the host app (apps/web/components/inline-loading-row/index.vue,
 // now a re-export shim) so the inline loading row has exactly one
 // implementation. Library-boundary adaptations vs the host original:
-// - import { Spinner } from '../spinner' (was '@felinic/ui');
+// - import { Spinner } from '../spinner' (was '@labmate/ui');
 // - token renames: size md text-sm → text-control, size sm text-xs →
 //   text-body (the prop JSDoc below tracks the renamed class names).
 // Everything else is byte-identical to the host original.

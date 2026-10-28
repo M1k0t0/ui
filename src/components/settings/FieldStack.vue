@@ -51,7 +51,8 @@
         v-slot="{ message }"
         as="p"
         :name="fieldName"
-        class="text-destructive flex items-center gap-1.5 text-label leading-snug"
+        data-error-text
+        class="text-foreground flex items-center gap-1.5 text-label leading-snug"
       >
         <ErrorIcon class="size-3.5 shrink-0" />
         <span>{{ message }}</span>
@@ -63,7 +64,8 @@
       v-slot="{ message }"
       as="p"
       :name="fieldName"
-      class="text-destructive flex items-center gap-1.5 text-label leading-snug"
+      data-error-text
+        class="text-foreground flex items-center gap-1.5 text-label leading-snug"
     >
       <ErrorIcon class="size-3.5 shrink-0" />
       <span>{{ message }}</span>
@@ -76,7 +78,7 @@
 // (apps/web/components/settings/field-stack.vue, now a re-export shim) so the
 // stacked field has exactly one implementation. Library-boundary adaptations
 // vs the host original:
-// - '@felinic/ui' import split into relative '../label' (Label) and '../form'
+// - '@labmate/ui' import split into relative '../label' (Label) and '../form'
 //   (FORM_ITEM_INJECTION_KEY);
 // - token rename: help text text-xs → text-body.
 // Everything else is byte-identical to the host original.

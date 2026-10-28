@@ -34,8 +34,8 @@ const LEGACY = ['Badge (semantic fills)', 'Alert (semantic fills)', 'components/
     width="xl"
     :title="tt('Overview', '概览')"
     :description="tt(
-      'The living reference for @felinic/ui — every page renders the real component, live and tweakable.',
-      '@felinic/ui 的活文档——每一页渲染的都是真实组件,活的、可调。',
+      'The living reference for @labmate/ui — every page renders the real component, live and tweakable.',
+      '@labmate/ui 的活文档——每一页渲染的都是真实组件,活的、可调。',
     )"
   >
     <div class="flex flex-col gap-8">

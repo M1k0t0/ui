@@ -20,3 +20,22 @@ export const STATUS_NAME: Record<WorkStatus | 'locked' | 'ready', string> = {
   'locked': 'Locked',
   'ready': 'Ready to unlock',
 }
+
+/**
+ * Words the node components draw (chips under milestones and the project goal). Hosts in another
+ * language call `setGraphNodeText` once at startup; status names go through `STATUS_NAME` the same way.
+ */
+export const NODE_TEXT = {
+  locked: (done: number, total: number) => `LOCKED · ${done}/${total} GOALS`,
+  ready: 'READY TO UNLOCK',
+  delivered: 'DELIVERED',
+  halted: 'HALTED',
+  daysLeft: (n: number) => `${n} DAYS LEFT`,
+  goalMet: 'PROJECT GOAL MET',
+}
+
+/** Override node words and status names (host i18n). Call before the first render. */
+export function setGraphNodeText(text: Partial<typeof NODE_TEXT>, statusNames: Partial<typeof STATUS_NAME> = {}): void {
+  Object.assign(NODE_TEXT, text)
+  Object.assign(STATUS_NAME, statusNames)
+}

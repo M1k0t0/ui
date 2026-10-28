@@ -5,7 +5,7 @@ import { computed } from 'vue'
 import { cn } from '#/lib/utils'
 import { STATUS_GLYPH, statusPlanes } from '../status-chip/glyphs'
 import NodeLabel from './NodeLabel.vue'
-import { STATUS_NAME } from './types'
+import { NODE_TEXT, STATUS_NAME } from './types'
 
 // Project goal node (§8.7): a faceted chalice, the one thing the whole project
 // is for. It fills with liquid in its status colour; the level is the share of
@@ -60,7 +60,7 @@ const liquid = computed(() => {
 const dark = computed(() => props.status === 'halted')
 const ink = computed(() => (dark.value ? 'var(--paper)' : 'var(--ink)'))
 const chip = computed(() => ({
-  text: props.status === 'completed' ? 'PROJECT GOAL MET' : STATUS_NAME[props.status].toUpperCase(),
+  text: props.status === 'completed' ? NODE_TEXT.goalMet : STATUS_NAME[props.status].toUpperCase(),
   bg: props.status === 'not-started' ? 'var(--paper)' : c.value.b,
   fg: dark.value ? 'var(--paper)' : 'var(--ink)',
 }))

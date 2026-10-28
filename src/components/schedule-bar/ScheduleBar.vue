@@ -23,6 +23,8 @@ const props = defineProps<{
   continuesBefore?: boolean
   continuesAfter?: boolean
   selected?: boolean
+  /** Spoken status name (hosts pass their own language); defaults to English. */
+  statusLabel?: string
   class?: HTMLAttributes['class']
 }>()
 
@@ -45,14 +47,16 @@ const NAME: Record<ScheduleBarStatus, string> = {
   'halted': 'Halted',
 }
 const text = computed(() => props.status === 'handed-off' && props.handedTo ? `${props.title} → ${props.handedTo}` : props.title)
-const aria = computed(() => [props.code, text.value, NAME[props.status]].filter(Boolean).join(', '))
+const aria = computed(() => [props.code, text.value, props.statusLabel ?? NAME[props.status]].filter(Boolean).join(', '))
 </script>
 
 <template>
-  <span
+  <button
+    type="button"
     data-slot="schedule-bar"
     :data-status="status"
     :data-selected="selected ? '' : undefined"
+    :aria-pressed="selected ? 'true' : 'false'"
     :aria-label="aria"
     :class="cn(
       'flex h-9 min-w-0 items-center gap-1.5 overflow-hidden px-2 text-left',
@@ -70,5 +74,5 @@ const aria = computed(() => [props.code, text.value, NAME[props.status]].filter(
     <span v-if="code" class="shrink-0 font-mono text-[0.625rem]">{{ code }}</span>
     <span class="min-w-0 flex-1 truncate text-[0.8125rem] font-semibold">{{ text }}</span>
     <span v-if="continuesAfter" class="text-caption" aria-hidden="true">›</span>
-  </span>
+  </button>
 </template>

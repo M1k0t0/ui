@@ -11,8 +11,10 @@ export const alertVariants = cva(
     variants: {
       variant: {
         default: 'bg-background text-foreground border-border',
+        // §7.8: 确认是 Pulse 横幅加 Ink 边; 错误是 Spark 横幅 (Ink 字, 强调色只作填充 §3.21)
+        confirm: 'bg-brand text-brand-foreground border-[1.5px] border-foreground',
         destructive:
-          'text-destructive bg-background border-border [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90',
+          'bg-destructive text-destructive-foreground border-[1.5px] border-foreground [&>svg]:text-current',
       },
     },
     defaultVariants: {

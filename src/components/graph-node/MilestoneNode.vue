@@ -5,7 +5,7 @@ import { computed } from 'vue'
 import { cn } from '#/lib/utils'
 import { STATUS_GLYPH, statusPlanes } from '../status-chip/glyphs'
 import NodeLabel from './NodeLabel.vue'
-import { STATUS_NAME } from './types'
+import { STATUS_NAME, NODE_TEXT } from './types'
 
 // Milestone node (§8.5–8.6): a cut gem inside a 24-segment ring, 200px. The
 // ring drains toward the deadline — remaining segments Ink, elapsed Well-deep,
@@ -60,11 +60,11 @@ const glyphInk = computed(() => dark.value ? 'var(--paper)' : props.status === '
 // The chip under the label — a FRAMED square chip (1.5px edge).
 const chip = computed(() => {
   const s = props.status
-  if (s === 'locked') return { text: `LOCKED · ${reqDone.value}/${reqTotal.value} GOALS`, bg: 'var(--paper)', fg: 'var(--slate)', border: 'var(--ash)' }
-  if (s === 'ready') return { text: 'READY TO UNLOCK', bg: 'var(--pulse)', fg: 'var(--ink)', border: 'var(--ink)' }
-  if (s === 'completed') return { text: 'DELIVERED', bg: 'var(--status-completed-base)', fg: 'var(--ink)', border: 'var(--ink)' }
-  if (s === 'halted') return { text: 'HALTED', bg: 'var(--ink)', fg: 'var(--paper)', border: 'var(--ink)' }
-  return { text: `${left.value} DAYS LEFT`, bg: urgent.value ? 'var(--spark)' : 'var(--paper)', fg: 'var(--ink)', border: 'var(--ink)' }
+  if (s === 'locked') return { text: NODE_TEXT.locked(reqDone.value, reqTotal.value), bg: 'var(--paper)', fg: 'var(--slate)', border: 'var(--ash)' }
+  if (s === 'ready') return { text: NODE_TEXT.ready, bg: 'var(--pulse)', fg: 'var(--ink)', border: 'var(--ink)' }
+  if (s === 'completed') return { text: NODE_TEXT.delivered, bg: 'var(--status-completed-base)', fg: 'var(--ink)', border: 'var(--ink)' }
+  if (s === 'halted') return { text: NODE_TEXT.halted, bg: 'var(--ink)', fg: 'var(--paper)', border: 'var(--ink)' }
+  return { text: NODE_TEXT.daysLeft(left.value), bg: urgent.value ? 'var(--spark)' : 'var(--paper)', fg: 'var(--ink)', border: 'var(--ink)' }
 })
 const pips = computed(() => Array.from({ length: reqTotal.value }, (_, i) => i < reqDone.value))
 const showPips = computed(() => pre.value && reqTotal.value > 0)

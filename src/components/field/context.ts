@@ -13,4 +13,4 @@ export interface FieldContext {
   hasError: Ref<boolean>
 }
 
-export const FIELD_INJECTION_KEY: InjectionKey<FieldContext> = Symbol('memoh-field')
+export const FIELD_INJECTION_KEY: InjectionKey<FieldContext> = Symbol('labmate-field')

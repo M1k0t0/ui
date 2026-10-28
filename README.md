@@ -1,4 +1,4 @@
-# @felinic/ui
+# @labmate/ui
 
 A design system for AI agent management interfaces, shipped as a single
 distributable unit: the Vue 3 component library, the design-token scales,
@@ -32,7 +32,7 @@ controls, no shadows. Breaking for hosts upgrading from 0.15:
 ## Consuming as a submodule
 
 ```bash
-git submodule add https://github.com/felinics/ui packages/ui
+git submodule add https://github.com/M1k0t0/ui packages/ui
 ```
 
 The mount point **must** be `packages/ui`: all internal path references

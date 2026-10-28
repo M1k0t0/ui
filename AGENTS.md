@@ -1,4 +1,4 @@
-# @felinic/ui — Design Language Contract
+# @labmate/ui — Design Language Contract
 
 Single source of truth for the **cross-cutting** visual and interaction decisions
 in this component library. It exists because one class of bug kept recurring:
@@ -614,7 +614,7 @@ dark. Tooltip carries no border at all — its solid fill is its own edge.
 - **There is no "in-between" tier.** Wanting a value between two tiers is a
   design question — pick a tier, don't invent a number. `toast` is the one
   intentional exception: it stays a raw `z-index: 9999` (see
-  `.memoh-toaster` in `style.css`) specifically so it wins over the
+  `.labmate-toaster` in `style.css`) specifically so it wins over the
   `--z-top` lightbox too, which a shared tier value can't guarantee once two
   Teleport-rendered layers tie.
 - **Context-internal ordering is NOT on this ladder.** A handful of `0`/`1`/`2`
@@ -679,7 +679,7 @@ dark. Tooltip carries no border at all — its solid fill is its own edge.
 
 ## Scale with the font — rem on anything that touches text
 
-The root sets `font-size: var(--memoh-ui-font-size, 1rem)`, so the UI font-size control
+The root sets `font-size: var(--labmate-ui-font-size, 1rem)`, so the UI font-size control
 and browser zoom resize the whole UI **through rem**. A hardcoded `px` does NOT scale —
 so a px value on a property that gates text stops growing while the text around it
 grows (clipped controls, cramped rows, same-row controls that stop matching height).

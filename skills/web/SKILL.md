@@ -1,6 +1,6 @@
 ---
 name: web
-description: Primary Web development skill for apps/web — white-floating-card design language, disciplined @felinic/ui usage, deliberate copy, honest empty states, aligned controls, and restrained motion. Never hand-write controls or menus; never leave stray fragments (orphan status labels, misaligned save hints). Compose from @felinic/ui primitives and reuse existing save/feedback patterns from reference pages. Use for any apps/web UI work — new pages, settings/list/detail surfaces, chat components, polish passes — not only legacy page migrations. Read this skill before writing or changing Web frontend code.
+description: Primary Web development skill for apps/web — white-floating-card design language, disciplined @labmate/ui usage, deliberate copy, honest empty states, aligned controls, and restrained motion. Never hand-write controls or menus; never leave stray fragments (orphan status labels, misaligned save hints). Compose from @labmate/ui primitives and reuse existing save/feedback patterns from reference pages. Use for any apps/web UI work — new pages, settings/list/detail surfaces, chat components, polish passes — not only legacy page migrations. Read this skill before writing or changing Web frontend code.
 ---
 
 # Web — Page Development & Design Language
@@ -32,19 +32,19 @@ the *how*; these are the *must*.
    state, delete confirm, page frame…) have an owner component, the decision map, and when a
    shape deliberately stays hand-written — lives in `../ui-owners/SKILL.md`;
    read it before building any of those shapes.
-5. **Reuse a component — never hand-write one.** Compose from the real `@felinic/ui` atoms
+5. **Reuse a component — never hand-write one.** Compose from the real `@labmate/ui` atoms
    (Select / Combobox / Tooltip / icon `Button` / `Empty`) and the existing shared parts; never
    re-skin one, hand-roll an equivalent, or rebuild a control out of raw `<div>`s. **Menus
    included:** dropdown / context / action menus use `DropdownMenu` / `ContextMenu` and their
    `*Item` / `*Separator` / `*Label` slots — never hand-written `<button>` rows, never `<hr>` /
    `border-b` dividers inside a popover. The same rule applies to every other surface: if
-   `@felinic/ui` (or an existing app component) already covers it, use it — hand-built markup
+   `@labmate/ui` (or an existing app component) already covers it, use it — hand-built markup
    drifts out of the token contract and reads inconsistent page to page. If a layout repeats,
    extract it into one shared component instead of pasting it twice. A genuinely new component
    is a last resort — clear it with the developer *before* building it.
    **Verify the component's source, not just its name or appearance.** A third-party
-   renderer's built-in Tooltip is not Memoh's Tooltip. For existing UI primitives,
-   confirm the import and implementation resolve to `@felinic/ui` before editing.
+   renderer's built-in Tooltip is not labmate's Tooltip. For existing UI primitives,
+   confirm the import and implementation resolve to `@labmate/ui` before editing.
    Do not fix a slow browser `title` hint by enabling a renderer's private tooltip;
    use the shared `Tooltip` / `TooltipTrigger` / `TooltipContent` and its provider.
    Disable competing renderer hints and the native `title` fallback so only one
@@ -203,7 +203,7 @@ What concretely changed, before → after:
   `StatusChip` (colour + glyph). Accents are fills with Ink text, never text on Paper. `success`/`warning`/
   `destructive` are **rationed signals**, not surface decoration — never tint a whole
   card `bg-success/5`.
-- **Unified components.** Use the refactored `@felinic/ui` atoms as-is. Do not re-skin
+- **Unified components.** Use the refactored `@labmate/ui` atoms as-is. Do not re-skin
   them or inject classes that fight their contract (the canonical "weird Select" bug).
 - **No hover-rise, ever.** Cards and rows do **not** lift / scale-up / grow a shadow on
   hover or press. Press-scale belongs only to buttons and sidebar rail items — never to a
@@ -365,7 +365,7 @@ already existed. Three rules, in order:
 1. **Hand-writing a component is forbidden.** A clickable `<div>` that re-implements a Button, a
    bespoke popover list that re-implements a Select, a `<div>`-grid that re-implements a Table —
    all banned. They can't receive the size / token / focus / a11y contract, and they drift. If
-   `@felinic/ui` (or an existing app component) has it, use it as-is.
+   `@labmate/ui` (or an existing app component) has it, use it as-is.
 2. **A composition that can repeat must be extracted, not pasted.** Even when every piece is a
    properly reused atom, if the *arrangement* could appear in more than one place (a provider
    row, a card header, an empty tile, a field cluster), lift it into one shared component and
@@ -453,7 +453,7 @@ recurring failures to avoid:
   border/bg. See `reference.md` § Dirty → clean for the full case (`ActionCard`'s icon slot).
 - **`BadgeCount`:** `destructive` red dot pinned to an icon corner = alert/unread; `default`
   neutral count rides a tab/filter/segment; a flat list row uses a plain muted numeral, no bubble.
-- **`Tooltip`:** always the `@felinic/ui` `Tooltip`. A hand-rolled or legacy tooltip is a bug.
+- **`Tooltip`:** always the `@labmate/ui` `Tooltip`. A hand-rolled or legacy tooltip is a bug.
 - **An empty state keeps the populated skeleton — it is the same page with no rows yet.** The
   worst empty-state failure is letting "there's no data" rearrange the page into a *different*
   shape. Keep the exact frame the populated state uses (the same `SettingsSection` card, the same
@@ -1020,7 +1020,7 @@ learned from the Access → Advanced rules dialog that broke them:
   gated on `!formVisible` as well as its own condition — a `v-if` that only checks the data
   (`items.length`) leaks the list rows *above* the form view, and their `border-b` shows up as
   a mystery divider under the form title. The form is the dialog's only body while open.
-- **Wrap the swapping body in `@felinic/ui`'s `<AutoHeight>`** so list→form height changes
+- **Wrap the swapping body in `@labmate/ui`'s `<AutoHeight>`** so list→form height changes
   tween (220ms house spring) instead of hard-cutting — a dialog that jumps size on every
   drill-in reads as broken. `AutoHeight` is the height-tween primitive (see
   `packages/ui/AGENTS.md` § Motion); keep it *inside* the `overflow-y-auto` scroll element,
@@ -1030,7 +1030,7 @@ learned from the Access → Advanced rules dialog that broke them:
 dialog**: title top-LEFT + close top-right — the house default for a dialog that is one
 focused form (New Task, settings forms); what `DialogHeader` + `DialogTitle` render
 naturally. (b) **List-management dialog**: title CENTERED, close top-right, body led by the
-search+add toolbar above. For form (b), use `@felinic/ui`'s **`DialogViewHeader`** — do NOT
+search+add toolbar above. For form (b), use `@labmate/ui`'s **`DialogViewHeader`** — do NOT
 hand-write the grid, and do NOT keep the built-in corner close (it pins at `top-3` while the
 title row sits below the content padding, so their centerlines miss by ~12px and the header
 reads broken the moment a back chevron joins). `DialogPanel view-swap` disables the corner
@@ -1125,7 +1125,7 @@ is not that.)
 **The scrolling dialog body is `DialogBody`, and it fades at the scroll edges.** Inside a
 `DialogPanel` (the capped focused-dialog shell — its props own `max-h-[80dvh]`, the grid
 rows, width rungs, and the view-swap corner-close pairing; NEVER retype those classes),
-the body row is `@felinic/ui`'s `<DialogBody>` — it owns the `-mr-3 pr-3` scroll-gutter trick
+the body row is `@labmate/ui`'s `<DialogBody>` — it owns the `-mr-3 pr-3` scroll-gutter trick
 AND a stateful scroll-edge fade: content continuing past the box fades out over the last
 16px, each edge only while more content actually exists in that direction (top of scroll → no
 top fade; bottom reached → fade dissolves; content shorter than the box → no fade at all),
@@ -1137,7 +1137,7 @@ nests INSIDE `DialogBody`, never the other way around.
 > The remaining hand-written part of the list-management pattern is the body composition
 > (search+add toolbar, rows, empty/no-match states, AutoHeight'd list↔form swap) in
 > `bot-access.vue`. The shell primitives (`DialogViewHeader`, `DialogBody`, `AutoHeight`) are
-> already in `@felinic/ui` — compose those; if a second full list-management dialog appears,
+> already in `@labmate/ui` — compose those; if a second full list-management dialog appears,
 > consider lifting the body composition too.
 >
 > Same status for the ActionCard **entry section block** (`<section class="space-y-2.5">` +
@@ -1260,13 +1260,13 @@ seeing it rendered is:
 - **Reuse audit:** did you reuse every component you could — or hand-write / duplicate something
   a primitive or a shared composition already covers? Is any brand-new component cleared with
   the developer? Was a repeated arrangement extracted, not pasted?
-- **Import audit — a `@felinic/ui` tag you forgot to import silently degrades to a native
+- **Import audit — a `@labmate/ui` tag you forgot to import silently degrades to a native
   element, and *nothing flags it*.** Vue resolves an unimported PascalCase tag against the DOM:
   `<Progress>` falls back to the native `<progress>` (a chunky grey OS bar, `model-value` inert),
   `<Switch>`/`<Dialog>` to unknown/native elements — eslint and `vue-tsc` both pass, so it only
   shows up in the *rendered* page (the canonical bug: a billing meter that shipped as a fat grey
-  block instead of the thin token bar). For every `@felinic/ui` component the template uses,
-  confirm it's in the `import { … } from '@felinic/ui'` list — and trust the rendered pixels over
+  block instead of the thin token bar). For every `@labmate/ui` component the template uses,
+  confirm it's in the `import { … } from '@labmate/ui'` list — and trust the rendered pixels over
   "I wrote `<Progress>`, so it's the Progress component."
 - **Forms & sizing:** do forms match the New Task standard, and is every button sized on purpose
   (default h-9 for primaries / footers, `sm` only where genuinely tight)? No squat `sm` footers.
@@ -1294,7 +1294,7 @@ on controls. A page is not done until it passes.
    **icons stacked inside a card**, kill any layer that isn't earning its keep. The cheapest
    place to delete a needless layer is here, on paper, before it exists in code.
 5. **Rebuild** from the shell down, **reusing components, never hand-writing them**: page shell →
-   `SettingsSection`/`SettingsRow` groups → the right `@felinic/ui` atoms, tokens only →
+   `SettingsSection`/`SettingsRow` groups → the right `@labmate/ui` atoms, tokens only →
    **re-wire every behavior from the step-2 inventory** → copy through the § 1 interrogation →
    empty states that hold the frame → aligned same-row heights → only the motion that fits. If a
    composition repeats, extract it; if you think you need a new component or an icon, get the

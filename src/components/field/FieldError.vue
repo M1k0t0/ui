@@ -29,8 +29,9 @@ onBeforeUnmount(() => {
   <p
     :id="field?.errorId"
     data-slot="field-error"
+    data-error-text
     :class="cn(
-      'text-destructive flex items-center gap-1.5 text-label leading-snug',
+      'text-foreground flex items-center gap-1.5 text-label leading-snug',
       props.class,
     )"
   >

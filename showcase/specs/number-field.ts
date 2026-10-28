@@ -26,6 +26,6 @@ export const numberFieldSpec: ComponentSpec = {
       disabled: Boolean(state.disabled),
       class: 'w-40',
       modelValue: Number(state.value),
-      'onUpdate:modelValue': (v: number) => (state.value = v),
+      'onUpdate:modelValue': (v: number | undefined) => (state.value = v ?? 0),
     }),
 }

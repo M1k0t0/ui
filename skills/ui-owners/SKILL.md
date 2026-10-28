@@ -32,50 +32,50 @@ because there is only one copy of its spacing.
 ## The core owners
 
 Import paths are exact. **As of the 2026-07 owner lift, every core owner below
-lives in `@felinic/ui`** (mostly `src/components/settings/`; a few in their own
+lives in `@labmate/ui`** (mostly `src/components/settings/`; a few in their own
 component dirs) — the `apps/web/src/components/` paths left in the entries are
 re-export shims that keep old imports working. Import new call sites from
-`@felinic/ui` directly; the shims die in the migration follow-up.
+`@labmate/ui` directly; the shims die in the migration follow-up.
 
 ### Structure
 
-**SettingsShell** · `settings-shell/index.vue` — shim (impl in `@felinic/ui`).
+**SettingsShell** · `settings-shell/index.vue` — shim (impl in `@labmate/ui`).
 The settings page width shell: centered column with the page-width LADDER
 (`narrow` max-w-3xl · `standard` max-w-4xl · `wide` max-w-6xl · `full`) and the
 page gutter (`px-4 md:px-6`). The ladder's single source is
-`settingsWidthClass` (`@felinic/ui`, `src/components/settings/width.ts`) —
+`settingsWidthClass` (`@labmate/ui`, `src/components/settings/width.ts`) —
 DetailPane consumes the same helper so its back row shares the content's
 rails. PageShell is the OTHER page frame (title block + actions + doc gutter):
 PageShell for titled settings pages, SettingsShell for master-detail panes
 that carry their own inner structure.
 
-**DetailPane** · `settings/detail-pane.vue` — shim (impl in `@felinic/ui`).
+**DetailPane** · `settings/detail-pane.vue` — shim (impl in `@labmate/ui`).
 The in-page detail surface (list ↔ detail navigation): a back row
 (**BackButton**) width-matched to the body, a loading skeleton mirroring the
 real body (header card + 4-row form card, so the frame doesn't jump when
 content swaps in), and the detail slot. Props: `backLabel`, `width`
 (SettingsWidth ladder), `loading`. Emits `back`.
 
-**BackButton** · `settings/back-button.vue` — shim (impl in `@felinic/ui`).
+**BackButton** · `settings/back-button.vue` — shim (impl in `@labmate/ui`).
 THE back affordance for in-page detail surfaces (DetailPane + bot-detail tabs
 that can't use DetailPane). Ghost button, `px-4`, chevron + truncated label,
 `/85` ink. Props: `label`. Emits `click`.
 
 **SwapTransition** · `settings/swap-transition.vue` — shim (impl in
-`@felinic/ui`; its `swap-forward/*` / `swap-back/*` classes live in the
+`@labmate/ui`; its `swap-forward/*` / `swap-back/*` classes live in the
 library's style.css). The directional push-pop for list ↔ detail swaps:
 forward opens the next pane at the top, back restores the exact scroll offset
 (an internal stack handles any nesting depth). Props: `direction:
 'forward' | 'back'`. No `appear` — the first paint is a plain cut.
 
 **StatusDot** · `settings/status-dot/index.vue` — shim (impl in
-`@felinic/ui`). The tiny status dot atom (status → color), composed by
+`@labmate/ui`). The tiny status dot atom (status → color), composed by
 BackendCard (`enabled` badge) and MetricReadout — never hand-paint a colored
 dot.
 
 **PageShell** · `page-shell/index.vue` — a re-export shim; the implementation
-lives in `@felinic/ui` (`src/components/settings`), shared with the component
-showcase. Import new call sites from `@felinic/ui`. Its title block is the
+lives in `@labmate/ui` (`src/components/settings`), shared with the component
+showcase. Import new call sites from `@labmate/ui`. Its title block is the
 shared **PageHeader** (same directory) — the ONE title + subtitle pair, also
 composed by SectionGroup's `heading` mode.
 The page header + centered `max-w-3xl` column. Props: `title`, `description`,
@@ -83,14 +83,14 @@ The page header + centered `max-w-3xl` column. Props: `title`, `description`,
 route). Slot: `#actions` (header-right toolbar). Every settings surface starts here.
 
 **SettingsSection** · `settings/section.vue` — a re-export shim; the
-implementation lives in `@felinic/ui` (`src/components/settings`), shared
-with the component showcase. Import new call sites from `@felinic/ui`.
+implementation lives in `@labmate/ui` (`src/components/settings`), shared
+with the component showcase. Import new call sites from `@labmate/ui`.
 A grey section label above a bordered white card. Props: `title`. Slots: `#actions`
 (header toolbar, right of the title), default (the rows), `#footer` (an action band —
 Save/Cancel or pagination — rendered *inside* the card with a top hairline). A card is a
 `SettingsSection`; you never hand-roll `rounded-… border bg-card`.
 
-**SurfaceCard** · `@felinic/ui` (`src/components/settings`) — the same card shell
+**SurfaceCard** · `@labmate/ui` (`src/components/settings`) — the same card shell
 as SettingsSection, for a body that is NOT settings rows: a plan / quota summary,
 a page identity header (icon + name + enable switch), a list container whose rows
 carry their own inset. Props: `padding: 'none' | 'row' | 'lg'` (default `lg` = p-5;
@@ -107,8 +107,8 @@ when the card sits inside another card-colored surface (a dialog body, a card
 within a card) so the boundary stays visible there.
 
 **SectionGroup** · `section-group/index.vue` — a re-export shim; the
-implementation lives in `@felinic/ui` (`src/components/settings`), shared
-with the component showcase. Import new call sites from `@felinic/ui`.
+implementation lives in `@labmate/ui` (`src/components/settings`), shared
+with the component showcase. Import new call sites from `@labmate/ui`.
 A titled content group: a **foreground** section label (+ optional hint, `#actions`
 toolbar) heading a BARE body — typically a BackendCard grid. Deliberately NOT
 SettingsSection (muted label + bordered card): SectionGroup is the page-content tier,
@@ -128,8 +128,8 @@ section the air the card would have provided.
 ### Rows (things inside a section card)
 
 **SettingsRow** · `settings/row.vue` — *the workhorse.* (Re-export shim; the
-implementation lives in `@felinic/ui` (`src/components/settings`), shared
-with the component showcase. Import new call sites from `@felinic/ui`.)
+implementation lives in `@labmate/ui` (`src/components/settings`), shared
+with the component showcase. Import new call sites from `@labmate/ui`.)
 One horizontal row inside a section card. The canonical geometry
 (`min-h-[3.75rem] py-3 mx-4 border-b`, inset hairline, `last:border-b-0`) lives here and
 nowhere else. Props:
@@ -199,7 +199,7 @@ stacks it *above*.
 > `<Label>`. A plain field with no validation is just `<FieldStack :label>` around the
 > control. **One caveat:** because FieldStack now renders errors inline, any hardcoded
 > validation message in the zod schema becomes visible — translate it (zh/en/ja) instead
-> of shipping the English default. The older `@felinic/ui` `<FormItem>` (`grid gap-2`) is
+> of shipping the English default. The older `@labmate/ui` `<FormItem>` (`grid gap-2`) is
 > superseded; new code uses FieldStack.
 
 
@@ -210,7 +210,7 @@ A `space-y-4` wrapper for a run of `FieldStack`s. Use it around a contiguous for
 ### Readouts & notices
 
 **DeviceCodePanel** · `device-code-panel/index.vue` — shim (impl in
-`@felinic/ui`).
+`@labmate/ui`).
 设备码授权(RFC 8628)的"输码时刻":一句指引(caller i18n,防钓鱼警示写在 hint 里)→
 英雄码(text-3xl mono,select-all,不是输入框)→ 唯一动作"复制并打开"(【先发起复制、
 再同步打开,两行都不 await】——趁当前页聚焦先发起 writeText,失焦会让 Chromium 复制
@@ -223,7 +223,7 @@ Props: `code`, `verificationUri`, `expiresAt?`, `hint`, `retryLoading?`,以及�
 不要合并。已知同形状旧写法:bots ACP 面板、onboarding Step4 —— 迁移前先做各自的
 行为盘点(ACP 有真 cancel API 和错误态)。
 
-**CodePanel** · `@felinic/ui`(`src/components/code-panel`)
+**CodePanel** · `@labmate/ui`(`src/components/code-panel`)
 只读代码块 + 复制按钮:聊天代码块、要粘到终端运行的命令、配置片段都用它。外框是
 menu-shell 圆角(与 SettingsSection / SurfaceCard 同档,放在设置卡片旁边对得齐)。
 Props: `code`(复制的原文)、`copyLabel` / `copiedLabel` / `copyFailedMessage`(caller
@@ -232,7 +232,7 @@ i18n)、`width: 'fit' | 'full'`(fit 贴合代码,聊天用;full 撑满行,对话
 把渲染好的内容放进默认 slot,不放则原样显示 `code`。不要再手写 `pre` + 绝对定位复制按钮。
 复制按钮单独是 **CopyButton**(同目录 `copy-button`),图标按钮 + 复制后打勾动效。
 
-**LabelSwap**(`@felinic/ui` 原语,非 apps/web owner,顺带登记防重造)
+**LabelSwap**(`@labmate/ui` 原语,非 apps/web owner,顺带登记防重造)
 会"换字"的内容槽:每个候选 label 一个具名 slot,`active` 指名当前项;各 label 保持
 自然宽度,切换时外壳宽度按 house spring 平滑过渡、label 交叉淡出。给 Connect↔Cancel
 式的状态开关按钮用 —— 不要再用 min-w 魔法数定宽或手写叠格量宽(grid 轨道按最宽
@@ -277,7 +277,7 @@ A whole pane/panel with nothing else to show       → PanePlaceholder (centered
 **PanePlaceholder** · `pane-placeholder/index.vue`
 The centered fill for a pane's content area, three states: `loading` (horizontal
 spinner + text), default empty (vertical `#icon` + text + `#action`), `title` (emphasized
-two-line block, e.g. "Select a bot"). Deliberately **not** the `@felinic/ui` `Empty`
+two-line block, e.g. "Select a bot"). Deliberately **not** the `@labmate/ui` `Empty`
 (that's the dashed/solid framed card for in-page empties); PanePlaceholder is for the
 frameless center of a panel that has nothing else. Parent must give it height.
 
@@ -299,19 +299,19 @@ class (single root node, merges with the component's base class).
 ### Dialogs
 
 **FormDialogShell** · `form-dialog-shell/index.vue` — shim (impl in
-`@felinic/ui`). The Dialog-with-a-form skeleton: Dialog + form + footer band
+`@labmate/ui`). The Dialog-with-a-form skeleton: Dialog + form + footer band
 (default `sm:max-w-106.25`). Compose it for any create/edit dialog whose body
 is a form — never hand-roll the dialog+form+footer assembly.
 
 **ConfirmPopover** · `confirm-popover/index.vue` — shim (impl in
-`@felinic/ui`). The anchored confirm bubble (NOT a modal): shared popover
+`@labmate/ui`). The anchored confirm bubble (NOT a modal): shared popover
 chrome, a title-grade question (`title`, or `message` alone), optional
 supporting line, ghost cancel + action confirm. Props: `title`, `message`,
 `cancelText` / `confirmText` (**required** — caller i18n, no fallback),
 `loading`, `variant`. Emits `confirm`.
 
 **ConfirmDeleteDialog** · `confirm-delete-dialog/index.vue` — shim (impl in
-`@felinic/ui`).
+`@labmate/ui`).
 The delete-confirmation dialog: `sm:max-w-sm`, title + optional `DialogDescription`,
 outline cancel + destructive confirm. Props: `open` (v-model), `title`, `description`,
 `cancelLabel` / `confirmLabel` (**required** — caller i18n; the old
@@ -402,7 +402,7 @@ Same discipline, narrower home — compose these when working on their surface:
 
 ### Plus one atom you already have
 
-**Empty** (`@felinic/ui`) — the framed in-page empty state card. Fold `py-12`/`py-16` as
+**Empty** (`@labmate/ui`) — the framed in-page empty state card. Fold `py-12`/`py-16` as
 needed. Loading and empty states must still draw their frame so nothing reflows.
 
 ## Which owner? — a decision map
@@ -425,7 +425,7 @@ A vertical, centered entity/add tile?           → PersonaTile
 An error / warning / info notice?               → CalloutBanner (bare inside a host surface)
 A device-code "enter this code" moment?         → DeviceCodePanel
 Read-only code / a command to copy?             → CodePanel
-A label that swaps with state (Connect↔Cancel)? → LabelSwap (@felinic/ui)
+A label that swaps with state (Connect↔Cancel)? → LabelSwap (@labmate/ui)
 The page frame itself?                          → PageShell
 A pane with nothing to show (loading/empty)?    → PanePlaceholder (centered fill)
 An in-flow loading row (spinner + text)?        → InlineLoadingRow

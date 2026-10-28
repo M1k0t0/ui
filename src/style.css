@@ -611,7 +611,7 @@
      to those rows, so it must match their corner, not the generic Card family's.
      Set here (not a Tailwind rounded-[…] class) because the guard HARD-fails any
      arbitrary-radius Tailwind token in packages/ui — this mirrors how the Toast
-     shell (.memoh-toast above) sets the same token as a plain CSS property. */
+     shell (.labmate-toast above) sets the same token as a plain CSS property. */
   [data-slot="action-card"] {
     border-radius: var(--radius-menu-shell);
     /* Border-COLOR lives here (not a Tailwind `border-border` class) so it can
@@ -1186,8 +1186,8 @@
   --menu-item-leading-size: calc(var(--text-label--line-height) + 1rem);
   --menu-viewport-max-height: calc(2.125rem * 9 + 0.125rem * 8);
   --select-viewport-max-height: var(--menu-viewport-max-height);
-  --font-sans: "Space Grotesk Variable", "Space Grotesk", "MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
-  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-sans: "Space Grotesk Variable", "Space Grotesk", "MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, "PingFang SC", "Microsoft YaHei UI", "Noto Sans Mono CJK SC", "Noto Sans CJK SC", monospace;
   --radius: var(--chamfer-control);
   /* Near-neutral WARM surfaces (hue 63, faint chroma — a gentle warm lean so the
      off-white reads cozy and slightly white-leaning, NOT yellow/red and NOT the
@@ -1934,8 +1934,8 @@
   --text-body: 0.9375rem; /* 15px — body (§4 Body 15/400, lh 1.55) */
   --text-body--line-height: 1.55;
   --text-body--letter-spacing: 0;
-  --text-label: 0.875rem; /* 14px — form labels, emphasized small */
-  --text-label--line-height: 1.25rem;
+  --text-label: 0.8125rem; /* 13px — form labels, emphasized small (< body 15, §4) */
+  --text-label--line-height: 1.125rem;
   --text-label--letter-spacing: 0;
   --text-control: 0.9375rem; /* 15px — buttons, compact titles */
   --text-control--line-height: 1.25rem;
@@ -2187,7 +2187,7 @@
    no shadow. Colour stays neutral; semantic intent is carried ONLY by the
    leading semantic icon.
    Two layout variants: single (no description) and rich (has description). */
-.memoh-toaster {
+.labmate-toaster {
   position: fixed;
   /* ui-allow-z: NOT folded into --z-top, despite the ladder's catch-all
      guidance to fold stray values — doing so ties the toast with the media
@@ -2217,35 +2217,35 @@
      the whole stack back out (no-op on web). See apps/desktop/AGENTS.md. */
   -webkit-app-region: no-drag;
 }
-.memoh-toaster > * {
+.labmate-toaster > * {
   pointer-events: auto;
 }
-.memoh-toaster--top-right,
-.memoh-toaster--top-left,
-.memoh-toaster--top-center {
+.labmate-toaster--top-right,
+.labmate-toaster--top-left,
+.labmate-toaster--top-center {
   top: 1rem;
 }
-.memoh-toaster--bottom-right,
-.memoh-toaster--bottom-left,
-.memoh-toaster--bottom-center {
+.labmate-toaster--bottom-right,
+.labmate-toaster--bottom-left,
+.labmate-toaster--bottom-center {
   bottom: 1rem;
 }
-.memoh-toaster--top-right,
-.memoh-toaster--bottom-right {
+.labmate-toaster--top-right,
+.labmate-toaster--bottom-right {
   right: 1rem;
 }
-.memoh-toaster--top-left,
-.memoh-toaster--bottom-left {
+.labmate-toaster--top-left,
+.labmate-toaster--bottom-left {
   left: 1rem;
 }
-.memoh-toaster--top-center,
-.memoh-toaster--bottom-center {
+.labmate-toaster--top-center,
+.labmate-toaster--bottom-center {
   left: 50%;
   transform: translateX(-50%);
 }
 
 /* ── Toast card shell ─────────────────────────────────────────────────────── */
-.memoh-toast {
+.labmate-toast {
   /* Ghost button hover chip recalibrated to the popover surface —
      see comment in the no-drag block above for full rationale. */
   --btn-ghost-hover: var(--btn-ghost-hover-on-popover);
@@ -2261,7 +2261,7 @@
 /* ── SINGLE LINE: no description ─────────────────────────────────────────── *
  *  icon · title · (action) · ×   — one flat row, all center-aligned.         *
  * ─────────────────────────────────────────────────────────────────────────── */
-.memoh-toast--single {
+.labmate-toast--single {
   align-items: center;
   padding: 0.375rem 0.375rem 0.375rem 0.75rem;
 }
@@ -2270,39 +2270,39 @@
  *  icon · [title-row · (action)]  · ×   — top-aligned outer shell            *
  *            desc                                                             *
  * ─────────────────────────────────────────────────────────────────────────── */
-.memoh-toast--rich {
+.labmate-toast--rich {
   align-items: flex-start;
   padding: 0.625rem 0.375rem 0.625rem 0.75rem;
 }
 
 /* ── Icons ────────────────────────────────────────────────────────────────── */
-.memoh-toast__icon {
+.labmate-toast__icon {
   flex-shrink: 0;
 }
 /* In rich mode (align-items: flex-start) each icon's optical center sits at a
    slightly different height within the 24×24 Lucide viewBox, so they each need
    an individual nudge to land on the 13px title cap-line. */
-.memoh-toast__icon--rich {
+.labmate-toast__icon--rich {
   margin-top: 1px; /* info — already close, minimal nudge */
 }
-.memoh-toast--rich[data-variant="warning"] .memoh-toast__icon--rich,
-.memoh-toast--rich[data-variant="success"] .memoh-toast__icon--rich,
-.memoh-toast--rich[data-variant="error"]   .memoh-toast__icon--rich {
+.labmate-toast--rich[data-variant="warning"] .labmate-toast__icon--rich,
+.labmate-toast--rich[data-variant="success"] .labmate-toast__icon--rich,
+.labmate-toast--rich[data-variant="error"]   .labmate-toast__icon--rich {
   margin-top: 2px;
 }
-.memoh-toast[data-variant="success"] .memoh-toast__icon { color: var(--success); }
-.memoh-toast[data-variant="warning"] .memoh-toast__icon { color: var(--warning); }
-.memoh-toast[data-variant="error"]   .memoh-toast__icon { color: var(--destructive); }
-.memoh-toast[data-variant="info"]    .memoh-toast__icon { color: var(--info); }
+.labmate-toast[data-variant="success"] .labmate-toast__icon { color: var(--success); }
+.labmate-toast[data-variant="warning"] .labmate-toast__icon { color: var(--warning); }
+.labmate-toast[data-variant="error"]   .labmate-toast__icon { color: var(--destructive); }
+.labmate-toast[data-variant="info"]    .labmate-toast__icon { color: var(--info); }
 
 /* Single-line title stretches to fill the row */
-.memoh-toast__title--grow {
+.labmate-toast__title--grow {
   flex: 1 1 auto;
   min-width: 0;
 }
 
 /* ── Rich body: column layout, title → desc → (action) ───────────────────── */
-.memoh-toast__body {
+.labmate-toast__body {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
@@ -2315,25 +2315,25 @@
    wrap INSIDE the card, never spill past the close button. `anywhere` also lets
    the flex item collapse to its true min-content width, so a wall-of-text title
    can't push the row wider than the 22rem column. Applies to single + rich. */
-.memoh-toast__title,
-.memoh-toast__desc {
+.labmate-toast__title,
+.labmate-toast__desc {
   overflow-wrap: anywhere;
 }
 /* Single-line: one grade larger — the card is compact so the title carries more weight */
-.memoh-toast--single .memoh-toast__title {
+.labmate-toast--single .labmate-toast__title {
   font-size: var(--text-control);
   line-height: var(--text-control--line-height);
   letter-spacing: var(--text-control--letter-spacing);
   font-weight: 500;
 }
 /* Rich: title at text-label (13px) — desc sits below so title doesn't need to dominate */
-.memoh-toast--rich .memoh-toast__title {
+.labmate-toast--rich .labmate-toast__title {
   font-size: var(--text-label);
   line-height: var(--text-label--line-height);
   letter-spacing: var(--text-label--letter-spacing);
   font-weight: 500;
 }
-.memoh-toast__desc {
+.labmate-toast__desc {
   margin-top: 0.25rem;
   font-size: var(--text-body);
   line-height: var(--text-body--line-height);
@@ -2349,7 +2349,7 @@
    `text-label` type (a notch under the button default) so it reads as an action,
    not a control hogging the toast. Single-line stays center-aligned by the row;
    rich pins below the description (see the rich rule). */
-.memoh-toast__action {
+.labmate-toast__action {
   flex-shrink: 0;
   height: 1.75rem;
   padding-top: 0;
@@ -2362,54 +2362,54 @@
    need this height, extract it as a proper `xs` size in button/index.ts instead
    of duplicating this override. */
 
-/* Rich action: lives inside .memoh-toast__body (flex column). Push it down so
+/* Rich action: lives inside .labmate-toast__body (flex column). Push it down so
    the visual gap from desc-text-bottom to button-top ≈ card's padding-bottom
    (0.625rem / 10px).  desc half-leading ≈ 2px, so margin-top 0.5rem (8px)
    gives ~10px visual distance — matching the bottom padding symmetrically. */
-.memoh-toast--rich .memoh-toast__action {
+.labmate-toast--rich .labmate-toast__action {
   align-self: flex-start;
   margin-top: 0.5rem;
 }
 
 /* Single-line close: no adjustment needed (outer row is already center-aligned) */
-.memoh-toast__close {
+.labmate-toast__close {
   flex-shrink: 0;
 }
 
 /* Rich close: icon-sm is 32px, title line-box is 18px. With flex-start the
    button top aligns to the card top edge; pull it up so its visual center
    tracks the title's cap-line instead of sitting a full button-radius below. */
-.memoh-toast__close--rich {
+.labmate-toast__close--rich {
   margin-top: -0.25rem;
 }
 
 /* enter: a SHORT slide in from the right + fade. exit: quick fade back to the
    right. The leaving card drops out of flow so the rest slide up cleanly. No
    vertical travel, no scale — the "from the right, local fade" spec. */
-.memoh-toast-enter-from,
-.memoh-toast-leave-to {
+.labmate-toast-enter-from,
+.labmate-toast-leave-to {
   opacity: 0;
   transform: translateX(1rem);
 }
-.memoh-toast-enter-active {
+.labmate-toast-enter-active {
   transition:
     transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
     opacity 140ms ease;
 }
-.memoh-toast-leave-active {
+.labmate-toast-leave-active {
   position: absolute;
   width: 100%;
   transition:
     transform 140ms ease,
     opacity 120ms ease;
 }
-.memoh-toast-move {
+.labmate-toast-move {
   transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 @media (prefers-reduced-motion: reduce) {
-  .memoh-toast-enter-active,
-  .memoh-toast-leave-active,
-  .memoh-toast-move {
+  .labmate-toast-enter-active,
+  .labmate-toast-leave-active,
+  .labmate-toast-move {
     transition-duration: 1ms;
   }
 }
@@ -2533,6 +2533,10 @@
 .rounded-full {
   border-radius: var(--chamfer-octagon);
 }
+/* 细长的东西 (滑块轨道与把手、骨架、进度条) 按八边形切角会切成菱形 / 六边形: 它们取 chip 的 4px 切角 (§2.2)。 */
+:is([data-slot="slider-track"], [data-slot="slider-range"], [data-slot="skeleton"], [data-slot="progress"], [data-slot="progress-indicator"]).rounded-full {
+  border-radius: 4px;
+}
 
 /* Browsers without corner-shape would draw the radius ladder as CURVES — the
    one thing this language forbids — so they fall back to square corners.
@@ -2567,12 +2571,12 @@
      A disabled CTA reads as a Mist plate with Steel text, not a faded CTA.
      !important: the cva base carries `disabled:opacity-40` (utilities layer)
      for ghost/link, which must not fade these. */
-  [data-button]:is([data-variant="default"], [data-variant="primary"], [data-variant="outline"], [data-variant="secondary"], [data-variant="brand"], [data-variant="destructive"]):disabled {
+  [data-button]:is([data-variant="default"], [data-variant="primary"], [data-variant="outline"], [data-variant="secondary"], [data-variant="brand"], [data-variant="destructive"]):disabled:not([data-loading]) {
     opacity: 1 !important;
     color: var(--disabled-foreground) !important;
     background-color: var(--disabled-fill) !important;
   }
-  [data-button]:is([data-variant="default"], [data-variant="primary"], [data-variant="outline"], [data-variant="secondary"], [data-variant="brand"]):disabled::before {
+  [data-button]:is([data-variant="default"], [data-variant="primary"], [data-variant="outline"], [data-variant="secondary"], [data-variant="brand"]):disabled:not([data-loading])::before {
     background-color: var(--disabled-fill);
     box-shadow: none;
   }
@@ -2582,8 +2586,9 @@
      Keyed off [data-ui-selected] like every other durable selected state. */
   :is([data-slot="card"], [data-slot="surface-card"], [data-slot="action-card"])[data-ui-selected] {
     position: relative;
-    border-width: 2px;
-    border-color: var(--foreground);
+    /* !important: 卡片自己的 border 工具类 (utilities layer) 会盖掉这里 (panel v2 附录 A) */
+    border-width: 2px !important;
+    border-color: var(--foreground) !important;
   }
   :is([data-slot="card"], [data-slot="surface-card"], [data-slot="action-card"])[data-ui-selected]::after {
     content: "";
@@ -2629,4 +2634,41 @@
 svg.lucide {
   stroke-linecap: square;
   stroke-linejoin: miter;
+}
+
+/* ── 附录 A (labmate panel v2 设计): 焦点与错误文字 ─────────────────────────────
+   焦点: 一律 2px Ink 外框、留 2px 缝 (对 Paper 21:1, 对 Pulse 填充同样可见); 按钮、复选框、菜单、select、分段、链接与字段都一样,
+   subtle 字段聚焦不再变浅。错误文字: 强调色只作填充 (§3.21), 错误信息用 Ink 字, 前面一块 Spark 方块作标记 (§3.3 颜色 + 图形)。 */
+/* 焦点规则不放进 layer: 组件 cva 里的 outline-none (utilities layer) 不能把它盖掉。 */
+:is([data-button], [data-slot="select-trigger"], [data-slot="native-select"], [role="checkbox"], [role="radio"], [role="switch"],
+  [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="tab"], [data-segment-item], [data-slot="schedule-bar"], a[href], summary):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+:is([data-slot="input"], [data-slot="textarea"], [data-slot="pin-input-slot"]):focus,
+:is([data-slot="input-group"], [data-slot="number-field"], [data-slot="tags-input"]):focus-within {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@layer components {
+  [data-error-text] {
+    color: var(--ink);
+  }
+  [data-error-text]::before {
+    content: "";
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--spark);
+    border-radius: 0;
+  }
+}
+
+/* 横幅 (§7.8): 确认是 Pulse 横幅加 Ink 边, 错误是 Spark; toast 同样。 */
+@layer components {
+  .labmate-toast[data-variant="success"] { background-color: var(--pulse); color: var(--ink); box-shadow: inset 0 0 0 var(--stroke) var(--ink); }
+  .labmate-toast[data-variant="error"] { background-color: var(--spark); color: var(--ink); box-shadow: inset 0 0 0 var(--stroke) var(--ink); }
+  .labmate-toast[data-variant="success"] .labmate-toast__icon,
+  .labmate-toast[data-variant="error"] .labmate-toast__icon { color: var(--ink); }
 }

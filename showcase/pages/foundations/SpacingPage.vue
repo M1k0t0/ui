@@ -6,7 +6,7 @@ import { tt } from '../../lib/i18n'
 // No custom spacing tokens exist — the system rides the Tailwind spacing
 // ladder (0.25rem base). What the contract legislates is rem-vs-px: anything
 // touching text uses the rem ladder so the whole UI scales with
-// --memoh-ui-font-size; px is reserved for non-text decoration (hairlines,
+// --labmate-ui-font-size; px is reserved for non-text decoration (hairlines,
 // icon sizes, blur).
 function rem(n: number): string {
   return `${n * 0.25}rem`
@@ -52,8 +52,8 @@ function rem(n: number): string {
         <div class="space-y-2 text-control text-muted-foreground">
           <p>
             {{ tt(
-              'The root font size is var(--memoh-ui-font-size, 1rem) — the UI font-size control and browser zoom resize the whole UI through rem. A hardcoded px on a text-coupled property (font size, control height, padding, gaps) stops growing while the text around it grows.',
-              '根字号是 var(--memoh-ui-font-size, 1rem)——界面字号设置和浏览器缩放都通过 rem 整体缩放 UI。写死 px 的文本相关属性(字号、控件高度、内距、间距)会在周围文字变大时停止跟随。',
+              'The root font size is var(--labmate-ui-font-size, 1rem) — the UI font-size control and browser zoom resize the whole UI through rem. A hardcoded px on a text-coupled property (font size, control height, padding, gaps) stops growing while the text around it grows.',
+              '根字号是 var(--labmate-ui-font-size, 1rem)——界面字号设置和浏览器缩放都通过 rem 整体缩放 UI。写死 px 的文本相关属性(字号、控件高度、内距、间距)会在周围文字变大时停止跟随。',
             ) }}
           </p>
           <p>

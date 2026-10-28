@@ -4,7 +4,7 @@
 // background), so this file can never drift out of sync with style.css's
 // values — at worst a renamed token renders as a transparent bar, which is
 // the visible signal to update this list. The domain families (event /
-// capability / context-window / diff / terminal / chart) are Memoh-specific
+// capability / context-window / diff / terminal / chart) are app-specific
 // semantic palettes, not generic primitives — they get their own section.
 
 export interface ColorRow {

@@ -5,7 +5,7 @@ parent contract (`../AGENTS.md`) still applies in full — tokens only, the
 clean/dirty rule, rem on text-coupled sizes, the z ladder. If you are working
 on the library itself (`src/`) or on the host app, you do NOT need this file.
 
-**The showcase is the copy-precedent surface.** Everyone who builds a Memoh
+**The showcase is the copy-precedent surface.** Everyone who builds a labmate
 interface will treat whatever they find here as the sanctioned way to write
 it — a hand-written pattern in the showcase reads as "official, feel free to
 copy". So: every class on every page must trace to an owner component or a
@@ -130,7 +130,7 @@ pages and foundation pages, with their own law:
   refs. No fake backends, no demo data plumbing.
 - **Bilingual, generic copy.** All strings go through `tt()` and read as
   "any product's" copy — an example names no concrete product and teaches
-  no Memoh-specific business wording.
+  no labmate-specific business wording.
 
 Register each page in `registry.ts` under the `examples` nav group via the
 `example()` helper (id prefix `examples/`).
@@ -168,7 +168,7 @@ Register each page in `registry.ts` under the `examples` nav group via the
 
 ## The shell dogfoods the library
 
-Sidebar/controls/chrome are built from `@felinic/ui` components and follow
+Sidebar/controls/chrome are built from `@labmate/ui` components and follow
 the parent contract (tokens only, rem on text-coupled sizes, the z ladder,
 `[data-ui-selected]` for selected rows, the library's own Tooltip/Select/
 ScrollArea — never a hand-rolled bubble or native popup). The host guard

@@ -38,9 +38,9 @@ Flat, always. Floating menus, popovers, dialogs and panels are separated by a **
 
 ### Base Atoms
 
-- **Avatars**: `size-8` (32px) `rounded-full`, `overflow-hidden`, `shrink-0`; the size is overridable per call site via `class` (e.g. `class="size-6"` / `size-10"`). Fallback is a paired step of the warm-gray ramp — `bg-[--accent-gray-soft-active]` fill + `text-[--accent-gray-deep]` `font-medium` initials, centered and `select-none`. (The old `bg-muted`/`text-muted-foreground` was too light to read as a present circle and the cool muted-foreground initials looked murky; the ramp pair gives a deliberate placeholder, not an empty/disabled blob.) Still neutral — no per-identity accent tint. Status dots/badges are composed at the call site and need a 2px knockout border matching the surface behind the avatar.
+- **Avatars**: `MateAvatar` — a human is a Paper octagon with an Ink outline and one Ink corner facet at the bottom-right; an agent is an Ink hexagon whose top-left plane is Pulse (LabMate §5). Never a circle; generic `Avatar` (`rounded-full`) renders as an octagon.
 - **Badges**: 4px radius (`rounded-sm`). Default uses `secondary/secondary-foreground` with `border-border`. Secondary uses `accent/foreground`. Destructive, success, and warning map to global status tokens. Outline uses `background/border/foreground`. Supports `size="sm"` (`text-[11px] px-2`) alongside default.
-- **BadgeCount**: Circular numeric counter. `rounded-full`, `h-[18px] min-w-[18px] px-1`, `text-[11px] font-medium`. Uses the same base/status mapping as Badge. Values above 99 display as "99+".
+- **BadgeCount**: Numeric counter, `h-[18px] min-w-[18px] px-1`, `text-[11px]` mono; chamfered like a chip (4px), never a circle. Values above 99 display as "99+".
 - **Buttons**:
   - Default / Primary: 8px radius, charcoal fill (`--btn-primary`) with hover/press ramps on the pseudo-element shell. This is the standard high-emphasis action; `default` and `primary` are visual aliases.
   - Outline / Secondary: 8px radius, transparent rest state with a 1px inset ring, gray hover fill, and shell-only press scale. `outline` and `secondary` are visual aliases.
@@ -51,20 +51,20 @@ Flat, always. Floating menus, popovers, dialogs and panels are separated by a **
   - Brand: Use `variant="brand"` only for rare brand-colored actions (for example the chat Send button), following brand scarcity.
 - **In-capsule icon affordance** (the X on a tag/chip, a clear button inside a pill): a small icon button (`size-4`, `size-3` lucide glyph) that **follows the shape of its host container**. This is a deliberate split from the standalone ghost icon Button:
   - Inside a **rounded-rectangle** surface (toolbar, input row, card) the hover chip is a **rounded rectangle** (matches the host's `rounded-md`).
-  - Inside a **pill / capsule** (a tag chip, a count-style pill) the hover chip is a **pure circle** (`rounded-full`) — never a rounded rectangle. The hover chip must echo the curvature of the thing it sits in.
+  - Inside a chip, the hover chip echoes the chip's chamfer (4px) — there are no pills or circles in this language.
   - **Colour is never hand-rolled.** The hover fill deepens along the *same ramp the host capsule is built from*: a gray chip (`--accent-gray-soft-active`) deepens to that ramp's next stop (`--accent-gray-border`). Do not borrow the standalone ghost `--btn-ghost-hover` here — it is tuned for a white page and disappears on an already-tinted chip. Icon is `muted-foreground` at rest, `foreground` on hover/focus.
-- **Inputs**: Flat design. 1px `border`, pure `background` fill, 8px/10px outer radius. Text sizes via the `size` prop (`sm` 12px / `default` 13px / `lg` 14px), never a fixed 16px. Focus is not a ring — the 1px field edge swaps color in place (`--field-edge-rest` → `--field-edge-solid`, a near-black ~0.78-alpha hairline) on focus; an outer ring or a grown border width is the anti-pattern (see `packages/ui/AGENTS.md` § Borders & field edge).
+- **Inputs**: Flat. Ink frame at rest (1.5px), pure `background` fill, 8px chamfer. Text sizes via the `size` prop. Focus: a 2px Ink outline with a 2px gap (visible on Paper and on Pulse), the same for every focusable control; errors turn the edge Spark.
 - **Checkboxes/Radios**: Flat, soft background (`bg-background`). 1px `border`. The checked state marker (tick/dot) is `foreground` (charcoal), avoiding brand colors.
 - **Separators**: Uniformly use the 1px `border` color. Do not use padding/margins that detach them from the container edges (e.g., use full width `border-b` in menus instead of `<Separator mx-1>`).
 - **Skeleton**: Flat `bg-muted` block, `rounded-lg`. The loading shimmer is a **single synchronized seam** across a whole cluster (avatar + lines read as one loading surface, never independent per-block pulses) — the "one paper, many windows" model. Implementation lives entirely in `style.css` on `[data-slot="skeleton"]`: a two-close-gray gradient (`--muted` → `--skeleton-mid` → `--muted`) on a **viewport-anchored** sheet (`background-attachment: fixed`), tiled at `--skeleton-tile` (640px) and repeated, animated by exactly one tile width so it loops seamlessly. Because every block samples the *same* viewport-anchored sheet by its own position, the seam stays in sync without any wrapper component. Tile narrower than a typical row → a fresh seam revisits each cluster every cycle (short gap, not a viewport-wide wait). Tune speed via the `2s` duration, gap via `--skeleton-tile`. Reduced-motion freezes to flat `--muted`. **Two deliberate trade-offs of the `fixed` technique**: (1) iOS Safari ignores `background-attachment: fixed` and degrades to element-anchored — the shimmer still animates but loses cross-block sync there; (2) a `transform`/`filter`/`will-change` ancestor re-anchors the `fixed` sheet to that box instead of the viewport (sync holds within the subtree, but tile size/gap is then relative to that box). Both are acceptable for a Chromium desktop-first product; **do not "fix" this into a per-element gradient** — that reintroduces the independent-pulse look this avoids.
 
 ### Containers & Layouts
 
-- **Cards**: The exception to the flat rule. 12px radius (`rounded-xl`), pure `background`, 1px `border`, and strong `shadow-lg`. Content spacing is tight (`p-6`, with 6px gap between title and description).
-- **Alerts**: Flat (`bg-background`), 1px `border`, 10px radius (`rounded-[10px]`). No variant-specific colored backgrounds; errors use red text/icons but keep the white background.
+- **Cards**: Paper with a Fog border, 12px chamfer, no shadow (§7.6). Selected: 2px Ink border and a Pulse corner triangle at the top-left.
+- **Alerts**: Banners (§7.8). `confirm` is a Pulse banner with a 1.5px Ink border; `destructive` is a Spark banner with Ink text. Accents are fills, never text on Paper.
 - **Collapsible**: Flat sub-panels. `bg-background` inside a `border-border` container, items divided by `border-b` (no bottom border on last child). Uses `font-mono` for code-related items.
 - **Dropdowns / Popovers / Comboboxes**:
-  - `bg-background` with `border-border` and `shadow-md`.
+  - `bg-background` with a 1.5px Ink border, no shadow.
   - 8px outer radius.
   - Items use 4px inner radius and `text-sm font-normal text-foreground`.
   - Hover states use `bg-accent` and `text-foreground` (no brand color tints).
@@ -92,7 +92,7 @@ Flat, always. Floating menus, popovers, dialogs and panels are separated by a **
 
 ### Complex / Domain Specific
 
-- **Sonner (Toast Notifications)**: Uses `bg-background` with `border border-border` and `shadow-md`. Border radius is `var(--radius-lg)` (10px). Title: `text-sm font-medium text-foreground`. Description: `text-xs text-muted-foreground`. Status icons are `size-4`. Action buttons use `bg-foreground text-background rounded-sm text-xs font-medium`. Supports 6 states: default (with action button), loading (spinner), success, info, warning, error.
+- **Sonner (Toast Notifications)**: Paper with a 1.5px Ink frame, no shadow, panel chamfer. Success is a Pulse banner, error a Spark banner, both with Ink text and icon. States: default, loading, success, info, warning, error.
 - **Table**: Wrapped in a container with `border border-border rounded-sm` (6px). Header row height 41px with `py-[10px]`, data rows 38px with `py-[8.5px]`. Footer uses `bg-muted/50`. Empty state centers an icon + `text-muted-foreground` message in `h-[204px]`. Caption is centered `text-sm text-muted-foreground`.
 - **TagsInput**: Flat design. `rounded-lg` (no shadow). Focus state uses `ring-ring/20 ring-2` (not `ring-[3px]`).
 - **Chat Input (Main Area)**:
@@ -109,7 +109,7 @@ To ensure visual consistency when generating images or extrapolating designs via
 1. **The "Flat Atom" Law:** If it's a basic interactive element (button, badge, input, toggle, checkbox), it **cannot** have a shadow. It must rely on tokenized borders and background contrast (`--background` vs `--accent` vs `--foreground`).
 2. **The "Menu Underline" Law:** Whenever rendering a list of items inside a container (Dropdowns, Comboboxes, Sidebar Sub-menus, Collapsibles), items must be divided by a full-width, 1px horizontal line (`border-b`), terminating cleanly on the last item. Do not leave floating separators with margins.
 3. **The "Monochrome Hover" Law:** Focus and hover states for secondary items must use `bg-accent` and `text-foreground`. Never apply the brand purple (`#8b56e3`) as a background highlight for menus.
-4. **The "Bimodal Elevation" Trigger:** Only use heavy, soft shadows (like `shadow-lg`) when rendering a standalone focal piece (like a login modal or a central dashboard card) that sits distinctly above a complex, flat background layer.
+4. **No elevation:** There are no shadows at any level (LabMate §2.3). A standalone focal piece (login, central card) is set apart by a 1.5px Ink border and space, never by a shadow.
 5. **The "Brand Scarcity" Law:** The scheme brand color (`--brand` / `--primary`) is the most expensive pixel on the screen. It can only be used for:
    - The absolute primary completion action on a screen (e.g., the Chat "Send" button).
    - Micro-indicators of "current active state" (e.g., a 2px vertical bar next to an active sidebar menu item, or a 5px status dot).
@@ -118,7 +118,7 @@ To ensure visual consistency when generating images or extrapolating designs via
 
 - **Do** use `bg-secondary` with `border-border` for standard filled controls; reserve `bg-primary` / `bg-brand` for explicit brand actions and high-emphasis CTAs.
 - **Don't** use `shadow-sm` on buttons, inputs, or alerts. Keep atomic components strictly flat.
-- **Do** use `shadow-lg` for large focal cards to make them pop against the flat UI.
+- **Don't** use shadows anywhere — not even on focal cards; a 1.5px Ink border carries the separation.
 - **Don't** use colored backgrounds for Alert or Badge variants (like `bg-red-50`). Keep them white and use text/icon color to convey meaning (or solid red for destructive badges).
 - **Do** maintain the 1px `#e5e5e5` (`--border`) across all structural dividing lines, ensuring they connect edge-to-edge (no floating separators).
 - **Don't** use primary colors for hover or active states in standard dropdowns and menus; stick to `bg-accent` and `text-foreground`.

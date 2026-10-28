@@ -79,7 +79,7 @@ function enumDisplay(c: EnumControl): 'segmented' | 'select' {
       <Switch
         v-else-if="c.kind === 'boolean'"
         :model-value="Boolean(state[c.key])"
-        @update:model-value="emit('set', c.key, $event)"
+        @update:model-value="emit('set', c.key, $event ?? 0)"
       />
       <NumberField
         v-else-if="c.kind === 'number'"
@@ -87,7 +87,7 @@ function enumDisplay(c: EnumControl): 'segmented' | 'select' {
         :min="c.min"
         :max="c.max"
         :model-value="Number(state[c.key])"
-        @update:model-value="emit('set', c.key, $event)"
+        @update:model-value="emit('set', c.key, $event ?? 0)"
       />
       <Input
         v-else

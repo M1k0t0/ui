@@ -11,7 +11,7 @@ import { mateInitials } from './types'
 //    the bottom-right. Initials Ink / 600.
 //  · AGENT — an Ink hexagon. `faceted` draws all six planes lit from the
 //    top-left (Pulse plane = live) with a Paper outline; the compact form is a
-//    flat Ink hexagon with one Steel facet, used at small sizes and in stacks.
+//    flat Ink hexagon whose top-left plane is Pulse (the agent is live, §5.2), used at small sizes and in stacks.
 //    Initials Paper / 700.
 // Inside a MateAvatarStack every avatar takes the 2.5-unit stack outline
 // (Paper on agents, Ink on humans) and humans drop the corner facet.
@@ -68,7 +68,7 @@ const OCT = '14,1 34,1 47,14 47,34 34,47 14,47 1,34 1,14'
           :stroke-width="stacked ? 2.5 : 2"
           stroke-linejoin="miter"
         />
-        <polygon v-if="!stacked" points="47,34 34,47 41,40" fill="var(--ink)" />
+        <polygon v-if="!stacked" points="47,34 34,47 36,36" fill="var(--ink)" />
         <text
           x="24"
           y="29"
@@ -99,7 +99,7 @@ const OCT = '14,1 34,1 47,14 47,34 34,47 14,47 1,34 1,14'
             :stroke-width="stacked ? 2.5 : 1.5"
             stroke-linejoin="miter"
           />
-          <polygon points="4,12.5 24,1 22,22" fill="var(--steel)" />
+          <polygon points="4,12.5 24,1 22,22" fill="var(--pulse)" />
         </template>
         <text
           x="24"
