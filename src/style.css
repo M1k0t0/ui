@@ -2620,9 +2620,10 @@
   /* ── Ghost text button (§7.13): Ink text, 1.5px underline offset 4px ─────
      Only a standalone text action — not icon buttons, the compact TextButton
      rung, full-width (block) rows, navigation rows (NavItem / anything in a
-     nav or sidebar), or menu / popover triggers (they carry aria-haspopup or
+     nav or [data-sidebar]; a plain <aside> panel is not navigation and keeps
+     the underline), or menu / popover triggers (they carry aria-haspopup or
      a reka data-state). */
-  [data-button][data-variant="ghost"]:not([data-size^="icon"]):not([data-size="text"]):not([data-block]):not([data-settings-nav-item]):not([aria-haspopup]):not([data-state]):not(nav *):not([data-sidebar] *):not(aside *) {
+  [data-button][data-variant="ghost"]:not([data-size^="icon"]):not([data-size="text"]):not([data-block]):not([data-settings-nav-item]):not([aria-haspopup]):not([data-state]):not(nav *):not([data-sidebar] *) {
     text-decoration-line: underline;
     text-decoration-thickness: var(--stroke);
     text-underline-offset: 4px;
