@@ -973,13 +973,16 @@
   }
 
   /* ── Switch ──────────────────────────────────────────────────────────────
-     Pure COLOR switch — no track outline at all. Off = a clear gray pill, on =
-     the solid palette blue (same --selection-fill as the checkbox, one blue
-     across selection controls). Hover deepens the gray and brightens the blue.
-     The puck is a plain white disc (drop shadow only, no ring). Geometry
-     (size/thumb/travel) is in Switch.vue; this is the single source for color. */
+     The labmate design's switch: a chamfered track with a --stroke edge
+     (--switch-edge, Ink) and a square chamfered puck (--switch-thumb, Ink).
+     Off = Well-deep, deepening to Fog on hover; on = Pulse (on means live),
+     shaded on hover, the puck staying Ink on it (--switch-thumb-on). Locked
+     (disabled) = Mist with an Ash edge and puck, the puck still on its side so
+     a locked switch shows whether it is on. Geometry (size/thumb/travel) is in
+     Switch.vue; this is the single source for color. */
   [data-slot="switch"] {
     background-color: var(--switch-off);
+    border-color: var(--switch-edge);
     /* synced with the thumb glide so track color + puck move as one motion;
        80ms alone read as an instant snap, 150 dragged. */
     transition: background-color 110ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -993,12 +996,23 @@
   [data-slot="switch"][data-state="checked"]:not(:disabled):hover {
     background-color: var(--switch-on-hover);
   }
+  /* after the checked rules (same specificity): locked wins over on */
+  [data-slot="switch"]:disabled {
+    background-color: var(--switch-locked);
+    border-color: var(--switch-locked-edge);
+  }
   [data-slot="switch-thumb"] {
     background-color: var(--switch-thumb);
     /* synced with the track color (110ms) so the toggle reads as one motion.
        NB: Tailwind v4 translate-x-* sets the `translate` property (not
        `transform`), so the transition must target `translate`. */
     transition: translate 110ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  [data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"] {
+    background-color: var(--switch-thumb-on);
+  }
+  [data-slot="switch"]:disabled [data-slot="switch-thumb"] {
+    background-color: var(--switch-locked-edge);
   }
 
   /* ── Radio ───────────────────────────────────────────────────────────────
@@ -1505,13 +1519,18 @@
      which would kill white-on-red. */
   --accent-red-fill: var(--spark);
   --accent-red-foreground: var(--ink);
-  /* Switch — pure color toggle, no outline. Off = a clear gray that deepens on
-     hover; ON reuses --accent-blue-fill (one blue across selection controls) and
-     BRIGHTENS on hover (unlike checkbox, which deepens); puck = a white disc. */
-  --switch-off: var(--fog);
-  --switch-off-hover: var(--ash);
+  /* Switch — the labmate design's switch: an Ink edge and a square Ink puck on
+     a chamfered track. Off = Well-deep that deepens to Fog on hover; on = Pulse
+     (--switch-on, below) that shades on hover, the puck staying Ink on it
+     (on-accent, both modes); locked (disabled) = Mist with an Ash edge and puck. */
+  --switch-off: var(--well-deep);
+  --switch-off-hover: var(--fog);
   --switch-on-hover: var(--pulse-shade);
-  --switch-thumb: var(--paper);
+  --switch-edge: var(--ink);
+  --switch-thumb: var(--ink);
+  --switch-thumb-on: var(--on-accent);
+  --switch-locked: var(--mist);
+  --switch-locked-edge: var(--ash);
   /* Foreground (check / glyph) sitting on the solid --accent-blue-fill. */
   --accent-blue-foreground: #fff;
   /* Translucent ink overlays for engage states layered OVER a surface (the
@@ -1711,10 +1730,14 @@
   --segment-track: var(--ink);
   --segment-thumb: var(--paper);
   /* Switch (dark): off gray LIGHTENS on hover (like the other dark control
-     tints); on/thumb inherit the light tokens but off needs its own dark grays. */
+     tints); the edge and the off puck flip to Paper; on keeps the Ink puck on
+     Pulse (inherited); locked = Graphite with a Steel edge and puck. */
   --switch-off: var(--slate);
   --switch-off-hover: var(--steel);
+  --switch-edge: var(--paper);
   --switch-thumb: var(--paper);
+  --switch-locked: var(--graphite);
+  --switch-locked-edge: var(--steel);
   /* Segmented engage overlays flip to white so they LIGHTEN on dark surfaces. */
   --segment-overlay-hover: oklch(1 0 0 / 0.06);
   --segment-overlay-active: oklch(1 0 0 / 0.10);

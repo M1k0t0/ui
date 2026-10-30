@@ -190,7 +190,9 @@ Spark and status planes keep their values and their Ink text.
    look nicer." Borders come from `--border` / `--border-hairline` / the
    field-edge contract; shadows come from the elevation tokens. (The Switch once
    shipped with an invented black hairline AND an invented thumb shadow — both
-   were wrong and removed.)
+   were wrong and removed. Its current Ink edge is not that: it is the labmate
+   design's switch, an edged chamfered track with a square puck, and it lives in
+   the `--switch-edge` / `--switch-locked-edge` tokens.)
 3. **New language only.** The refactored Atoms are the reference. Do **not** copy
    an un-refactored legacy component's styling.
 
@@ -519,7 +521,9 @@ top-left and bottom-right). The mechanism is single-sourced:
     `rounded-menu-shell` = card.
   - Dialog / Sheet → `rounded-panel` = panel.
 - **Circles become octagons:** `.rounded-full` is overridden to
-  `--chamfer-octagon` (29.3%, bevelled) — Avatar, Switch, Radio, Slider thumb.
+  `--chamfer-octagon` (29.3%, bevelled) — Avatar, Radio, Slider thumb. The
+  Switch is not round: its track and puck take the chip chamfer (`rounded-xs` /
+  `rounded-2xs`).
 - Browsers without `corner-shape` fall back to SQUARE corners (never curves).
 - Directional utilities (`rounded-l-md`, `rounded-t-md`) do not compose with the
   two-value shorthand; they degrade to square. Prefer `rounded-*-none` to drop a

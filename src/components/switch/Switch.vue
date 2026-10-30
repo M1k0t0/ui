@@ -23,19 +23,21 @@ const delegatedProps = reactiveOmit(props, 'class', 'size')
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
-// Geometry only. Both sizes are 20 tall with a 16 thumb (the 32×20 / 36×20
-// references). Track is px-0.5 (2px) inset so the puck floats off the edge;
-// translate = inner width − thumb. Color + transition live in style.css
-// ([data-slot="switch"]) — same single source as Checkbox, so on=palette blue /
-// off=gray never drifts per call site.
+// Geometry only (the labmate design's switch): a chip-chamfered track with a
+// --stroke edge and a square chip-chamfered puck. default 40×22 with a 14 puck,
+// sm 32×18 with a 10 puck. px is 2.5px so the puck sits 4px off the outer edge
+// (border 1.5 + 2.5), vertically centred the same; translate = inner width −
+// 2 × 2.5 − puck (default 37 − 5 − 14 = 18, sm 29 − 5 − 10 = 14). Color, edge
+// color and transition live in style.css ([data-slot="switch"]) — the single
+// source, so on / off / locked never drift per call site.
 const trackClass = computed(() => ({
-  sm: 'w-8 h-5',
-  default: 'w-9 h-5',
+  sm: 'w-8 h-[18px]',
+  default: 'w-10 h-[22px]',
 }[props.size]))
 
 const thumbClass = computed(() => ({
-  sm: 'size-4 data-[state=checked]:translate-x-3',
-  default: 'size-4 data-[state=checked]:translate-x-4',
+  sm: 'size-2.5 data-[state=checked]:translate-x-3.5',
+  default: 'size-3.5 data-[state=checked]:translate-x-4.5',
 }[props.size]))
 </script>
 
@@ -46,9 +48,9 @@ const thumbClass = computed(() => ({
     :data-size="props.size"
     v-bind="forwarded"
     :class="cn(
-      'peer inline-flex shrink-0 cursor-pointer items-center rounded-full px-0.5 outline-none',
+      'peer inline-flex shrink-0 cursor-pointer items-center rounded-xs border-(length:--stroke) px-[2.5px] outline-none',
       'focus-visible:ring-2 focus-visible:ring-ring/20',
-      'disabled:cursor-not-allowed disabled:opacity-40',
+      'disabled:cursor-not-allowed',
       trackClass,
       props.class,
     )"
@@ -56,7 +58,7 @@ const thumbClass = computed(() => ({
     <SwitchThumb
       data-slot="switch-thumb"
       :class="cn(
-        'pointer-events-none block rounded-full data-[state=unchecked]:translate-x-0',
+        'pointer-events-none block rounded-2xs data-[state=unchecked]:translate-x-0',
         thumbClass,
       )"
     >
