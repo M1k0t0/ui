@@ -16,6 +16,7 @@ import { nativeSelectSpec } from './native-select'
 import { numberFieldSpec } from './number-field'
 import { popoverSpec } from './popover'
 import { mateAvatarSpec } from './mate-avatar'
+import { matePickerSpec } from './mate-picker'
 import { scheduleBarSpec } from './schedule-bar'
 import { segmentedSpec } from './segmented'
 import { segmentedProgressSpec } from './segmented-progress'
@@ -54,6 +55,7 @@ export const componentSpecs: ComponentSpec[] = [
   tagChipSpec,
   labIconSpec,
   mateAvatarSpec,
+  matePickerSpec,
   segmentedProgressSpec,
   startNodeSpec,
   taskNodeSpec,
